@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="40" tileheight="40" infinite="0" nextlayerid="7" nextobjectid="51">
+ <editorsettings>
+  <export target="void_meeting_room.lua" format="lua"/>
+ </editorsettings>
+ <properties>
+  <property name="border" value="undertale/fire"/>
+  <property name="light" type="bool" value="true"/>
+ </properties>
+ <imagelayer id="2" name="Image Layer 1" locked="1">
+  <image source="../../../assets/sprites/tilesets/meeting_room.png" width="640" height="480"/>
+ </imagelayer>
+ <layer id="1" name="Tile Layer 1" width="16" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup color="#aa55ff" id="3" name="markers">
+  <object id="8" name="spawn" x="339" y="431">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup color="#aa00ff" id="6" name="Objects">
+  <object id="46" name="interactable" x="319" y="188.25" width="40" height="39.75">
+   <properties>
+    <property name="cutscene" value="void.meeting"/>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="50" name="npc" x="339" y="-119.333">
+   <properties>
+    <property name="actor" value="void_ut"/>
+    <property name="cutscene" value="void.boom"/>
+   </properties>
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup color="#0000ff" id="5" name="collision">
+  <object id="21" x="160" y="120" width="40" height="280"/>
+  <object id="23" x="200" y="120" width="280" height="40"/>
+  <object id="24" x="480" y="120" width="40" height="280"/>
+  <object id="25" x="200.758" y="350" width="80" height="40"/>
+  <object id="26" x="400" y="350" width="80" height="40"/>
+  <object id="34" x="252" y="350" width="40" height="130.182"/>
+  <object id="35" x="388" y="350" width="40" height="130.182"/>
+  <object id="43" x="279.667" y="469" width="120" height="10"/>
+ </objectgroup>
+</map>
