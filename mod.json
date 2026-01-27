@@ -7,7 +7,7 @@
     "subtitle": "",
 
     // The version of your mod.
-    "version": "v1.0.0",
+    "version": "v0.0.1",
     // What version of the engine your mod was made with.
     "engineVer": "v0.10.0-dev",
 
@@ -17,32 +17,21 @@
     "chapter": 4,
 
     // The map that you start in when first starting the mod.
-    "map": "room1",
+    "map": "void_meeting_room",
 
     // The party. The first character is the player.
-    "party": ["kris", "susie", "ralsei"],
+    "party": ["frisk"],
 
     // The inventory. Contains three darkburgers, a cell phone and a shadow crystal by default.
     "inventory": {
-        "items": ["glowshard", "darkburger", "darkburger", "darkburger"],
-        "key_items": ["cell_phone", "shadowcrystal"]
+        // "items": ["undertale/rock_candy", "undertale/monster_candy", "undertale/spider_donut", "undertale/spider_cider", "undertale/butterscotch_pie", "undertale/ghost_fruit"],
+        "items": ["undertale/bisicle","undertale/bisicle","undertale/bisicle","undertale/bisicle","undertale/bisicle","undertale/bisicle","undertale/bisicle","undertale/bisicle"],
+        "box_a": ["undertale/stick", "undertale/toy_knife", "undertale/tough_glove", "undertale/ballet_shoes", "undertale/torn_notebook", "undertale/burnt_pan", "undertale/empty_gun", "undertale/worn_dagger", "undertale/real_knife"],
+        "box_b": ["undertale/bandage", "undertale/faded_ribbon", "undertale/manly_bandanna", "undertale/old_tutu", "undertale/cloudy_glasses", "undertale/stained_apron", "undertale/cowboy_hat", "undertale/heart_locket", "undertale/the_locket", "undertale/temy_armor"],
+        "key_items": ["cell_phone"]
     },
-
     // Equipment for your party. Not specifying equipment defaults to the following.
-    "equipment": {
-        "kris": {
-            "weapon": "wood_blade",
-            "armor": ["amber_card", "amber_card"]
-        },
-        "susie": {
-            "weapon": "mane_ax",
-            "armor": ["amber_card", "amber_card"]
-        },
-        "ralsei": {
-            "weapon": "red_scarf",
-            "armor": ["amber_card", "amber_card"]
-        }
-    },
+
 
     // Should never be true, but just in case. Restarts the entire engine when leaving the mod.
     // If you need this, you're most likely doing something wrong.
@@ -61,6 +50,11 @@
     // These config values can control chapter-specific features as well.
     "config": {
         "kristal": {
+            "lightCurrency": "Gold",
+            "lightCurrencyShort": "G",
+            "overworldSpells": true,
+            "canTossLightWeapons": true,
+            //"targetSystem": true,
             // End of config
         }
     }

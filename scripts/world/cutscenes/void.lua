@@ -10,8 +10,8 @@ return {
             cutscene:look(down)
             cutscene:wait(cutscene:playSound("escaped"))
   
-            cutscene:text("* Ah.[wait:5]\n* i'm late.[wait:5]\n* i'm late...")
-            cutscene:text("* [wait:5]i'm void.")
+            cutscene:text("* ah.[wait:5]\n* i'm late.[wait:5]\n* i'm late...")
+            cutscene:text("* [wait:5]please forgive me!!!")
             cutscene:playSound("drive")
             cutscene:wait(cutscene:slideTo(void, Game.world.player.x, Game.world.player.y-30, 1))
             cutscene:startLightEncounter("void")

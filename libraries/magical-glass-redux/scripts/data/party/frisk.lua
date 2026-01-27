@@ -55,8 +55,8 @@ function character:init()
     self:setWeapon("wood_rapier")
 
     -- Default light world equipment item IDs (saves current equipment)
-    self.lw_weapon_default = "undertale/stick"
-    self.lw_armor_default = "undertale/bandage"
+    self.lw_weapon_default = "undertale/burnt_pan"
+    self.lw_armor_default = "undertale/stained_apron"
 
     -- Character color (for action box outline and hp bar)
     self.color = {170/255, 1, 0}

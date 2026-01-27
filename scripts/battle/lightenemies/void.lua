@@ -47,22 +47,18 @@ function void:init()
 
     self.gauge_size = 150
     self.damage_offset = {5, -70}
-    self.hit = 0
-    self.hited = false
-    self.flirt = 0
+    self.act1 = 0
     self.acted = false
-   
+    self.violence = false
 end
 
 
 function void:hurt(amount, ...)
     if amount < 60  then
-        self.hited = true
-        self.hit = self.hit + 1
+        self.violence = true
         super.hurt(self,100,...)
     elseif amount > 60 then --and amount ~= 67 and amount ~= 66
-        self.hited = true
-        self.hit = self.hit + 1
+        self.violence = true
         super.hurt(self,200,...)
    -- elseif amount == 66  then
      --   super.hurt(self,666666,...)
@@ -72,34 +68,39 @@ function void:hurt(amount, ...)
         super.hurt(self,0,...)
     end
 
+
 end
     function void:onAct(battler, name)
 
-    if name == "Flirt" then
-        self.acted = true
-        self.act = self.act + 1
-        if self.act == 1 then
-           self.dialogue_override = "."
-           return "* ."
-        else
-           self.dialogue_override = "..."
-           return "*  " .. self.name .. " ."
-        end
-        elseif name == "Check" then
+        if name == "Check" then
         return "* void - ATK 100 DEF 100\n* This creature is definitely in the wrong time and space!"
-        elseif name == "Something" then
+         elseif name == "Something" then
         if Game.battle.turn_count < 2 then
         return TableUtils.pick{
         "* You wave,[wait:5] void waves(?) you back",
         "* You say hello,[wait:5] void says hi back.",
         "* You smile,[wait:5] void imitates your smile"}
+        --[[elseif name == "Flirt" then
+        self.acted = true
+        self.act1 = self.act1 + 1
+
+        if self.act1 == 1 then
+            Game.battle:startActCutscene("void", "turn1")
+        else
+           return "*  " .. self.name .. " ."
+        end
+        
+        
+       
         else
         self:registerAct("Flirt")
         self:registerAct("Hug")
         self:registerAct("Imitate")
         self:removeAct("Something")
         return "* "
+        end]]
         end
+
     end
     
     return super.onAct(self,battler, name)
@@ -113,17 +114,9 @@ end
     elseif turn == 3 then
     return "* void looks at you curiously."
     end   
-     return TableUtils.pick(self.text)
+     return TableUtils.pick(self.text)  
         
     end
-   function void:getEnemyDialogue()
-   -- local turn =  Game.battle.turn_count
-   -- if turn == 1 then
-   -- return ""
-    --elseif turn == 2 then
-    --return "you look different\nfrom the others...\nare you lost too?"
-   -- else
-   return TableUtils.pick(self.dialogue)
-end
+
 --end
 return void

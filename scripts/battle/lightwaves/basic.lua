@@ -15,7 +15,7 @@ function Basic:onStart()
         local y = Utils.random(Game.battle.arena.top, Game.battle.arena.bottom)
 
         -- Spawn smallbullet going left with speed 8 (see scripts/battle/bullets/smallbullet.lua)
-        local bullet = self:spawnBullet("smallbullet", x, y, math.rad(180), 8)
+        local bullet = self:spawnBullet("star", x, y, math.rad(180), 8)
         if not bullet.attacker then
             bullet.damage = 6
         end

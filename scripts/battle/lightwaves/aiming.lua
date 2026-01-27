@@ -18,7 +18,7 @@ function Aiming:onStart()
                 local angle = Utils.angle(x, y, Game.battle.soul.x, Game.battle.soul.y)
 
                 -- Spawn smallbullet angled towards the player with speed 8 (see scripts/battle/bullets/smallbullet.lua)
-                self:spawnBullet("smallbullet", x, y, angle, 8)
+                self:spawnBullet("star", x, y, angle, 8)
             end
         else
             -- Get all enemies that selected this wave as their attack
@@ -34,7 +34,7 @@ function Aiming:onStart()
                 local angle = Utils.angle(x, y, Game.battle.soul.x, Game.battle.soul.y)
 
                 -- Spawn smallbullet angled towards the player with speed 8 (see scripts/battle/bullets/smallbullet.lua)
-                self:spawnBullet("smallbullet", x, y, angle, 8)
+                self:spawnBullet("star", x, y, angle, 8)
             end
         end
     end)
