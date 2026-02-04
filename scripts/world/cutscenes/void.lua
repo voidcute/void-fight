@@ -19,6 +19,7 @@ return {
     end,
     boom = function (cutscene)
         local void = cutscene:getCharacter("void_ut")
+        cutscene:setSpeaker(void)
         cutscene:text("* a")
         void:explode()
     

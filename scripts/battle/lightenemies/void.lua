@@ -8,13 +8,13 @@ function void:init()
     self:setActor("void_ut")
 
     -- Enemy health
-    self.max_health = 1000
-    self.health = 1000
+    self.max_health = 101
+    self.health = 101
     -- Enemy attack (determines bullet damage)
     self.attack = 9
     -- Enemy defense (usually 0)
     self.defense = 0
-
+    self.turn_count = 1
     -- Enemy reward
     self.money = 0
     self.experience = 0
@@ -50,6 +50,7 @@ function void:init()
     self.act1 = 0
     self.acted = false
     self.violence = false
+    self.can_die = false
 end
 
 
@@ -57,15 +58,15 @@ function void:hurt(amount, ...)
     if amount < 60  then
         self.violence = true
         super.hurt(self,100,...)
-    elseif amount > 60 then --and amount ~= 67 and amount ~= 66
+    --[[elseif amount > 60 then --and amount ~= 67 and amount ~= 66
         self.violence = true
         super.hurt(self,200,...)
-   -- elseif amount == 66  then
-     --   super.hurt(self,666666,...)
-     --elseif amount == 67  then
-     --   super.hurt(self,670000,...)
+    elseif amount == 66  then
+      super.hurt(self,666666,...)
+     elseif amount == 67  then
+       super.hurt(self,670000,...)
     else
-        super.hurt(self,0,...)
+        super.hurt(self,0,...)]]
     end
 
 
@@ -74,8 +75,8 @@ end
 
         if name == "Check" then
         return "* void - ATK 100 DEF 100\n* This creature is definitely in the wrong time and space!"
-         elseif name == "Something" then
-        if Game.battle.turn_count < 2 then
+        
+        elseif name == "Something" then
         return TableUtils.pick{
         "* You wave,[wait:5] void waves(?) you back",
         "* You say hello,[wait:5] void says hi back.",
@@ -101,22 +102,20 @@ end
         end]]
         end
 
-    end
     
     return super.onAct(self,battler, name)
     
 end
     -- first 3 turns
     function void:getEncounterText()
-    local turn =  Game.battle.turn_count
-    if turn == 2 then
+    if self.turn_count == 2 then
     return "* void wonders why are you here."
-    elseif turn == 3 then
+    elseif self.turn_count == 3 then
     return "* void looks at you curiously."
     end   
      return TableUtils.pick(self.text)  
         
-    end
+end
 
 --end
 return void

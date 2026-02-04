@@ -25,7 +25,7 @@ function actor:init()
     self.default = "idle"
 
     -- Sound to play when this actor speaks (optional)
-    self.voice = nil
+    self.voice = "void_5"
     -- Path to this actor's portrait for dialogue (optional)
     self.portrait_path = nil
     -- Offset position for this actor's portrait (optional)
@@ -76,6 +76,14 @@ function actor:init()
     })
 
 end
-
+function actor:onTextSound(sound, node)
+    if Mod.voice_timer == 0 then
+        local snd = "voice/void"
+        local pitch = 0.86 + Utils.random(0.35)
+        Assets.playSound(snd, 1, pitch)
+        Mod.voice_timer = 3
+    end
+    return true
+end
 
 return actor

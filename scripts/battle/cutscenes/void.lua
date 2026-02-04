@@ -18,16 +18,23 @@ return{
     cutscene:battlerText(void,"huh, why are you looking\nat me like that.")
     cutscene:battlerText(void,"colors? i'm not sure \nwhat you mean.")
     end,
-    hurt1 = function (cutscene)
-    void = cutscene:getCharacter("void")      
+    hurt1 = function (cutscene)        
     body = void:getSpritePart("body")
     body:setSprite("enemies/void_ut/body_sweat")   
     eyes = void:getSpritePart("eyes")
     eyes:setSprite("enemies/void_ut/eyes_sweat")
     cutscene:battlerText(void, "ouch. that hurts.\nwhy did you hit me.")  
     cutscene:battlerText(void, "is it because \ni bumped into you?\ni am so sorry.")  
+    end,
 
-    end
+    hurt2 = function (cutscene)
+    
+    cutscene:battlerText(void, "aaaa.")
+    end,
+    die = function (cutscene,enemy)
+    cutscene:battlerText(void, "aaaaa.")
+
+    end,
 
             
 
