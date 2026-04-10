@@ -8,8 +8,8 @@ function void:init()
     self:setActor("void_ut")
 
     -- Enemy health
-    self.max_health = 101
-    self.health = 101
+    self.max_health = 1000
+    self.health = 1000
     -- Enemy attack (determines bullet damage)
     self.attack = 9
     -- Enemy defense (usually 0)
@@ -20,7 +20,7 @@ function void:init()
     self.experience = 0
     self.spare_points = 0    
     self.dialogue_bubble = "ut_round"
-    self.dialogue_offset = {0, 0}
+    self.dialogue_offset = {0, 10}
    
     -- List of possible wave ids, randomly picked each turn
     self.waves = {
@@ -57,7 +57,10 @@ end
 function void:hurt(amount, ...)
     if amount < 60  then
         self.violence = true
+        if self.health > 100 then
         super.hurt(self,100,...)
+        else super.hurt(self,99,...)
+        end
     --[[elseif amount > 60 then --and amount ~= 67 and amount ~= 66
         self.violence = true
         super.hurt(self,200,...)

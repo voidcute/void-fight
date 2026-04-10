@@ -13,13 +13,13 @@ function encounter:init()
     self.soul_offset = {-4, 0}
 
     -- Add the dummy enemy to the encounter
-    self:addEnemy("froggit", SCREEN_WIDTH/2, 246)
+    self:addEnemy("void", SCREEN_WIDTH/2, 246)
 end
 
 function encounter:getDialogueCutscene()
     return function(cutscene)
         cutscene:wait(1)
-        local dialogue = "[speed:0.5][voice:none]Ribbit.[wait:60]\nLike the deltarune mod"
+        local dialogue = "[speed:0.5][voice:none]void.[wait:60]\nLike the void"
         local x = Game.battle.enemies[1].x + Game.battle.enemies[1].width * 2
         local bubble = SpeechBubble(dialogue, x, 78, {style = "ut_above"})
         Game.battle:addChild(bubble)

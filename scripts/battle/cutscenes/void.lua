@@ -9,16 +9,15 @@ return{
 
     eyes:setSprite("enemies/void_ut/eyes_sweat")
     cutscene:battlerText(void,"ah, sorry.\ni thought you was a ball\nso i bumped into you.")
-    cutscene:battlerText(void,"what are you doing here?\ndidn't you read the sign?")
-    body:setSprite("enemies/void_ut/body")
-    eyes:setSprite("enemies/void_ut/eyes")  
-    
+    cutscene:battlerText(void,"what are you doing here?\ndidn't you read the sign?") 
     end,
     turn2 = function (cutscene)
+    body:setSprite("enemies/void_ut/body")  
+    eyes:setSprite("enemies/void_ut/eyes")
     cutscene:battlerText(void,"huh, why are you looking\nat me like that.")
-    cutscene:battlerText(void,"colors? i'm not sure \nwhat you mean.")
+    cutscene:battlerText(void,"colors?.\nhmm\n now that you mention it")
     end,
-    hurt1 = function (cutscene)        
+    hurt1 = function (cutscene)            
     body = void:getSpritePart("body")
     body:setSprite("enemies/void_ut/body_sweat")   
     eyes = void:getSpritePart("eyes")
@@ -28,7 +27,7 @@ return{
     end,
 
     hurt2 = function (cutscene)
-    
+    eyes:setSprite("enemies/void_ut/eyes")  
     cutscene:battlerText(void, "aaaa.")
     end,
     die = function (cutscene,enemy)

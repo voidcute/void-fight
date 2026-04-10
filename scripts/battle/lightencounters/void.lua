@@ -6,11 +6,11 @@ function void:init()
     -- Text displayed at the bottom of the screen at the start of the encounter
     self.text = "* Ridiculously powerful enemy \nvoid showed up!!!"
     self.music = "Strongerer_Monsters"
-    -- Add the void enemy to the encounter
     self.void = self:addEnemy("void",SCREEN_WIDTH/2, 246)
     -- hurt when encounter???
     frisk = Game.battle:getPartyBattler("frisk")
-    frisk:hurt(1,true)
+    frisk:hurt(0,true)
+
 end
 
     function void:onActionsEnd()
@@ -22,7 +22,9 @@ end
             end
         elseif self.void.violence == false then 
             if self.void.turn_count == 1 then
-            Game.battle.enemies[1].wave_override ="basic"   
+            Game.battle.enemies[1].wave_override ="aiming"   
+            elseif self.void.turn_count == 2 then
+            Game.battle.enemies[1].wave_override ="basic"  
             end
             
         end
@@ -52,5 +54,7 @@ end
     else 
         self.void.violence = false  
     end
+
 end
+
 return void

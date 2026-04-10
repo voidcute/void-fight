@@ -79,7 +79,7 @@ end
 function actor:onTextSound(sound, node)
     if Mod.voice_timer == 0 then
         local snd = "voice/void"
-        local pitch = 0.86 + Utils.random(0.35)
+        local pitch = 0.86 + Utils.random(0.34)
         Assets.playSound(snd, 1, pitch)
         Mod.voice_timer = 3
     end
