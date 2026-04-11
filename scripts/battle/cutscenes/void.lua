@@ -1,7 +1,6 @@
 return{
     
     turn1 = function (cutscene)
-    -- handling sprite parts
     void = cutscene:getCharacter("void")  
     body = void:getSpritePart("body")
     body:setSprite("enemies/void_ut/body_sweat")   
@@ -15,9 +14,10 @@ return{
     body:setSprite("enemies/void_ut/body")  
     eyes:setSprite("enemies/void_ut/eyes")
     cutscene:battlerText(void,"huh, why are you looking\nat me like that.")
-    cutscene:battlerText(void,"colors?.\nhmm\n now that you mention it")
+    cutscene:battlerText(void,"colors?.\nhmm, now that you \nmention it")
     end,
-    hurt1 = function (cutscene)            
+    hurt1 = function (cutscene)    
+    void = cutscene:getCharacter("void")    
     body = void:getSpritePart("body")
     body:setSprite("enemies/void_ut/body_sweat")   
     eyes = void:getSpritePart("eyes")
@@ -34,6 +34,12 @@ return{
     cutscene:battlerText(void, "aaaaa.")
 
     end,
+    slime = function (cutscene)        
+    body:setSprite("enemies/void_ut/body_sweat")   
+    eyes:setSprite("enemies/void_ut/eyes_confused")
+    cutscene:battlerText(void, "uh what?\nwhat did you just say???")  
+
+    end
 
             
 

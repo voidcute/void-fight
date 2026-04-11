@@ -51,16 +51,19 @@ function void:init()
     self.acted = false
     self.violence = false
     self.can_die = false
+    self.checks = 0
 end
 
 
 function void:hurt(amount, ...)
-    if amount < 60  then
-        self.violence = true
-        if self.health > 100 then
-        super.hurt(self,100,...)
-        else super.hurt(self,99,...)
-        end
+    if amount > 0 and self.health > 100   then
+    self.violence = true
+    super.hurt(self,100,...)
+    elseif amount > 0 and self.health < 200 then
+    super.hurt(self,99,...)
+    elseif amount == 0 then 
+    super.hurt(self,0,...)
+    end
     --[[elseif amount > 60 then --and amount ~= 67 and amount ~= 66
         self.violence = true
         super.hurt(self,200,...)
@@ -70,18 +73,21 @@ function void:hurt(amount, ...)
        super.hurt(self,670000,...)
     else
         super.hurt(self,0,...)]]
+
     end
 
-
-end
     function void:onAct(battler, name)
 
-        if name == "Check" then
+        if name == "Check" and self.checks == 0 then
+        self.checks =  self.checks + 1
         return "* void - ATK 100 DEF 100\n* This creature is definitely in the wrong time and space!"
+        else if name == "Check" and self.checks >= 1 then
+        self.checks =  self.checks + 1    
+        return "* void - ATK 100 DEF 100\n* Stereotypical: Curvaceously attractive, but no brains..."  
         
         elseif name == "Something" then
         return TableUtils.pick{
-        "* You wave,[wait:5] void waves(?) you back",
+        "* You wave,[wait:5] void waves(?) back at",
         "* You say hello,[wait:5] void says hi back.",
         "* You smile,[wait:5] void imitates your smile"}
         --[[elseif name == "Flirt" then
@@ -104,6 +110,7 @@ end
         return "* "
         end]]
         end
+    end
 
     
     return super.onAct(self,battler, name)

@@ -56,6 +56,22 @@
             "canTossLightWeapons": true,
             //"targetSystem": true,
             // End of config
-        }
+        },
+        "magical-glass": {
+        //"default_battle_system": ["undertale", true],
+            //"hp_gauge_length_cap": true,
+            "undertale_menu_display": true,
+            "light_battle_tp": false,
+            "mercy_messages": false,
+            "tired_messages": false,
+            "awake_messages": false,
+            "mercy_bar": false,
+            "enemy_bar_percentages": false,
+            "light_inventory_equipment_conversion": false,
+            "savepoint_style": "undertale",
+            "text_choicebox_sound": true,
+            "debug": true,
+            "undertale_movement_can_run": false
     }
+}
 }

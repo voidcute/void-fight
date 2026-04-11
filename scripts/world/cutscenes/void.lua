@@ -1,6 +1,6 @@
 return {
     meeting = function(cutscene)
-        cutscene:text("* Ball Club: Meet here!\n* Next meeting:\n* October 10th 10PM (or 10 AM)")  
+        cutscene:text("* Ball Club: Meet here!\n* Next meeting:\n* October 10th 10")  
         day = tonumber(os.date("%d"))
         month = tonumber(os.date("%m"))    
         hour = tonumber(os.date("%H"))

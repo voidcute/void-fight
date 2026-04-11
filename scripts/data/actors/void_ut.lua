@@ -43,14 +43,23 @@ function actor:init()
     self.light_battle_height = 66
 
     self:addLightBattlerPart("body", {
-        -- path, function that returns a path, or a function that returns a sprite object
-        -- if one's not defined, get the default animation
         ["create_sprite"] = function()
-            local sprite = Sprite(self.path.."/body")
-            sprite.layer = 500
-            sprite:slidePath({{0,0},{0,1},{1,0},{0,-1},{-1,0},{0,0}}, {speed = 0.2, loop = true, relative = true})
+            local sprite = Sprite(self.path.."/body", 0, 65)
+            sprite.origin_y = 1
             return sprite
         end,
+        ["init"] = function(part)
+            part.scale_direction = 0.01
+        end,
+        ["update"] = function(part)
+            if part.sprite.scale_y < 0.9 then
+                part.scale_direction = 0.01
+            end
+            if part.sprite.scale_y > 1.05 then
+                part.scale_direction = -0.01
+            end
+            part.sprite.scale_y = part.sprite.scale_y + (part.scale_direction * DTMULT)
+        end
     })
 
      self:addLightBattlerPart("eyes", {
@@ -64,14 +73,24 @@ function actor:init()
         end
     })
     
-     self:addLightBattlerPart("hat", {
-        -- path, function that returns a path, or a function that returns a sprite object
-        -- if one's not defined, get the default animation
+    self:addLightBattlerPart("hat", {
         ["create_sprite"] = function()
-            local sprite = Sprite(self.path.."/hat",0, 1)
-            sprite:slidePath({{0,0},{0,1},{1,0},{0,-1},{-1,0},{0,0}}, {speed = 0.2, loop = true, relative = true})
-            sprite.layer = 502
+            local sprite = Sprite(self.path.."/hat", 0, 65)
+            sprite.origin_y = 1
+            sprite.layer = 502     
             return sprite
+        end,
+        ["init"] = function(part)
+            part.scale_direction = 0.01
+        end,
+        ["update"] = function(part)
+            if part.sprite.scale_y < 0.9 then
+                part.scale_direction = 0.01
+            end
+            if part.sprite.scale_y > 1.05 then
+                part.scale_direction = -0.01
+            end
+            part.sprite.scale_y = part.sprite.scale_y + (part.scale_direction * DTMULT)
         end
     })
 
