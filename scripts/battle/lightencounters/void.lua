@@ -59,7 +59,12 @@ end
     function void:onTurnEnd()
     if  self.void.violence == false then
         self.void.turn_count = self.void.turn_count + 1
-    else 
+    elseif  self.void.violence == true then
+        if  self.void.turn_count < 11 then
+        self.void.turn_counted = self.void.turn_count 
+        self.void.turn_count = 11
+        end
+        self.void:registerAct("Apologize")
         self.void.violence = false  
     end
         

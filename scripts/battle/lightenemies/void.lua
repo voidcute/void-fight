@@ -15,6 +15,7 @@ function void:init()
     -- Enemy defense (usually 0)
     self.defense = 0
     self.turn_count = 1
+    self.turn_counted = 0
     -- Enemy reward
     self.money = 0
     self.experience = 0
@@ -52,6 +53,7 @@ function void:init()
     self.violence = false
     self.can_die = false
     self.checks = 0
+
 end
 
 
@@ -60,6 +62,7 @@ function void:hurt(amount, ...)
     self.violence = true
     super.hurt(self,100,...)
     elseif amount > 0 and self.health < 200 then
+    self.violence = true
     super.hurt(self,99,...)
     elseif amount == 0 then 
     super.hurt(self,0,...)
@@ -82,7 +85,12 @@ function void:hurt(amount, ...)
         self.checks =  self.checks + 1
         return "* void - ATK 100 DEF 100\n* This creature is definitely in the wrong time and space!"
         else if name == "Check" and self.checks >= 1 then
-        self.checks =  self.checks + 1    
+
+        self.checks =  self.checks + 1   
+        self:removeAct("Something")
+        self:registerAct("Flirt")
+        self:registerAct("Hug")
+        self:registerAct("Imitate")
         return "* void - ATK 100 DEF 100\n* Stereotypical: Curvaceously attractive, but no brains..."  
         
         elseif name == "Something" then
@@ -90,6 +98,11 @@ function void:hurt(amount, ...)
         "* You wave,[wait:5] void waves(?) back at",
         "* You say hello,[wait:5] void says hi back.",
         "* You smile,[wait:5] void imitates your smile"}
+        elseif name == "Apologize"  then
+        self.turn_count = self.turn_counted 
+        self:removeAct("Apologize")
+        return "* You apologized to void"
+
         --[[elseif name == "Flirt" then
         self.acted = true
         self.act1 = self.act1 + 1
@@ -103,9 +116,7 @@ function void:hurt(amount, ...)
         
        
         else
-        self:registerAct("Flirt")
-        self:registerAct("Hug")
-        self:registerAct("Imitate")
+
         self:removeAct("Something")
         return "* "
         end]]
