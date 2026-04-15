@@ -16,6 +16,22 @@ return{
     cutscene:battlerText(void,"huh, why are you looking\nat me like that.")
     cutscene:battlerText(void,"colors?.\nhmm, now that you \nmention it")
     end,
+    turn3 = function (cutscene)
+    end,
+    turn4 = function (cutscene)
+    end,
+    turn5 = function (cutscene)
+    end,
+    turn6 = function (cutscene)
+    end,
+    turn7 = function (cutscene)
+    end,
+    turn8 = function (cutscene)
+    end,
+    turn9 = function (cutscene)
+    end,
+    turn10 = function (cutscene)
+    end,
     hurt1 = function (cutscene)    
     void = cutscene:getCharacter("void")    
     body = void:getSpritePart("body")
@@ -30,13 +46,33 @@ return{
     eyes:setSprite("enemies/void_ut/eyes")  
     cutscene:battlerText(void, "aaaa.")
     end,
+    hurt3 = function (cutscene)
+        
+    end,
+    hurt4 = function (cutscene)
+        
+    end,
+    hurt5 = function (cutscene)
+        
+    end,
+    hurt6 = function (cutscene)
+        
+    end,
+    hurt7 = function (cutscene)
+        
+    end,
+    hurt8 = function (cutscene)
+        
+    end,
+    hurt9 = function (cutscene)
+        
+    end,
+
     die = function (cutscene,enemy)
     cutscene:battlerText(void, "aaaaa.")
 
     end,
     slime = function (cutscene)        
-    body:setSprite("enemies/void_ut/body_sweat")   
-    eyes:setSprite("enemies/void_ut/eyes_confused")
     cutscene:battlerText(void, "uh what?\nwhat did you just say???")  
 
     end

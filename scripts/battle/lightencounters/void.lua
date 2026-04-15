@@ -10,7 +10,6 @@ function void:init()
     -- hurt when encounter???
     frisk = Game.battle:getPartyBattler("frisk")
     frisk:hurt(0,true)
-
 end
 
     function void:onActionsEnd()
@@ -44,9 +43,6 @@ end
             return "void.die"
         end
 
-        elseif self.void.checks == 2 then
-            return "void.slime"
-
         elseif self.void.turn_count == 1 then
             return "void.turn1"
         elseif self.void.turn_count == 2 then
@@ -64,6 +60,7 @@ end
         self.void.turn_counted = self.void.turn_count 
         self.void.turn_count = 11
         end
+        self.void:removeAct("Apologize")
         self.void:registerAct("Apologize")
         self.void.violence = false  
     end

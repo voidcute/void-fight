@@ -11,7 +11,7 @@ function void:init()
     self.max_health = 1000
     self.health = 1000
     -- Enemy attack (determines bullet damage)
-    self.attack = 9
+    self.attack = 5
     -- Enemy defense (usually 0)
     self.defense = 0
     self.turn_count = 1
@@ -82,11 +82,11 @@ function void:hurt(amount, ...)
     function void:onAct(battler, name)
 
         if name == "Check" and self.checks == 0 then
-        self.checks =  self.checks + 1
+        self.checks =  1
         return "* void - ATK 100 DEF 100\n* This creature is definitely in the wrong time and space!"
-        else if name == "Check" and self.checks >= 1 then
-
-        self.checks =  self.checks + 1   
+        else if name == "Check" and self.checks == 1 then
+        self.checks =  2
+        Game.battle:startActCutscene("void", "slime")
         self:removeAct("Something")
         self:registerAct("Flirt")
         self:registerAct("Hug")
@@ -95,28 +95,25 @@ function void:hurt(amount, ...)
         
         elseif name == "Something" then
         return TableUtils.pick{
-        "* You wave,[wait:5] void waves(?) back at",
+        "* You wave,[wait:5] void waves(?) back at you.",
         "* You say hello,[wait:5] void says hi back.",
-        "* You smile,[wait:5] void imitates your smile"}
+        "* You smile,[wait:5] void imitates your smile."}
         elseif name == "Apologize"  then
         self.turn_count = self.turn_counted 
         self:removeAct("Apologize")
-        return "* You apologized to void"
-
+        return "* You apologized to void."
         --[[elseif name == "Flirt" then
         self.acted = true
         self.act1 = self.act1 + 1
 
         if self.act1 == 1 then
-            Game.battle:startActCutscene("void", "turn1")
+
         else
            return "*  " .. self.name .. " ."
         end
         
-        
        
         else
-
         self:removeAct("Something")
         return "* "
         end]]
