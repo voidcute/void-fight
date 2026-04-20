@@ -2,19 +2,26 @@ return{
     
     turn1 = function (cutscene)
     void = cutscene:getCharacter("void")  
+
     body = void:getSpritePart("body")
-    body:setSprite("enemies/void_ut/body_sweat")   
     eyes = void:getSpritePart("eyes")
 
+    body:setSprite("enemies/void_ut/body_sweat")  
     eyes:setSprite("enemies/void_ut/eyes_sweat")
     cutscene:battlerText(void,"ah, sorry.\ni thought you was a ball\nso i bumped into you.")
     cutscene:battlerText(void,"what are you doing here?\ndidn't you read the sign?") 
     end,
     turn2 = function (cutscene)
-    body:setSprite("enemies/void_ut/body")  
-    eyes:setSprite("enemies/void_ut/eyes")
     cutscene:battlerText(void,"huh, why are you looking\nat me like that.")
-    cutscene:battlerText(void,"colors?.\nhmm, now that you \nmention it")
+    cutscene:battlerText(void,"colors?.\nhmm, now that you \nmention it.")
+
+    cutscene:wait(1)
+    eyes.visible = false
+    cutscene:battlerText(void,"...")
+    eyes.visible = true
+    cutscene:wait(1)
+    eyes:setSprite("enemies/void_ut/eyes_confused")
+    cutscene:battlerText(void,"where am i???.")
     end,
     turn3 = function (cutscene)
     end,
@@ -72,9 +79,8 @@ return{
     cutscene:battlerText(void, "aaaaa.")
 
     end,
-    slime = function (cutscene)        
+    slime = function (cutscene)      
     cutscene:battlerText(void, "uh what?\nwhat did you just say???")  
-
     end
 
             

@@ -18,12 +18,10 @@ function actor:init()
 
     -- Whether this actor flips horizontally (optional, values are "right" or "left", indicating the flip direction)
     self.flip = nil
-
     -- Path to this actor's sprites (defaults to "")
     self.path = "enemies/void_ut"
     -- This actor's default sprite or animation, relative to the path (defaults to "")
     self.default = "idle"
-
     -- Sound to play when this actor speaks (optional)
     self.voice = "void_5"
     -- Path to this actor's portrait for dialogue (optional)
@@ -59,7 +57,8 @@ function actor:init()
                 part.scale_direction = -0.01
             end
             part.sprite.scale_y = part.sprite.scale_y + (part.scale_direction * DTMULT)
-        end
+
+end
     })
 
      self:addLightBattlerPart("eyes", {

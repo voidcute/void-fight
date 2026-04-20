@@ -85,14 +85,15 @@ function void:hurt(amount, ...)
         self.checks =  1
         return "* void - ATK 100 DEF 100\n* This creature is definitely in the wrong time and space!"
         else if name == "Check" and self.checks == 1 then
-        self.checks =  2
-        Game.battle:startActCutscene("void", "slime")
+        self.checks = 2   
         self:removeAct("Something")
         self:registerAct("Flirt")
         self:registerAct("Hug")
         self:registerAct("Imitate")
         return "* void - ATK 100 DEF 100\n* Stereotypical: Curvaceously attractive, but no brains..."  
-        
+        elseif name == "Check" and self.checks == 2 then
+        self.checks = 3 
+        return "* void - ATK 100 DEF 100\n* Stereotypical: Curvaceously attractive, but no brains..."  
         elseif name == "Something" then
         return TableUtils.pick{
         "* You wave,[wait:5] void waves(?) back at you.",
@@ -126,6 +127,7 @@ function void:hurt(amount, ...)
 end
     -- first 3 turns
     function void:getEncounterText()
+        
     if self.turn_count == 2 then
     return "* void wonders why are you here."
     elseif self.turn_count == 3 then

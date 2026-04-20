@@ -42,7 +42,8 @@ end
         elseif self.void.health <= 100 then
             return "void.die"
         end
-
+        elseif self.void.checks == 2 then
+        return "void.slime"
         elseif self.void.turn_count == 1 then
             return "void.turn1"
         elseif self.void.turn_count == 2 then
@@ -51,7 +52,7 @@ end
     end
 
     end
-    
+    -- worst code of all time ??????
     function void:onTurnEnd()
     if  self.void.violence == false then
         self.void.turn_count = self.void.turn_count + 1
