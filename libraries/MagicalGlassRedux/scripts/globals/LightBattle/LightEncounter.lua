@@ -6,8 +6,8 @@ function LightEncounter:init()
 
     -- Is an "event" encounter (can't attack, only hp and lv are shown. A wave is started as soon as the battle starts)
     self.event = false
-    self.event_waves = {"_empty"}
-    
+    self.event_waves = { "_empty" }
+
     -- A table defining the default location of where the soul should move to
     -- during the battle transition. If this is nil, it will move to the default location.
     self.soul_target = nil
@@ -33,22 +33,22 @@ function LightEncounter:init()
 
     -- A copy of battle.defeated_enemies, used to determine how an enemy has been defeated.
     self.defeated_enemies = nil
-    
+
     -- Whether Karma (KR) UI changes will appear.
     self.karma_mode = false
-    
+
     -- Whether "* But it refused." will replace the game over and revive the player.
     self.invincible = false
 
     -- Whether the flee command is available at the mercy button
     self.can_flee = Game:isLight()
-    
+
     -- Amount of times the player used the yellow soul's BIGSHOT cheat
     self.yellow_funnycheat = 0
 
     -- The chance of successful flee (increases by 10 every turn)
     self.flee_chance = 50
-    
+
     -- A random flee message that appears when you manage to run away.
     self.flee_messages = {}
 
@@ -155,10 +155,10 @@ end
 function LightEncounter:getFleeMessage()
     if #self.flee_messages == 0 then
         local flee_messages = {
-            "* I'm outta here.", -- 1/20
-            "* I've got better to do.", --1/20
-            "* Don't slow me down.", --1/20
-            "* Escaped..." --17/20
+            "* I'm outta here.", -- 1 / 20
+            "* I've got better to do.", --1 / 20
+            "* Don't slow me down.", --1 / 20
+            "* Escaped..." --17 / 20
         }
         return flee_messages[math.min(MathUtils.round(MathUtils.random(1, 20)), #flee_messages)]
     end
@@ -232,15 +232,15 @@ function LightEncounter:createSoul(x, y, color)
 end
 
 function LightEncounter:setFlag(flag, value)
-    Game:setFlag("lightencounter#"..self.id..":"..flag, value)
+    Game:setFlag("lightencounter#" .. self.id .. ":" .. flag, value)
 end
 
 function LightEncounter:getFlag(flag, default)
-    return Game:getFlag("lightencounter#"..self.id..":"..flag, default)
+    return Game:getFlag("lightencounter#" .. self.id .. ":" .. flag, default)
 end
 
 function LightEncounter:addFlag(flag, amount)
-    return Game:addFlag("lightencounter#"..self.id..":"..flag, amount)
+    return Game:addFlag("lightencounter#" .. self.id .. ":" .. flag, amount)
 end
 
 function LightEncounter:hasReducedTension()
@@ -269,7 +269,7 @@ end
 function LightEncounter:createBackground()
     if self.background then
         local background = Sprite("ui/lightbattle/backgrounds/standard", 0, 0, SCREEN_HEIGHT, SCREEN_WIDTH)
-        background:setColor(Game:isLight() and {34 / 255, 177 / 255, 76 / 255, 1} or {175 / 255, 35 / 255, 175 / 255, 1})
+        background:setColor(Game:isLight() and { 34 / 255, 177 / 255, 76 / 255, 1 } or { 175 / 255, 35 / 255, 175 / 255, 1 })
         background:setParallax(0, 0)
         background.layer = LIGHT_BATTLE_LAYERS["background"]
         background.debug_select = false

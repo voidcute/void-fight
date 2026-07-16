@@ -2,7 +2,7 @@ local character, super = Class("susie", true)
 
 function character:init()
     super.init(self)
-    
+
     -- Light world portrait in the menu (saved to the save file)
     self.lw_portrait = Game:getConfig("susieStyle") == 1 and "face/susie/bangs_smile" or "face/susie/smile"
 
@@ -14,9 +14,9 @@ function character:init()
         defense = 10,
         magic = 1
     }
-    
+
     -- The color of this character's soul (optional, defaults to red)
-    self.soul_color = {1, 1, 1}
+    self.soul_color = { 1, 1, 1 }
     -- Whether the soul will be upside-down or not (optional)
     self.monster_soul = true
 
@@ -42,9 +42,20 @@ end
 
 function character:onLightTurnStart(battler)
     super.onLightTurnStart(self, battler)
-    
+
     if self:getFlag("auto_attack", false) then
-        Game.battle:pushForcedAction(battler, "AUTOATTACK", Game.battle:getActiveEnemies()[1], nil, {points = 150})
+        Game.battle:pushForcedAction(battler, "AUTOATTACK", Game.battle:getActiveEnemies()[1], nil, { points = 150 })
+    end
+end
+
+function character:onLightAttackHit(enemy, damage)
+    super.onLightAttackHit(self, enemy, damage)
+
+    if not Game:isLight() then
+        if damage > 0 then
+            Assets.playSound("impact", 0.8)
+            Game.battle:shake(true)
+        end
     end
 end
 

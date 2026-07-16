@@ -9,12 +9,13 @@ function LightArena:init(x, y, shape)
     self.y = math.floor(self.y)
 
     if Game:isLight() then
-        self.color = {1, 1, 1}
+        self.color = { 1, 1, 1 }
     else
-        self.color = {0, 0.75, 0}
+        self.color = { 0, 0.75, 0 }
     end
-    self.bg_color = {0, 0, 0}
+    self.bg_color = { 0, 0, 0 }
 
+    -- Default size
     self.home_x = self.x
     self.home_y = self.y
     self.init_width = 565
@@ -23,7 +24,7 @@ function LightArena:init(x, y, shape)
     self.collider = ColliderGroup(self)
 
     self.line_width = 5 -- must call setShape again if u change this
-    self:setShape(shape or {{0, 0}, {self.init_width, 0}, {self.init_width, self.init_height}, {0, self.init_height}})
+    self:setShape(shape or { { 0, 0 }, { self.init_width, 0 }, { self.init_width, self.init_height }, { 0, self.init_height } })
 
     self.sprite = LightArenaSprite(self)
     self.sprite.outline = false
@@ -46,6 +47,7 @@ function LightArena:init(x, y, shape)
     self.target_position_callback = nil
 end
 
+-- Hide the arena
 function LightArena:disable()
     self.collidable = false
     self.active = false
@@ -53,6 +55,7 @@ function LightArena:disable()
     self.sprite_border.visible = false
 end
 
+-- Show the arena
 function LightArena:enable()
     self.collidable = true
     self.active = true
@@ -61,13 +64,13 @@ function LightArena:enable()
 end
 
 function LightArena:setSize(width, height)
-    self:setShape{{0, 0}, {width, 0}, {width, height}, {0, height}}
+    self:setShape{ { 0, 0 }, { width, 0 }, { width, height }, { 0, height } }
 end
 
 function LightArena:setShape(shape)
     self.shape = TableUtils.copy(shape, true)
     self.processed_shape = TableUtils.copy(shape, true)
-    
+
     local min_x, min_y, max_x, max_y
     for _, point in ipairs(self.shape) do
         min_x, min_y = math.min(min_x or point[1], point[1]), math.min(min_y or point[2], point[2])
@@ -90,14 +93,14 @@ function LightArena:setShape(shape)
 
     self.triangles = love.math.triangulate(Utils.unpackPolygon(self.shape))
 
-    self.border_line = {Utils.unpackPolygon(Utils.getPolygonOffset(self.shape, self.line_width/2))}
+    self.border_line = { Utils.unpackPolygon(Utils.getPolygonOffset(self.shape, self.line_width/2)) }
 
     self.clockwise = Utils.isPolygonClockwise(self.shape)
 
     self.area_collider = PolygonCollider(self, TableUtils.copy(shape, true))
 
     self.collider.colliders = {}
-    
+
     -- Makes arena collision accurate to Undertale
     for i, v in ipairs(Utils.getPolygonEdges(self.shape)) do
         if #Utils.getPolygonEdges(self.shape) == 4 then
@@ -125,11 +128,11 @@ function LightArena:setShape(shape)
 end
 
 function LightArena:setBorderColor(r, g, b, a)
-    self.color = {r, g, b, a or 1}
+    self.color = { r, g, b, a or 1 }
 end
 
 function LightArena:setBackgroundColor(r, g, b, a)
-    self.bg_color = {r, g, b, a or 1}
+    self.bg_color = { r, g, b, a or 1 }
 end
 
 function LightArena:getBorderColor()
@@ -161,7 +164,7 @@ end
 function LightArena:getOffset()
     local x, y = self:getPosition()
     x, y = x - 319, y - 320
-    
+
     return x, y
 end
 
@@ -268,7 +271,7 @@ function LightArena:draw()
     self.sprite_border.width = self.sprite.width
     self.sprite_border.height = self.sprite.height
     self.sprite_border.rotation = self.rotation
-    
+
     super.draw(self)
 
     if DEBUG_RENDER and self.collider then

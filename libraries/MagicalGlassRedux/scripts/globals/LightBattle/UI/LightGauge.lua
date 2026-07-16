@@ -3,7 +3,7 @@ local LightGauge, super = Class(Object)
 function LightGauge:init(type, amount, x, y, enemy, color)
     super.init(self, x, y)
 
-    self.layer = LIGHT_BATTLE_LAYERS["damage_numbers"]
+    self.layer = LIGHT_BATTLE_LAYERS["damage_numbers"] - 0.5
     self.timer = Timer()
     self:addChild(self.timer)
 
@@ -20,7 +20,14 @@ function LightGauge:init(type, amount, x, y, enemy, color)
         self.color = color
     end
 
+    for _, gauge in ipairs(Game.stage:getObjects(LightGauge)) do
+        if gauge.enemy == enemy then
+            gauge:remove()
+        end
+    end
+
     self.enemy = enemy
+
     self.width, self.height = TableUtils.unpack(self.enemy:getGaugeSize())
 
     self.amount = math.abs(tonumber(amount))
@@ -30,17 +37,18 @@ function LightGauge:init(type, amount, x, y, enemy, color)
         self.real_value = self.enemy.health
         self.max_value = self.enemy.max_health
         self.extra_width = (self.width / self.max_value)
-        self.reversed = (StringUtils.sub(tostring(amount), 1, 1) == "+" or amount < 0) and true or false -- heal
+        self.reversed = (StringUtils.sub(tostring(amount), 1, 1) == "+" or amount < 0) and true or false -- Heal
     elseif self.type == "mercy" then
         self.value = self.enemy.mercy
         self.real_value = self.enemy.mercy
         self.max_value = 100
         self.extra_width = (self.width / self.max_value)
-        self.reversed = amount >= 0 and true or false -- allows for mercy reduction
+        self.reversed = amount >= 0 and true or false -- Allows for mercy reduction
     end
-    
+
+    -- Update the value every 2 frames, just like in Undertale
     if not Kristal.getLibConfig("magical-glass", "enemy_gauge_smoothness") and self.max_value >= self.real_value then
-        self.timer:every(2/30, function()
+        self.timer:every(2 / 30, function()
             self:setValue()
         end)
     end
@@ -48,7 +56,8 @@ end
 
 function LightGauge:update()
     super.update(self)
-    
+
+    -- Update the value on every frame, just like in Deltatraveler
     if Kristal.getLibConfig("magical-glass", "enemy_gauge_smoothness") and self.max_value >= self.real_value then
         self:setValue()
     end
@@ -56,11 +65,12 @@ end
 
 function LightGauge:draw()
     super.draw(self)
-    
+
     Draw.setColor(MG_PALETTE["gauge_outline"])
     love.graphics.rectangle("fill", -1, 7, self.max_value * self.extra_width + 2, self.height + 2)
     Draw.setColor(MG_PALETTE["gauge_bg"])
     love.graphics.rectangle("fill", 0, 8, self.max_value * self.extra_width, self.height)
+
     if self.value > 0 then
         Draw.setColor(self.color)
         love.graphics.rectangle("fill", 0, 8, self.value * self.extra_width, self.height)

@@ -2,8 +2,8 @@ local spell, super = Class("dual_heal", true)
 
 function spell:init()
     super.init(self)
-    
-    self.check = {"Heavenly light restores a little HP to\nall party members.", "* Depends on Magic."}
+
+    self.check = { "Heavenly light restores a little HP to\nall party members.", "* Depends on Magic." }
 end
 
 function spell:onLightCast(user, target)

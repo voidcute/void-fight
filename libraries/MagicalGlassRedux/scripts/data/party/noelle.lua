@@ -2,7 +2,7 @@ local character, super = Class("noelle", true)
 
 function character:init()
     super.init(self)
-    
+
     self:setDarkTransitionActor("noelle_dark_transition")
 
     -- Light world portrait in the menu (saved to the save file)
@@ -16,16 +16,16 @@ function character:init()
         defense = 10,
         magic = 2
     }
-    
+
     -- The color of this character's soul (optional, defaults to red)
-    self.soul_color = {1, 1, 1}
+    self.soul_color = { 1, 1, 1 }
     -- Whether the soul will be upside-down or not (optional)
     self.monster_soul = true
 
     -- Default light world equipment item IDs (saves current equipment)
-    self.lw_weapon_default = "mg/ring"
+    self.lw_weapon_default = "mg/snowflake_ring"
     self.lw_armor_default = "light/wristwatch"
-    
+
     -- Increased Base stats & Current health (saved to the save file)
     if Game.chapter == 1 then
         self.health = 60
@@ -58,7 +58,7 @@ function character:getLightStatText()
     if self:checkWeapon("mg/thorn") then
         return "Trance"
     end
-    
+
     return super.getLightStatText(self)
 end
 

@@ -16,7 +16,7 @@ function LightSoul:init(x, y, color)
     self.sprite.inherit_color = true
     self:addChild(self.sprite)
 
-    self.debug_rect = {-8, -8, 16, 16}
+    self.debug_rect = { -8, -8, 16, 16 }
 
     self.width = self.sprite.width
     self.height = self.sprite.height
@@ -45,7 +45,7 @@ function LightSoul:init(x, y, color)
     self.target_x = x
     self.target_y = y
     self.timer = 0
-    self.transitioning = false
+    self.transitioning = Game.battle:getState() ~= "DEFENDING" or not self.visible
     self.speed = Game.battle.soul_speed
 
     self.inv_timer = 0
@@ -67,14 +67,13 @@ function LightSoul:init(x, y, color)
     self.noclip = false
     self.slope_correction = true
 
-    self.transition_destroy = false
-
-    self.shard_x_table = {-2, 0, 2, 8, 10, 12}
-    self.shard_y_table = {0, 3, 6}
+    self.shard_x_table = { -2, 0, 2, 8, 10, 12 }
+    self.shard_y_table = { 0, 3, 6 }
 
     self.can_move = true
     self.allow_focus = true
-    
+
+    -- You can only graze if the tension bar is enabled
     self.graze_collider.collidable = Game.battle.tension
 end
 
@@ -104,31 +103,13 @@ function LightSoul:shatter(count)
         shard.physics.speed = 7
         shard.physics.gravity = 0.2
         shard.layer = LIGHT_BATTLE_LAYERS["above_arena_border"] + 5
-        shard:play(5/30)
+        shard:play(5 / 30)
         table.insert(self.shards, shard)
         self.stage:addChild(shard)
     end
 
     self:remove()
     Game.battle.soul = nil
-end
-
-function LightSoul:transitionTo(x, y, should_destroy)
-    if self.graze_sprite then
-        self.graze_sprite.timer = 0
-        self.graze_sprite.visible = false
-    end
-    self.transitioning = true
-    self.original_x = self.x
-    self.original_y = self.y
-    self.target_x = x
-    self.target_y = y
-    self.timer = 0
-    if should_destroy ~= nil then
-        self.transition_destroy = should_destroy
-    else
-        self.transition_destroy = false
-    end
 end
 
 function LightSoul:isMoving()
@@ -344,7 +325,9 @@ end
 
 function LightSoul:update()
     self.speed = Game.battle.soul_speed
-    
+    -- Whether the soul isn't in a battle state
+    self.transitioning = Game.battle:getState() ~= "DEFENDING" or not self.visible
+
     -- Input movement
     if self.can_move then
         self:doMovement()
@@ -378,7 +361,7 @@ function LightSoul:update()
                 else
                     Assets.playSound("graze")
                     Game:giveTension(bullet:getGrazeTension() * self.graze_tp_factor)
-                    if Game.battle.wave_timer < Game.battle.wave_length - (1/3) then
+                    if Game.battle.wave_timer < Game.battle.wave_length - (1 / 3) then
                         Game.battle.wave_timer = Game.battle.wave_timer + ((bullet.time_bonus / 30) * self.graze_time_factor)
                     end
                     self.graze_sprite.timer = 1 / 3
@@ -394,9 +377,10 @@ function LightSoul:update()
         self:onCollide(bullet)
     end
 
+    -- Invulnerability frames flash faster in Undertale
     if self.inv_timer > 0 then
         self.inv_flash_timer = self.inv_flash_timer + DT
-        local amt = math.floor(self.inv_flash_timer / (2 / 30)) -- flashing is faster in ut
+        local amt = math.floor(self.inv_flash_timer / (2 / 30))
         if (amt % 2) == 1 then
             self.sprite:setColor(0.5, 0.5, 0.5)
         else

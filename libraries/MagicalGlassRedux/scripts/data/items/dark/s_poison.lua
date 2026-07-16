@@ -1,7 +1,7 @@
 local item, super = Class("s_poison", true)
 
 function item:getLightBattleText(user, target)
-    return "* "..target.chara:getNameOrYou().." administered "..self:getUseName().."."
+    return "* " .. target.chara:getNameOrYou() .. " administered " .. self:getUseName() .. "."
 end
 
 function item:onLightBattleUse(user, target)
@@ -13,7 +13,7 @@ function item:onLightBattleUse(user, target)
     end
 
     local poison_left = self.battle_poison_amount
-    target.poison_effect_timer = Game.battle.timer:every(10/30, function()
+    target.poison_effect_timer = Game.battle.timer:every(10 / 30, function()
         if poison_left == 0 then
             return false
         end
@@ -25,8 +25,8 @@ function item:onLightBattleUse(user, target)
             return false
         end
     end)
-    Game.battle:battleText(self:getLightBattleText(user, target).."\n"..StringUtils.sub(self:getLightBattleHealingText(user, target, self.battle_heal_amount), 1, -2).."?"
-    .."\n* "..target.chara:getNameOrYou().." "..(select(2, target.chara:getNameOrYou()) and "are" or "is").." poisoned.")
+    Game.battle:battleText(self:getLightBattleText(user, target) .. "\n" .. StringUtils.sub(self:getLightBattleHealingText(user, target, self.battle_heal_amount), 1, -2) .. "?"
+    .."\n* " .. target.chara:getNameOrYou() .. " " .. (select(2, target.chara:getNameOrYou()) and "are" or "is") .. " poisoned.")
 end
 
 function item:battleUseSound(user, target)

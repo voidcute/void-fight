@@ -4,7 +4,7 @@ function item:init()
     super.init(self)
 
     self.temp_equipabble = true
-    Game.world.timer:after(1/30, function()
+    Game.world.timer:after(1 / 30, function()
         self.temp_equipabble = nil
     end)
 end

@@ -7,7 +7,7 @@ function Mod:preUpdate()
 end
 function Mod:load(data, new_file)
     if new_file then
-        Game.world:registerCall("Dimensional Box A", "cell.box_a")
-        Game.world:registerCall("Dimensional Box B", "cell.box_b")
+        Game.world:registerCall("Dimensional Box A", "mg_cell.box_a")
+        Game.world:registerCall("Dimensional Box B", "mg_cell.box_b")
     end
 end

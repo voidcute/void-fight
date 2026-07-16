@@ -18,14 +18,14 @@ function character:init()
     -- Determines which character the soul comes from (higher number = higher priority)
     self.soul_priority = 2
     -- The color of this character's soul (optional, defaults to red)
-    self.soul_color = {1, 0, 0}
+    self.soul_color = { 1, 0, 0 }
     -- Whether the soul will be upside-down or not (optional)
     self.monster_soul = false
 
     -- Whether the party member can act / use spells
     self.has_act = true
     self.has_spells = false
-    
+
     -- Use Undertale Movement
     self.undertale_movement = true
 
@@ -59,32 +59,32 @@ function character:init()
     self.lw_armor_default = "undertale/bandage"
 
     -- Character color (for action box outline and hp bar)
-    self.color = {170/255, 1, 0}
+    self.color = { 170 / 255, 1, 0 }
     -- Damage color (for the number when attacking enemies) (defaults to the main color)
-    self.dmg_color = {170/255, 1, 0}
+    self.dmg_color = { 170 / 255, 1, 0 }
     -- Attack bar color (for the target bar used in attack mode) (defaults to the main color)
-    self.attack_bar_color = {170/255, 1, 0}
+    self.attack_bar_color = { 170 / 255, 1, 0 }
     -- Attack box color (for the attack area in attack mode) (defaults to darkened main color)
-    self.attack_box_color = {85/255, 1, 0}
+    self.attack_box_color = { 85 / 255, 1, 0 }
     -- X-Action color (for the color of X-Action menu items) (defaults to the main color)
-    self.xact_color = {170/255, 1, 0}
-    
+    self.xact_color = { 170 / 255, 1, 0 }
+
     -- Light Battle Colors
     self.light_color = COLORS.white
     self.light_dmg_color = COLORS.red
     self.light_miss_color = COLORS.silver
-    self.light_attack_color = {1, 105/255, 105/255}
+    self.light_attack_color = { 1, 105 / 255, 105 / 255 }
     self.light_multibolt_attack_color = COLORS.white
     self.light_attack_bar_color = COLORS.white
     self.light_xact_color = COLORS.white
-    
+
     -- Dark Battle Colors in the light world
-    self.dmg_color_lw = {1, 0.3, 0.3}
+    self.dmg_color_lw = { 1, 0.3, 0.3 }
     self.attack_bar_color_lw = COLORS.white
     self.attack_box_color_lw = COLORS.silver
     self.xact_color_lw = COLORS.white
-    
-    
+
+
     -- Head icon in the equip / power menu
     self.menu_icon = "party/frisk/head"
     -- Path to head icons used in battle
@@ -100,7 +100,7 @@ function character:init()
     self.attack_pitch = 1
 
     -- Battle position offset (optional)
-    self.battle_offset = {-4 + 9, -3 + 12}
+    self.battle_offset = { -4 + 9, -3 + 12 }
     -- Head icon position offset (optional)
     self.head_icon_offset = nil
     -- Menu icon position offset (optional)
@@ -109,7 +109,7 @@ function character:init()
     -- Message shown on gameover (optional)
     self.gameover_message = nil
     self.force_gameover_message = true
-    
+
     -- Character flags (saved to the save file)
     self.flags = {
         ["player_name"] = false,
@@ -153,8 +153,8 @@ function character:getGameOverMessage(main)
     if self.id ~= Game:getSoulPartyMember().id then
         return nil
     end
-    local determined = main:getName().."![wait:10]\nStay determined..."
-    return TableUtils.pick({{"You cannot give\nup just yet...", determined}, {"You're going to\nbe alright!", determined}, {"It cannot end\nnow!", determined}, {"Don't lose hope!", determined}, {"Our fate rests\nupon you...", determined}})
+    local determined = main:getName() .. "![wait:10]\nStay determined..."
+    return TableUtils.pick({ { "You cannot give\nup just yet...", determined }, { "You're going to\nbe alright!", determined }, { "It cannot end\nnow!", determined }, { "Don't lose hope!", determined }, { "Our fate rests\nupon you...", determined } })
 end
 
 function character:getBattleOffset()

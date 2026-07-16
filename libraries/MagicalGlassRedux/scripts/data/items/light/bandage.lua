@@ -42,7 +42,7 @@ function item:init()
     self.world_heal_amounts = {}
     -- Amount this item heals for specific characters in battle (optional)
     self.battle_heal_amounts = {}
-    
+
     -- Whether this equipment item can convert on light change
     self.equip_can_convert = true
 end
@@ -79,7 +79,7 @@ function item:getLightBattleText(user, target)
     if target.chara.id == Game.battle.party[1].chara.id then
         return "* You re-applied the bandage."
     else
-        return "* "..target.chara:getName().." applied the bandage."
+        return "* " .. target.chara:getName() .. " applied the bandage."
     end
 end
 
@@ -95,7 +95,7 @@ function item:onLightBattleUse(user, target)
         end
     end
     target:heal(amount)
-    Game.battle:battleText(self:getLightBattleText(user, target).."\n"..self:getLightBattleHealingText(user, target, amount))
+    Game.battle:battleText(self:getLightBattleText(user, target) .. "\n" .. self:getLightBattleHealingText(user, target, amount))
 end
 
 function item:onBattleUse(user, target)

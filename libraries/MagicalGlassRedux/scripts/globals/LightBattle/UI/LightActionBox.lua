@@ -33,24 +33,26 @@ function LightActionBox:createButtons()
 
     self.buttons = {}
 
-    local btn_types = {"fight", "act", "magic", "item", "mercy"} -- There's also "defend" and "spare" as a seperated buttons instead of being part of "mercy"
+    -- There's also "defend" and "spare" as a seperated buttons instead of being part of 'mercy'
+    local btn_types = { "fight", "act", "magic", "item", "mercy" }
 
     if not self.battler.chara:hasAct() then TableUtils.removeValue(btn_types, "act") end
     if not self.battler.chara:hasSpells() then TableUtils.removeValue(btn_types, "magic") end
 
-    for lib_id,_ in Kristal.iterLibraries() do
+    for lib_id, _ in Kristal.iterLibraries() do
         btn_types = Kristal.libCall(lib_id, "getLightActionButtons", self.battler, btn_types) or btn_types
     end
     btn_types = Kristal.modCall("getLightActionButtons", self.battler, btn_types) or btn_types
-    
+
+    -- Better positioning of buttons when having less than 4
     if #btn_types == 1 then
-        btn_types = {false, false, btn_types[1], false, false}
+        btn_types = { false, false, btn_types[1], false, false }
     elseif #btn_types == 2 then
-        btn_types = {false, btn_types[1], false, btn_types[2], false}
+        btn_types = { false, btn_types[1], false, btn_types[2], false }
     elseif #btn_types == 3 then
-        btn_types = {btn_types[1], false, btn_types[2], false, btn_types[3]}
+        btn_types = { btn_types[1], false, btn_types[2], false, btn_types[3] }
     end
-    
+
     local function x_position(index)
         local x = 0
         if #btn_types == 4 then

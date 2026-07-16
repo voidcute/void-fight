@@ -2,13 +2,13 @@ local spell, super = Class("ice_shock", true)
 
 function spell:init()
     super.init(self)
-    
+
     self.check = "Deals magical ice damage to one enemy."
 end
 
 function spell:getTPCost(chara)
     local cost = super.getTPCost(self, chara)
-    
+
     if chara and chara:checkWeapon("mg/thorn") then
         cost = MathUtils.round(cost / 2)
     end

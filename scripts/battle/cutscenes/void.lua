@@ -12,18 +12,10 @@ return{
     cutscene:battlerText(void,"what are you doing here?\ndidn't you read the sign?") 
     end,
     turn2 = function (cutscene)
-    cutscene:battlerText(void,"huh, why are you looking\nat me like that.")
-    cutscene:battlerText(void,"colors?.\nhmm, now that you \nmention it.")
-
-    cutscene:wait(1)
-    eyes.visible = false
-    cutscene:battlerText(void,"...")
-    eyes.visible = true
-    cutscene:wait(1)
-    eyes:setSprite("enemies/void_ut/eyes_confused")
-    cutscene:battlerText(void,"where am i???.")
+    cutscene:battlerText(void,"hmm,[wait:5] you are a human right?")    
     end,
     turn3 = function (cutscene)
+
     end,
     turn4 = function (cutscene)
     end,
@@ -54,6 +46,7 @@ return{
     cutscene:battlerText(void, "aaaa.")
     end,
     hurt3 = function (cutscene)
+        
         
     end,
     hurt4 = function (cutscene)

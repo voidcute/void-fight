@@ -6,11 +6,9 @@ function Lib:cleanup()
     MG_GAMEOVERS             = nil
     LIGHT_BATTLE_LAYERS      = nil
     LIGHT_SHOP_LAYERS        = nil
-    
-    Textbox.REACTION_X_BATTLE = ORIG_REACTION_X_BATTLE
-    Textbox.REACTION_Y_BATTLE = ORIG_REACTION_Y_BATTLE
-    ORIG_REACTION_X_BATTLE = nil
-    ORIG_REACTION_Y_BATTLE = nil
+
+    Textbox.REACTION_X_BATTLE = self.ORIG_REACTION_X_BATTLE
+    Textbox.REACTION_Y_BATTLE = self.ORIG_REACTION_Y_BATTLE
 end
 
 function Lib:save(data)
@@ -27,20 +25,15 @@ function Lib:save(data)
     data.magical_glass["rearrange_cell_calls"] = Lib.rearrange_cell_calls
     data.magical_glass["game_overs"] = Lib.game_overs
     MG_GAMEOVERS = 0
-    
+
     data.calls = Game.world.calls
-    
-    data.light_recruits_data = {}
-    for k, v in pairs(Game.light_recruits_data) do
-        data.light_recruits_data[k] = v:save()
-    end
 end
 
 function Lib:load(data, new_file)
     data.magical_glass = data.magical_glass or {}
     Lib.kills = data.magical_glass["kills"] or 0
     Lib.serious_mode = data.magical_glass["serious_mode"] or false
-    Lib.spare_color = data.magical_glass["spare_color"] or {COLORS.yellow, "YELLOW"}
+    Lib.spare_color = data.magical_glass["spare_color"] or { COLORS.yellow, "YELLOW" }
     Lib.in_light_shop = data.magical_glass["in_light_shop"] or false
     Lib.last_shop_world_type = data.magical_glass["last_shop_world_type"]
     Lib.current_battle_system = data.magical_glass["current_battle_system"] or nil
@@ -48,21 +41,12 @@ function Lib:load(data, new_file)
     Lib.light_battle_shake_text = data.magical_glass["light_battle_shake_text"] or 0
     Lib.rearrange_cell_calls = data.magical_glass["rearrange_cell_calls"] or false
     Lib.game_overs = MG_GAMEOVERS_TEMP and (MG_GAMEOVERS_TEMP + MG_GAMEOVERS) or data.magical_glass["game_overs"] and (data.magical_glass["game_overs"] + MG_GAMEOVERS) or MG_GAMEOVERS or 0
-    
+
     Game.world.calls = {}
     if data.calls then
         Game.world.calls = data.calls
     end
-    
-    Lib:initLightRecruits()
-    if data.light_recruits_data then
-        for k, v in pairs(data.light_recruits_data) do
-            if Game.light_recruits_data[k] then
-                Game.light_recruits_data[k]:load(v)
-            end
-        end
-    end
-    
+
     if new_file then
         Lib.initialize_armor_conversion = true
         if not Kristal.getLibConfig("magical-glass", "item_conversion") then
@@ -74,9 +58,10 @@ function Lib:load(data, new_file)
             if not party.lw_stats["magic"] then
                 party.lw_stats["magic"] = 0
             end
-            
+
             -- Fixes an issue with equipment for party members which were created after loading a save
             if party.mg_initialized == false then
+                -- Fixes an issue where starting in the dark world and then taking off your convertable dark armor wouldn't set your light armor to the bandage
                 if Kristal.getLibConfig("magical-glass", "equipment_conversion") then
                     for i = 1, 2 do
                         if party.equipped.armor[i] and party.equipped.armor[i]:convertToLightEquip(party) == party.lw_armor_default then
@@ -85,13 +70,15 @@ function Lib:load(data, new_file)
                         end
                     end
                 end
+
+                -- Fixes an issue where the party member would spawn with dark equipment in the light world
                 if Game:isLight() then
                     local last_weapon = party:getWeapon() and party:getWeapon().id or false
-                    local last_armors = {party:getArmor(1) and party:getArmor(1).id or false, party:getArmor(2) and party:getArmor(2).id or false}
-                    
+                    local last_armors = { party:getArmor(1) and party:getArmor(1).id or false, party:getArmor(2) and party:getArmor(2).id or false }
+
                     party:setFlag("dark_weapon", last_weapon)
                     party:setFlag("dark_armors", last_armors)
-                    
+
                     party:setWeapon(party.lw_weapon_default)
                     party:setArmor(1, party.lw_armor_default)
                     party:setArmor(2, nil)
@@ -99,23 +86,70 @@ function Lib:load(data, new_file)
             end
         end
     end
-    
+
+    -- Warn the creator if there's an item name which cannot fit in the light battle menu
     if Kristal.getLibConfig("magical-glass", "debug") then
         for item, _ in pairs(Registry.items) do
             local item = Registry.createItem(item)
             if item.type == "item" and #item:getShortName() > 11 then
                 Kristal.Console:warn("The item \"" .. item.id .. "\" has beyond 11 characters in its short name")
-            end 
+            end
         end
     end
 end
 
 function Lib:preInit()
+    -- Game overs counter
     MG_GAMEOVERS = 0
-    ORIG_REACTION_X_BATTLE = Textbox.REACTION_X_BATTLE
-    ORIG_REACTION_Y_BATTLE = Textbox.REACTION_Y_BATTLE
-    
-    MG_PALETTE = {
+
+    -- Dark battle reactions positons backup
+    self.ORIG_REACTION_X_BATTLE = Textbox.REACTION_X_BATTLE
+    self.ORIG_REACTION_Y_BATTLE = Textbox.REACTION_Y_BATTLE
+
+    -- Light battle reactions positioning
+    self.REACTION_X_BATTLE = {
+            ["left"] = 73  -38,
+         ["leftmid"] = 158 -38,
+             ["mid"] = 262 -38,
+          ["middle"] = 262 -38,
+        ["rightmid"] = 361 -38,
+           ["right"] = 402 -38,
+    }
+
+    self.REACTION_Y_BATTLE = {
+              ["top"] = -9 -4,
+              ["mid"] =  26 -4,
+           ["middle"] =  26 -4,
+        ["bottommid"] =  46 -4,
+           ["bottom"] =  59 -4,
+    }
+
+    MG_EVENT = {
+        onLightBattleActionBegin = "onLightBattleActionBegin",
+        onLightBattleActionEnd = "onLightBattleActionEnd",
+        onLightBattleActionCommit = "onLightBattleActionCommit",
+        onLightBattleActionUndo = "onLightBattleActionUndo",
+        onLightBattleMenuSelect = "onLightBattleMenuSelect",
+        onLightBattleMenuCancel = "onLightBattleMenuCancel",
+        onLightBattleEnemySelect = "onLightBattleEnemySelect",
+        onLightBattleEnemyCancel = "onLightBattleEnemyCancel",
+        onLightBattlePartySelect = "onLightBattlePartySelect",
+        onLightBattlePartyCancel = "onLightBattlePartyCancel",
+        onLightActionSelect = "onLightActionSelect",
+
+        onRegisterRandomEncounters = "onRegisterRandomEncounters",
+        onRegisterLightEncounters = "onRegisterLightEncounters",
+        onRegisterLightEnemies = "onRegisterLightEnemies",
+        onRegisterLightWaves = "onRegisterLightWaves",
+        onRegisterLightBullets = "onRegisterLightBullets",
+        onRegisterLightShops = "onRegisterLightShops",
+        onRegisterLightWorldBullets = "onRegisterLightWorldBullets",
+
+        getMonsterSoul = "getMonsterSoul",
+        getPaletteColor = "getMGPaletteColor"
+    }
+
+    local palette_data = {
         ["tension_maxtext"] = PALETTE["tension_maxtext"],
         ["tension_back"] = PALETTE["tension_back"],
         ["tension_decrease"] = PALETTE["tension_decrease"],
@@ -129,66 +163,48 @@ function Lib:preInit()
         ["tension_fill_reduced"] = PALETTE["tension_fill_reduced"],
         ["tension_max_reduced"] = PALETTE["tension_max_reduced"],
         ["tension_desc_reduced"] = PALETTE["tension_desc_reduced"],
-        
+
         ["action_health_bg"] = COLORS.red,
         ["action_health"] = COLORS.lime,
         ["action_health_text"] = PALETTE["action_health_text"],
         ["battle_mercy_bg"] = PALETTE["battle_mercy_bg"],
         ["battle_mercy_text"] = PALETTE["battle_mercy_text"],
-        
+
         ["gauge_outline"] = COLORS.black,
-        ["gauge_bg"] = {64 / 255, 64 / 255, 64 / 255, 1},
+        ["gauge_bg"] = { 64 / 255, 64 / 255, 64 / 255, 1 },
         ["gauge_health"] = COLORS.lime,
         ["gauge_mercy"] = COLORS.yellow,
-        
-        ["pink_spare"] = {255 / 255, 187 / 255, 212 / 255, 1},
-        
+
+        ["pink_spare"] = { 255 / 255, 187 / 255, 212 / 255, 1 },
+
         ["player_health_bg"] = COLORS.red,
         ["player_health"] = COLORS.yellow,
-        ["player_karma_health_bg"] = {192 / 255, 0, 0, 1},
+        ["player_karma_health_bg"] = { 192 / 255, 0, 0, 1 },
         ["player_karma_health"] = COLORS.fuchsia,
-        
+
         ["player_karma_health_bg_dark"] = PALETTE["action_health_bg"],
-        ["player_karma_health_dark"] = {213 / 255, 53 / 255, 217 / 255, 1},
-        
+        ["player_karma_health_dark"] = { 213 / 255, 53 / 255, 217 / 255, 1 },
+
         ["player_text"] = COLORS.white,
         ["player_defending_text"] = COLORS.aqua,
         ["player_action_text"] = COLORS.yellow,
         ["player_down_text"] = COLORS.red,
         ["player_sleeping_text"] = COLORS.blue,
         ["player_karma_text"] = COLORS.fuchsia,
-        
+
         ["light_world_dark_battle_color"] = COLORS.white,
         ["light_world_dark_battle_color_attackbar"] = COLORS.lime,
         ["light_world_dark_battle_color_attackbox"] = COLORS.red,
-        ["light_world_dark_battle_color_damage_single"] = {1, 0.3, 0.3, 1},
+        ["light_world_dark_battle_color_damage_single"] = { 1, 0.3, 0.3, 1 },
     }
-    
-    MG_EVENT = {
-        onLightBattleActionBegin = "onLightBattleActionBegin",
-        onLightBattleActionEnd = "onLightBattleActionEnd",
-        onLightBattleActionCommit = "onLightBattleActionCommit",
-        onLightBattleActionUndo = "onLightBattleActionUndo",
-        onLightBattleMenuSelect = "onLightBattleMenuSelect",
-        onLightBattleMenuCancel = "onLightBattleMenuCancel",
-        onLightBattleEnemySelect = "onLightBattleEnemySelect",
-        onLightBattleEnemyCancel = "onLightBattleEnemyCancel",
-        onLightBattlePartySelect = "onLightBattlePartySelect",
-        onLightBattlePartyCancel = "onLightBattlePartyCancel",
-        onLightActionSelect = "onLightActionSelect",
-        
-        onRegisterRandomEncounters = "onRegisterRandomEncounters",
-        onRegisterLightEncounters = "onRegisterLightEncounters",
-        onRegisterLightEnemies = "onRegisterLightEnemies",
-        onRegisterLightWaves = "onRegisterLightWaves",
-        onRegisterLightBullets = "onRegisterLightBullets",
-        onRegisterLightShops = "onRegisterLightShops",
-        onRegisterLightRecruits = "onRegisterLightRecruits",
-        onRegisterLightWorldBullets = "onRegisterLightWorldBullets",
-        
-        getMonsterSoul = "getMonsterSoul",
-    }
-    
+
+    MG_PALETTE = {}
+    setmetatable(MG_PALETTE, {
+        __index = function(t, i) return Kristal.callEvent(MG_EVENT.getPaletteColor, i) or palette_data[i] end,
+        __newindex = function(t, k, v) palette_data[k] = v end,
+    })
+
+    -- Most of them are negative so it will be easier to port spells without having to change their layer
     LIGHT_BATTLE_LAYERS = {
         ["bottom"]             = -1000,
         ["background"]         = -950,
@@ -213,13 +229,56 @@ function Lib:preInit()
         ["damage_numbers"]     = 150,
         ["top"]                = 1000
     }
-    
-    LIGHT_SHOP_LAYERS = TableUtils.copy(SHOP_LAYERS, true)
+
+    LIGHT_SHOP_LAYERS = {
+        ["background"] = -100,
+        ["below_shopkeeper"] = 100,
+        ["shopkeeper"] = 200,
+        ["above_shopkeeper"] = 300, --┰-- 300
+        ["below_boxes"] = 300,      --┙
+        ["cover"] = 400,
+        ["info_box"] = 500,
+        ["main_box"] = 600,
+        ["above_boxes"] = 700,    --┰-- 700
+        ["below_dialogue"] = 700, --┙
+        ["dialogue"] = 800,
+        ["above_dialogue"] = 900,
+        ["top"] = 1000
+    }
+end
+
+function Lib:getPaletteColor(color)
+    if Game:isLight() then
+        -- Light world colors in dark battles
+        local allowed_palettes = {
+            ["tension_maxtext"] = true,
+            ["tension_back"] = true,
+            ["tension_decrease"] = true,
+            ["tension_fill"] = true,
+            ["tension_max"] = true,
+            ["tension_desc"] = true,
+
+            ["tension_maxtext_reduced"] = true,
+            ["tension_back_reduced"] = true,
+            ["tension_decrease_reduced"] = true,
+            ["tension_fill_reduced"] = true,
+            ["tension_max_reduced"] = true,
+            ["tension_desc_reduced"] = true,
+
+            ["action_health"] = true,
+            ["action_health_bg"] = true,
+            ["action_health_text"] = true,
+            ["battle_mercy_bg"] = true,
+            ["battle_mercy_text"] = true,
+        }
+
+        return allowed_palettes[color] and MG_PALETTE[color] or nil
+    end
 end
 
 function Lib:onRegistered()
     self.random_encounters = {}
-    for _,path,rnd_enc in Registry.iterScripts("battle/randomencounters") do
+    for _, path, rnd_enc in Registry.iterScripts("battle/randomencounters") do
         assert(rnd_enc ~= nil, '"randomencounters/' .. path .. '.lua" does not return value')
         rnd_enc.id = rnd_enc.id or path
         self.random_encounters[rnd_enc.id] = rnd_enc
@@ -227,7 +286,7 @@ function Lib:onRegistered()
     Kristal.callEvent(MG_EVENT.onRegisterRandomEncounters)
 
     self.light_encounters = {}
-    for _,path,light_enc in Registry.iterScripts("battle/lightencounters") do
+    for _, path, light_enc in Registry.iterScripts("battle/lightencounters") do
         assert(light_enc ~= nil, '"lightencounters/' .. path .. '.lua" does not return value')
         light_enc.id = light_enc.id or path
         self.light_encounters[light_enc.id] = light_enc
@@ -235,23 +294,23 @@ function Lib:onRegistered()
     Kristal.callEvent(MG_EVENT.onRegisterLightEncounters)
 
     self.light_enemies = {}
-    for _,path,light_enemy in Registry.iterScripts("battle/lightenemies") do
+    for _, path, light_enemy in Registry.iterScripts("battle/lightenemies") do
         assert(light_enemy ~= nil, '"lightenemies/' .. path .. '.lua" does not return value')
         light_enemy.id = light_enemy.id or path
         self.light_enemies[light_enemy.id] = light_enemy
     end
     Kristal.callEvent(MG_EVENT.onRegisterLightEnemies)
-    
+
     self.light_waves = {}
-    for _,path,light_wave in Registry.iterScripts("battle/lightwaves") do
+    for _, path, light_wave in Registry.iterScripts("battle/lightwaves") do
         assert(light_wave ~= nil, '"lightwaves/' .. path .. '.lua" does not return value')
         light_wave.id = light_wave.id or path
         self.light_waves[light_wave.id] = light_wave
     end
     Kristal.callEvent(MG_EVENT.onRegisterLightWaves)
-    
+
     self.light_bullets = {}
-    for _,path,light_bullet in Registry.iterScripts("battle/lightbullets") do
+    for _, path, light_bullet in Registry.iterScripts("battle/lightbullets") do
         assert(light_bullet ~= nil, '"lightbullets/' .. path .. '.lua" does not return value')
         light_bullet.id = light_bullet.id or path
         self.light_bullets[light_bullet.id] = light_bullet
@@ -259,23 +318,15 @@ function Lib:onRegistered()
     Kristal.callEvent(MG_EVENT.onRegisterLightBullets)
 
     self.light_shops = {}
-    for _,path,light_shop in Registry.iterScripts("lightshops") do
+    for _, path, light_shop in Registry.iterScripts("lightshops") do
         assert(light_shop ~= nil, '"lightshops/' .. path .. '.lua" does not return value')
         light_shop.id = light_shop.id or path
         self.light_shops[light_shop.id] = light_shop
     end
     Kristal.callEvent(MG_EVENT.onRegisterLightShops)
-    
-    self.light_recruits = {}
-    for _,path,light_recruit in Registry.iterScripts("data/lightrecruits") do
-        assert(light_recruit ~= nil, '"lightrecruits/' .. path .. '.lua" does not return value')
-        light_recruit.id = light_recruit.id or path
-        self.light_recruits[light_recruit.id] = light_recruit
-    end
-    Kristal.callEvent(MG_EVENT.onRegisterLightRecruits)
-    
+
     self.light_world_bullets = {}
-    for _,path,light_world_bullet in Registry.iterScripts("world/lightbullets") do
+    for _, path, light_world_bullet in Registry.iterScripts("world/lightbullets") do
         assert(light_world_bullet ~= nil, '"lightworldbullets/' .. path .. '.lua" does not return value')
         light_world_bullet.id = light_world_bullet.id or path
         self.light_world_bullets[light_world_bullet.id] = light_world_bullet
@@ -283,33 +334,46 @@ function Lib:onRegistered()
     Kristal.callEvent(MG_EVENT.onRegisterLightWorldBullets)
 end
 
+-- If the party member has no weapon, use this as a fallback weapon
+function Lib:onRegisterItems()
+    Lib.fallback_weapon = Registry.getItem("everybodyweapon")
+end
+
+function Lib:onRegisterRecruits()
+    -- Register light recruits
+    for _, path, lightrecruit in Registry.iterScripts("data/lightrecruits") do
+        assert(lightrecruit ~= nil, '"lightrecruits/' .. path .. '.lua" does not return value')
+        lightrecruit.id = "light/" .. (lightrecruit.id or path)
+        Registry.registerRecruit(lightrecruit.id, lightrecruit)
+    end
+
+    for id, recruit in pairs(Registry.recruits) do
+        if StringUtils.sub(id, 1, 6) == "light/" and not recruit:includes(LightRecruit) then
+            error("Attempted to create Recruit as a LightRecruit. Convert your recruit \"" .. id .. "\" file to a Recruit")
+            break
+        elseif StringUtils.sub(id, 1, 6) ~= "light/" and recruit:includes(LightRecruit) then
+            error("Attempted to create LightRecruit as a DarkRecruit. Convert your recruit \"" .. id .. "\" file to a LightRecruit")
+            break
+        end
+    end
+end
+
 function Lib:init()
+    Game:registerEvent("encounterzone", function(data)
+        return EncounterZone(data)
+    end)
+    Game:registerEvent("storagebox", function(data)
+        return StorageBox(data.x, data.y, { data.width, data.height, data.polygon }, data.properties)
+    end)
 
     -- print("Loaded Magical Glass: Redux " .. self.info.version .. "!")
-    
-    -- Undertale Borders
-    self.active_keys = {}
-    self.flower_positions = {
-        {34, 679},
-        {94, 939},
-        {269, 489},
-        {0, 319},
-        {209, 34},
-        {1734, 0},
-        {1829, 359},
-        {1789, 709},
-        {1584, 1049}
-    }
-    self.idle_time = RUNTIME * 1000
-    self.idle = false
-
-
 
     self.encounters_enabled = false
     self.steps_until_encounter = nil
 end
 
 function Lib:onGameOver(x, y)
+    -- When taking fatal damage in the overworld, show everyone's health at 0 instead of 1 for the screenshot
     if Game.state == "OVERWORLD" then
         for _, party in ipairs(Game.party) do
             if party:getHealth() > 0 then
@@ -318,10 +382,12 @@ function Lib:onGameOver(x, y)
         end
         Game.world:shakeCamera(0)
     end
+    -- Draw a new frame so you'll see your health at 0 during the screenshot without calling an update
     if Game.battle and Game.battle.light or Game:isLight() and Game.state ~= "BATTLE" then
         love.draw()
     end
-    
+
+    -- "* But it refused."
     if Game.battle and Game.battle.encounter.invincible then
         Kristal.hideBorder(0)
 
@@ -333,11 +399,12 @@ function Lib:onGameOver(x, y)
 
         Game.gameover = GameNotOver(x, y)
         Game.stage:addChild(Game.gameover)
-        
+
         return true
     else
+        -- Game overs counter
         MG_GAMEOVERS = MG_GAMEOVERS + 1
-        
+
         -- Shows the game over message even when the party member is the main character
         local soul_party = Game:getSoulPartyMember()
         if soul_party:getForceGameOverMessage() then
@@ -348,6 +415,7 @@ function Lib:onGameOver(x, y)
     end
 end
 
+-- Turn the 'spare' button into a toggleable 'spare/flee' button
 function Lib:getActionButtons(battler, buttons)
     if TableUtils.contains(buttons, "spare") then
         local index = TableUtils.getIndex(buttons, "spare")
@@ -452,22 +520,6 @@ function Lib:createLightShop(id, ...)
     end
 end
 
-function Lib:registerLightRecruit(id, class)
-    self.light_recruits[id] = class
-end
-
-function Lib:getLightRecruit(id)
-    return self.light_recruits[id]
-end
-
-function Lib:createLightRecruit(id, ...)
-    if self.light_recruits[id] then
-        return self.light_recruits[id](...)
-    else
-        error("Attempted to create non-existent light recruit \"" .. tostring(id) .. "\"")
-    end
-end
-
 function Lib:registerLightWorldBullet(id, class)
     self.light_world_bullets[id] = class
 end
@@ -484,34 +536,20 @@ function Lib:createLightWorldBullet(id, ...)
     end
 end
 
-function Lib:initLightRecruits()
-    Game.light_recruits_data = {}
-    for id,_ in pairs(Lib.light_recruits) do
-        if Lib:getLightRecruit(id) then
-            Game.light_recruits_data[id] = Lib:createLightRecruit(id)
-            if not Game.light_recruits_data[id]:includes(LightRecruit) then
-                error("Attempted to use Recruit in a LightRecruit. Convert the recruit \"" .. id .. "\" file to a LightRecruit")
-            end
-        else
-            error("Attempted to create non-existent light recruit \"" .. id .. "\"")
-        end
-    end
-end
-
 function Lib:registerDebugOptions(debug)
     local function isDebugWave(id)
-        return TableUtils.contains({"_empty"}, id)
+        return TableUtils.contains({ "_empty" }, id)
     end
-    
+
     debug.exclusive_battle_menus = {}
-    debug.exclusive_battle_menus["LIGHTBATTLE"] = {"light_wave_select", "light_wave_select_multiple"}
-    debug.exclusive_battle_menus["DARKBATTLE"] = {"wave_select", "wave_select_multiple"}
+    debug.exclusive_battle_menus["LIGHTBATTLE"] = { "light_wave_select", "light_wave_select_multiple" }
+    debug.exclusive_battle_menus["DARKBATTLE"] = { "wave_select", "wave_select_multiple" }
     debug.exclusive_world_menus = {}
     debug.exclusive_world_menus["LIGHTWORLD"] = {}
     debug.exclusive_world_menus["DARKWORLD"] = {}
 
     debug:registerMenu("encounter_select", "Encounter Select")
-    
+
     debug:registerOption("encounter_select", "Start Dark Encounter", "Start a dark encounter.", function()
         debug:enterMenu("dark_encounter_select", 0)
     end)
@@ -520,7 +558,7 @@ function Lib:registerDebugOptions(debug)
     end)
 
     debug:registerMenu("dark_encounter_select", "Select Dark Encounter", "search")
-    for id,_ in pairs(Registry.encounters) do
+    for id, _ in pairs(Registry.encounters) do
         if id ~= "_empty" or Kristal.getLibConfig("magical-glass", "debug") then
             debug:registerOption("dark_encounter_select", id, "Start this encounter.", function()
                 Game:encounter(id, true, nil, nil, false)
@@ -530,7 +568,7 @@ function Lib:registerDebugOptions(debug)
     end
 
     debug:registerMenu("light_encounter_select", "Select Light Encounter", "search")
-    for id,_ in pairs(self.light_encounters) do
+    for id, _ in pairs(self.light_encounters) do
         if id ~= "_empty" or Kristal.getLibConfig("magical-glass", "debug") then
             debug:registerOption("light_encounter_select", id, "Start this encounter.", function()
                 Game:encounter(id, true, nil, nil, true)
@@ -540,7 +578,7 @@ function Lib:registerDebugOptions(debug)
     end
 
     debug:registerMenu("light_wave_select", "Wave Select", "search")
-    
+
     debug:registerOption("light_wave_select", "[Stop Current Wave]", "Stop the current playing wave.", function ()
         if Game.battle:getState() == "DEFENDING" then
             Game.battle.encounter:onWavesDone()
@@ -549,7 +587,7 @@ function Lib:registerDebugOptions(debug)
     end)
 
     local waves_list = {}
-    for id,_ in pairs(self.light_waves) do
+    for id, _ in pairs(self.light_waves) do
         if not isDebugWave(id) or Kristal.getLibConfig("magical-glass", "debug") then
             table.insert(waves_list, id)
         end
@@ -559,16 +597,15 @@ function Lib:registerDebugOptions(debug)
         return a < b
     end)
 
-    for _,id in ipairs(waves_list) do
+    for _, id in ipairs(waves_list) do
         debug:registerOption("light_wave_select", id, "Start this wave.", function ()
             if Game.battle:getState() == "ACTIONSELECT" then
-                Game.battle.debug_wave = true
-                Game.battle:setState("ENEMYDIALOGUE", {id})
+                Game.battle:setState("DEFENDINGBEGIN", { id })
             end
             debug:closeMenu()
         end)
     end
-    
+
     debug:registerMenu("light_wave_select_multiple", "Multiple Wave Select", "search")
 
     debug:registerOption(
@@ -630,8 +667,7 @@ function Lib:registerDebugOptions(debug)
                         end
                     end
                 end
-                Game.battle.debug_wave = true
-                Game.battle:setState("ENEMYDIALOGUE", debug.light_selected_waves)
+                Game.battle:setState("DEFENDINGBEGIN", debug.light_selected_waves)
                 debug:closeMenu()
             end
         end,
@@ -640,7 +676,7 @@ function Lib:registerDebugOptions(debug)
             return #debug.light_selected_waves > #Game.battle:getActiveEnemies() and COLORS.silver or COLORS.white
         end
     )
-    
+
     debug:registerOption(
         "light_wave_select_multiple",
         "[Clear Selection]",
@@ -649,7 +685,7 @@ function Lib:registerDebugOptions(debug)
             debug.light_selected_waves = {}
         end
     )
-    
+
     table.sort(waves_list, function(a, b)
         return a < b
     end)
@@ -667,7 +703,7 @@ function Lib:registerDebugOptions(debug)
                     if TableUtils.contains(debug.light_selected_waves, id) then
                         return "Remove this wave from the selected group. " .. getWaveSpaceString()
                     end
-                    
+
                     return "Add this wave to the selected group. " .. getWaveSpaceString()
                 end,
                 function()
@@ -686,18 +722,18 @@ function Lib:registerDebugOptions(debug)
             )
         end
     end
-    
+
     debug:registerMenu("select_shop", "Enter Shop")
-    
+
     debug:registerOption("select_shop", "Enter Dark Shop", "Enter a dark shop.", function()
         debug:enterMenu("dark_select_shop", 0)
     end)
     debug:registerOption("select_shop", "Enter Light Shop", "Enter a light shop.", function()
         debug:enterMenu("light_select_shop", 0)
     end)
-    
+
     debug:registerMenu("dark_select_shop", "Enter Dark Shop", "search")
-    for id,_ in pairs(Registry.shops) do
+    for id, _ in pairs(Registry.shops) do
         debug:registerOption("dark_select_shop", id, "Enter this shop.", function()
             Game:enterShop(id, nil, false)
             debug:closeMenu()
@@ -705,15 +741,18 @@ function Lib:registerDebugOptions(debug)
     end
 
     debug:registerMenu("light_select_shop", "Enter Light Shop", "search")
-    for id,_ in pairs(self.light_shops) do
+    for id, _ in pairs(self.light_shops) do
         debug:registerOption("light_select_shop", id, "Enter this shop.", function()
             Game:enterShop(id, nil, true)
             debug:closeMenu()
         end)
     end
-    
+
     debug:registerMenu("give_item", "Give Item")
-    
+
+    debug:registerOption("give_item", "Give Kristal Item", "Give a Kristal built-in item.", function()
+        debug:enterMenu("kristal_give_item", 1)
+    end)
     debug:registerOption("give_item", "Give Dark Item", "Give a dark item.", function()
         debug:enterMenu("dark_give_item", 0)
     end)
@@ -723,43 +762,62 @@ function Lib:registerDebugOptions(debug)
     debug:registerOption("give_item", "Give Undertale Item", "Give an Undertale item.", function()
         debug:enterMenu("ut_give_item", 0)
     end)
-    
+
+    debug:registerMenu("kristal_give_item", "Give Kristal Item")
     debug:registerMenu("dark_give_item", "Give Dark Item", "search")
     debug:registerMenu("light_give_item", "Give Light Item", "search")
     debug:registerMenu("ut_give_item", "Give Undertale Item", "search")
+
+
+    debug:registerOption("kristal_give_item", "Give Dark Item", "Give a dark item.", function()
+        debug:enterMenu("kristal_dark_give_item", 0)
+    end)
+    debug:registerOption("kristal_give_item", "Give Light Item", "Give a light item.", function()
+        debug:enterMenu("kristal_light_give_item", 0)
+    end)
+
+    debug:registerMenu("kristal_dark_give_item", "Give Dark Item", "search")
+    debug:registerMenu("kristal_light_give_item", "Give Light Item", "search")
+
     for id, item_data in pairs(Registry.items) do
         local item = item_data()
         local menu
-        if StringUtils.sub(item.id, 1, 10) == "undertale/" then
+        if TableUtils.contains(TableUtils.getKeys(Registry.saved_data["items"]), item.id) then
+            if item.light then
+                menu = "kristal_light_give_item"
+            else
+                menu = "kristal_dark_give_item"
+            end
+        elseif StringUtils.sub(item.id, 1, 10) == "undertale/" then
             menu = "ut_give_item"
         elseif item.light then
             menu = "light_give_item"
         else
             menu = "dark_give_item"
         end
-        debug:registerOption(menu, item.id, "\"" .. item.name .. "\"\n" .. item.description, function ()
+        debug:registerOption(menu, "(" .. item.type:upper() .. ") | ".. item.id, "\"" .. item.name .. "\"\n" .. item.description, function ()
             Game.inventory:tryGiveItem(item_data())
         end)
     end
-    
+
     local in_game = function () return Kristal.getState() == Game end
     local in_overworld = function () return in_game() and Game.state == "OVERWORLD" end
     local in_dark_battle = function () return in_game() and Game.state == "BATTLE" and not Game.battle.light end
     local in_light_battle = function () return in_game() and Game.state == "BATTLE" and Game.battle.light end
     local in_dark_world = function () return in_game() and not Game:isLight() end
     local in_light_world = function () return in_game() and Game:isLight() end
-    
+
     for i = #debug.menus["main"].options, 1, -1 do
         local option = debug.menus["main"].options[i]
-        if TableUtils.contains({"Start Wave", "Start Multiple Waves", "End Battle"}, option.name) then
+        if TableUtils.contains({ "Start Wave", "Start Multiple Waves", "End Battle" }, option.name) then
             table.remove(debug.menus["main"].options, i)
         end
     end
-    
+
     debug:registerOption("main", "Start Wave", "Start a wave.", function ()
         debug:enterMenu("wave_select", 0)
     end, in_dark_battle)
-    
+
     debug:registerOption("main", "Start Multiple Waves", "Start multiple waves at once.", function ()
         debug:enterMenu("wave_select_multiple", 0)
     end, in_dark_battle)
@@ -768,26 +826,34 @@ function Lib:registerDebugOptions(debug)
         Game.battle:setState("VICTORY")
         debug:closeMenu()
     end, in_dark_battle)
-                        
+
     debug:registerOption("main", "Start Wave", "Start a wave.", function ()
         debug:enterMenu("light_wave_select", 0)
     end, in_light_battle)
-    
+
     debug:registerOption("main", "Start Multiple Waves", "Start multiple waves at once.", function ()
         debug:enterMenu("light_wave_select_multiple", 0)
     end, in_light_battle)
 
     debug:registerOption("main", "End Battle", "Instantly complete a battle.", function ()
-        Game.battle.forced_victory = true
-        if TableUtils.contains({"DEFENDING", "DEFENDINGBEGIN", "ENEMYDIALOGUE"}, Game.battle.state) then
+        if TableUtils.contains({ "DEFENDING", "DEFENDINGBEGIN", "ENEMYDIALOGUE" }, Game.battle.state) then
             Game.battle.encounter:onWavesDone()
         end
         Game.battle:setState("VICTORY")
         debug:closeMenu()
     end, in_light_battle)
-    
-    debug:addToExclusiveMenu("OVERWORLD", {"dark_encounter_select", "light_encounter_select", "dark_select_shop", "light_select_shop"})
+
+    debug:addToExclusiveMenu("OVERWORLD", { "dark_encounter_select", "light_encounter_select", "dark_select_shop", "light_select_shop" })
     debug:addToExclusiveMenu("BATTLE", "light_wave_select", "light_wave_select_multiple")
+
+    if not Kristal.getLibConfig("magical-glass", "debug") then
+        for i = #debug.menus["cutscene_select"].options, 1, -1 do
+            local option = debug.menus["cutscene_select"].options[i]
+            if StringUtils.startsWith(option.name, "mg_") then
+                table.remove(debug.menus["cutscene_select"].options, i)
+            end
+        end
+    end
 end
 
 function Lib:setupLightShop(shop)
@@ -797,11 +863,11 @@ function Lib:setupLightShop(shop)
     else
         check_shop = shop
     end
-    
+
     if check_shop:includes(Shop) then
         error("Attempted to use Shop in a LightShop. Convert the shop \"" .. check_shop.id .. "\" file to a LightShop")
     end
-    
+
     if Game.shop then
         error("Attempt to enter light shop while already in shop")
     end
@@ -835,13 +901,14 @@ function Lib:enterLightShop(shop, options)
     end
 
     Game.state = "SHOP"
-    
+
     Lib.in_light_shop = true
 
     Game.stage:addChild(Game.shop)
     Game.shop:onEnter()
 end
 
+-- Whether all text objects will shake in light battles
 function Lib:setLightBattleShakingText(v)
     if v == true then
         Lib.light_battle_shake_text = 0.501
@@ -852,15 +919,17 @@ function Lib:setLightBattleShakingText(v)
     end
 end
 
+-- The color of sparing and the spare option
+-- 'color_name' string is visible when attempting to spare an enemy which doesn't have their mercy bar filled yet
 function Lib:setLightBattleSpareColor(value, color_name)
     if value == "pink" then
-        Lib.spare_color = {MG_PALETTE["pink_spare"], "PINK"}
+        Lib.spare_color = { MG_PALETTE["pink_spare"], "PINK" }
     elseif type(value) == "table" then
-        Lib.spare_color = {value, "SPAREABLE"}
+        Lib.spare_color = { value, "SPAREABLE" }
     else
         for name, color in pairs(COLORS) do
             if value == name then
-                Lib.spare_color = {color, name:upper()}
+                Lib.spare_color = { color, name:upper() }
                 break
             end
         end
@@ -870,32 +939,38 @@ function Lib:setLightBattleSpareColor(value, color_name)
     end
 end
 
+-- Whether to bring the last cell call to the top of the menu, like in Undertale
 function Lib:setCellCallsRearrangement(v)
     Lib.rearrange_cell_calls = v
 end
 
+-- Whether to use the serious mode behavior and name for light items
 function Lib:setSeriousMode(v)
     Lib.serious_mode = v
 end
 
+-- Used for counting steps in random encounters
 function Lib:onFootstep(char, num)
     if self.encounters_enabled and self.in_encounter_zone and Game.world.player and char:includes(Player) then
-        self.steps_until_encounter = self.steps_until_encounter - 1
+        self.steps_until_encounter = self.steps_until_encounter - (1 / #Game.stage:getObjects(Player))
     end
 end
 
+-- Set EXP for all party members
 function Lib:setLightEXP(exp)
     for _, party in pairs(Game.party_data) do
         party:setLightEXP(exp)
     end
 end
 
+-- Set LV for all party members
 function Lib:setLightLV(level)
     for _, party in pairs(Game.party_data) do
         party:setLightLV(level)
     end
 end
 
+-- Replace 'ACT' with 'SAVE' action button
 function Lib:getLightActionButtons(battler, buttons)
     if battler.has_save then
         local index = TableUtils.getIndex(buttons, "act")
@@ -906,62 +981,27 @@ function Lib:getLightActionButtons(battler, buttons)
     end
 end
 
+-- Gets the path to the monster soul sprites
 function Lib:assetsMonsterSoulCheckOverwrite(path)
     if StringUtils.sub(path, 1, 7) == "player/" and Game:getMonsterSoul() then
         path = StringUtils.sub(path, 1, 7) .. "monster" .. "/" .. StringUtils.sub(path, 8)
     elseif StringUtils.sub(path, 1, 8) == "!player/" then
         return StringUtils.sub(path, 2)
     end
-    
+
     return path
 end
 
--- Undertale Borders
-function Lib:onKeyPressed(key, is_repeat)
-    if not is_repeat then
-        self.active_keys[key] = true
-    end
-end
-
--- Undertale Borders
-function Lib:onKeyReleased(key)
-    self.active_keys[key] = nil
-end
-
-function Lib:onBorderDraw(border_sprite)
-    -- Undertale Border
-    if border_sprite == "undertale/sepia" then
-        local idle_min = 300000
-        local idle_time = 0
-        local current_time = RUNTIME * 1000
-        if (self.idle and current_time >= (self.idle_time + idle_min)) then
-            idle_time = (current_time - (self.idle_time + idle_min))
-        end
-
-        local idle_frame = (math.floor((idle_time / 100)) % 3)
-
-        if idle_frame > 0 then
-            for index, pos in pairs(self.flower_positions) do
-                local x, y = (pos[1] * BORDER_SCALE), (pos[2] * BORDER_SCALE) - 1
-                local round = MathUtils.round
-                love.graphics.setBlendMode("replace")
-                local flower = Assets.getTexture("borders_addons/undertale/sepia/" .. tostring(index) .. ((idle_frame == 1) and "a" or "b"))
-                Draw.setColor(1, 1, 1, BORDER_ALPHA)
-                Draw.draw(flower, round(x), round(y), 0, BORDER_SCALE, BORDER_SCALE)
-                Draw.setColor(1, 1, 1, 1)
-                love.graphics.setBlendMode("alpha")
-            end
-        end
-    end
-end
-
 function Lib:postUpdate()
+    -- 'Game.lw_xp' will show you the highest EXP value between all party members
     Game.lw_xp = nil
     for _, party in pairs(Game.party_data) do -- Gets the party with the most Light EXP
-        if not Game.lw_xp or (type(party:getLightEXP()) == "number" and party:getLightEXP() > Game.lw_xp) then
+        if not Game.lw_xp or party:getLightEXP() > Game.lw_xp then
             Game.lw_xp = party:getLightEXP()
         end
     end
+
+    -- Shared light EXP
     if Game.lw_xp == nil then Game.lw_xp = 0 end
     if Kristal.getLibConfig("magical-glass", "shared_light_exp") then
         for _, party in pairs(Game.party_data) do
@@ -970,24 +1010,16 @@ function Lib:postUpdate()
             end
         end
     end
+
+    -- Reset the random encounter after the battle
     if not Game.battle then
         if Lib.random_encounter then
             Lib.random_encounter:resetSteps(false)
             Lib.random_encounter = nil
         end
     end
-    
-    -- Undertale Borders
-    if Utils.equal(self.active_keys, {}, false) then
-        self.idle_time = 0
-        self.idle = false
-    else
-        if not self.idle then
-            self.idle_time = RUNTIME * 1000
-        end
-        self.idle = true
-    end
-    
+
+    -- Darkner shield
     for _, sprite in ipairs(Game.stage:getObjects(Sprite)) do
         local object = sprite.parent
         if object then
@@ -1000,7 +1032,7 @@ function Lib:postUpdate()
                 object.darkner_shield_foreground = DarknerProtectionEffect(0, 0, true)
                 sprite.parent:addChild(object.darkner_shield_background)
                 sprite.parent:addChild(object.darkner_shield_foreground)
-                
+
                 object.darkner_shield_active = true
             end
             if not object.darkner_shield and object.darkner_shield_active then

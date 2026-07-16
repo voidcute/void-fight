@@ -25,7 +25,7 @@ function LightTensionBar:init(x, y, dont_animate)
     self.font = Assets.getFont("main")
 
     self.parallax_y = 0
-    
+
     -- still dont understand nil logic
     if dont_animate then
         self.animating_in = false
@@ -39,7 +39,7 @@ function LightTensionBar:init(x, y, dont_animate)
 
     self.tension_preview = 0
     self.shown = true
-    
+
     self.timer = self:addChild(Timer())
 end
 
@@ -215,7 +215,7 @@ function LightTensionBar:drawText()
     end
     if (tamt >= 100) then
         self.maxed = true
-        
+
         self:drawMaxText()
     end
 end
@@ -266,7 +266,7 @@ function LightTensionBar:drawFill()
         if (self.maxed) then
             Draw.setColor(tension_max)
         end
-        
+
         local y2 = MathUtils.clamp(156 - (self:getPercentageFor250(self.current) * 156) + 1 + (self:getPercentageFor(self.tension_preview) * 156), 0, 156)
         Draw.drawPart(self.tp_bar_fill, 0, y2, 0, y2, 25, 156)
     elseif (self.apparent == self.current) then
@@ -274,7 +274,7 @@ function LightTensionBar:drawFill()
         if (self.maxed) then
             Draw.setColor(tension_max)
         end
-        
+
         local y = MathUtils.clamp(156 - (self:getPercentageFor250(self.current) * 156) + 1 + (self:getPercentageFor(self.tension_preview) * 156), 0, 156)
         Draw.drawPart(self.tp_bar_fill, 0, y, 0, y, 25, 156)
     end

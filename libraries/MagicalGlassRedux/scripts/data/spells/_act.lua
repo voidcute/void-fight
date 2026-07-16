@@ -2,7 +2,7 @@ local spell, super = Class("_act", true)
 
 function spell:init()
     super.init(self)
-    
+
     if Game.chapter == 1 then
         self.check = "Do all sorts of things.\n* It isn't magic."
     elseif Game.chapter == 2 then

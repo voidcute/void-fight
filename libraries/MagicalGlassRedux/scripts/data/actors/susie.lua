@@ -6,7 +6,7 @@ function actor:init()
     -- Table of sprite animations
     TableUtils.merge(self.animations, {
         -- Battle animations
-        ["battle/flee"]         = {"battle/hurt", 1/15},
+        ["battle/flee"]         = { "battle/hurt", 1 / 15 },
     }, false)
 end
 

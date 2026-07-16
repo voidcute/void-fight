@@ -2,10 +2,11 @@ local LightWave, super = Class(Wave)
 
 function LightWave:init()
     super.init(self)
-    
-    self.allow_duplicates = true
 
+    -- Whether to darken the battle background while this wave is active
+    -- If set to 'alt', it will use the Undertale version of darkening (like in the battle against Undyne)
     self.darken = false
+    -- Whether to remove the wave after the defending state ends
     self.auto_clear = true
 end
 
@@ -72,7 +73,7 @@ function LightWave:spawnBulletTo(parent, bullet, ...)
     end
     new_bullet:onWaveSpawn(self)
     if not new_bullet:includes(LightBullet) then
-        error("Attempted to use Bullet in a LightBattle. Convert \""..bullet.."\" to a LightBullet")
+        error("Attempted to use Bullet in a LightBattle. Convert \"" .. bullet .. "\" to a LightBullet")
     end
     return new_bullet
 end

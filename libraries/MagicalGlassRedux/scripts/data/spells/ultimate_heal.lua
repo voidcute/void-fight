@@ -2,7 +2,7 @@ local spell, super = Class("ultimate_heal", true)
 
 function spell:init()
     super.init(self)
-    
+
     self.check = "Heals 1 party member to the best of Susie's ability."
 end
 

@@ -4,9 +4,9 @@ function LightAttackBar:init(x, y, battler, scale_y)
     super.init(self, x, y)
 
     self.battler = battler
-    
+
     self.scale_y = scale_y or 1
-    
+
     self.debug_select = false
 
     self.hit = false
@@ -17,7 +17,7 @@ function LightAttackBar:init(x, y, battler, scale_y)
     self.fade_sprite = "ui/lightbattle/targetchoice_fade"
 
     self.sprite:setOrigin(0.5, 0.5)
-    self.sprite.color = {self.battler.chara:getLightAttackBarColor()}
+    self.sprite.color = { self.battler.chara:getLightAttackBarColor() }
     self:addChild(self.sprite)
 
     self.perfect = false
@@ -99,7 +99,7 @@ end
 function LightAttackBar:draw()
     local arena_ox, arena_oy = Game.battle.arena:getOffset()
     love.graphics.translate(arena_ox / self.scale_x, arena_oy / self.scale_y)
-    
+
     super.draw(self)
 end
 

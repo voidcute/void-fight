@@ -3,7 +3,7 @@ local RandomEncounter = Class()
 function RandomEncounter:init()
     -- The amount of enemies that can be defeated violently
     self.population = nil
-    
+
     -- The amount of steps it takes to start a random encounter initially
     self.initial_minimum_steps = 20
     -- A random amount of steps that will be added to the step counter initially
@@ -14,20 +14,20 @@ function RandomEncounter:init()
     self.random_steps = 15
     -- The amount of steps it takes to start an empty encounter
     self.empty_steps = 20
-    
+
     -- Whether the steps amount will increase when not that many monsters left
     self.use_population_factor = true
-    
+
     -- The bubble that should appear when a random encounter is triggered
     -- If this is nil, the battle starts instantly
     self.bubble = "effects/alert"
-    
+
     -- The encounter that will happen if the entire population was defeated violently
     self.empty_encounter = "_empty"
-    
+
     -- Table with the encounters that can be triggered by this random encounter
     self.encounters = {}
-    
+
     -- Whether the encounters are a light or dark encounters
     self.light = true
 end
@@ -78,8 +78,13 @@ function RandomEncounter:start()
         if self.bubble then
             Game.lock_movement = true
             Mod.libs["magical-glass"].initiating_random_encounter = true
-            local timer = (15 + MathUtils.random(5)) / 30
-            Game.world.player:alert(timer, {layer = WORLD_LAYERS["above_events"], sprite = self.bubble, callback = function() Game:encounter(self:getNextEncounter(), true, nil, nil, self.light);Mod.libs["magical-glass"].random_encounter = self;Game.lock_movement = false;Mod.libs["magical-glass"].initiating_random_encounter = nil end})
+            self.alert = Game.world.player:alert(nil, { sprite = self.bubble, callback = function()
+                Game:encounter(self:getNextEncounter(), true, nil, nil, self.light)
+                Mod.libs["magical-glass"].random_encounter = self
+                Game.lock_movement = false
+                Mod.libs["magical-glass"].initiating_random_encounter = nil
+                self.alert = nil
+            end })
         else
             Game:encounter(self:getNextEncounter(), true, nil, nil, self.light)
             Mod.libs["magical-glass"].random_encounter = self
@@ -88,15 +93,15 @@ function RandomEncounter:start()
 end
 
 function RandomEncounter:setFlag(flag, value)
-    Game:setFlag("randomencounter#"..self.id..":"..flag, value)
+    Game:setFlag("randomencounter#" .. self.id .. ":" .. flag, value)
 end
 
 function RandomEncounter:getFlag(flag, default)
-    return Game:getFlag("randomencounter#"..self.id..":"..flag, default)
+    return Game:getFlag("randomencounter#" .. self.id .. ":" .. flag, default)
 end
 
 function RandomEncounter:addFlag(flag, amount)
-    return Game:addFlag("randomencounter#"..self.id..":"..flag, amount)
+    return Game:addFlag("randomencounter#" .. self.id .. ":" .. flag, amount)
 end
 
 return RandomEncounter
