@@ -11,6 +11,9 @@ return{
 
     cutscene:battlerText(void,"ah, sorry.[wait:5]\ni thought you was a ball\nso i bumped into you.")
     cutscene:battlerText(void,"what are you doing here?[wait:5]\ndidn't you read the sign?") 
+
+
+    
     end,
     turn2 = function (cutscene)
     body:setSprite("enemies/void_ut/body")  
@@ -41,58 +44,67 @@ return{
     body:setSprite("enemies/void_ut/body_sweat")   
     eyes = void:getSpritePart("eyes")
     eyes:setSprite("enemies/void_ut/eyes_sweat")
-    cutscene:battlerText(void, "ouch. that hurts.\nwhy did you hit me?")  
-    cutscene:battlerText(void, "is it because \ni bumped into you?\ni am so sorry.")  
+    cutscene:battlerText(void, "ouch.[wait:5] that hurts.[wait:5]\nwhy did you hit me?")  
+    cutscene:battlerText(void, "is it because \ni bumped into you?[wait:5]\ni am so sorry.")  
     end,
 
     hurt2 = function (cutscene)
-    cutscene:battlerText(void, "ouch. why are you\nstill keep hitting me?\ni said i'm sorry.")
+    cutscene:battlerText(void, "ouch. why are you\nstill keep hitting me?[wait:5]\ni said i'm sorry.")
     end,
     hurt3 = function (cutscene)
     cutscene:battlerText(void, "...")  
-    cutscene:battlerText(void, "oh. are you...\ntrying to kill me?")     
+    cutscene:battlerText(void, "oh.[wait:5] are you...\ntrying to kill me?")     
     cutscene:battlerText(void, "so you must be\none of those human.")
-    cutscene:battlerText(void, "thinking we are just\nsome creature for\nyou to farm EXP.") 
+    cutscene:battlerText(void, "thinking we are just\nsome creature for\nyou to farm EXP and G.") 
     cutscene:battlerText(void, "you shouldn't do that.")   
     end,
     hurt4 = function (cutscene)
     cutscene:battlerText(void, "human. i don't know\nwhere you get \nthis idea from.")   
     cutscene:battlerText(void, "but maybe can you like\njust stop doing it?")   
+    cutscene:battlerText(void, "unbeliveable i know.[wait:5]\nit would make things\neasier for everyone.")
     end,
     hurt5 = function (cutscene)
-    cutscene:battlerText(void, "please stop...\nif you keep hitting me\ni will...")         
+    cutscene:battlerText(void, "do you find this fun or what?[wait:5]") 
+    cutscene:battlerText(void, "if so i can tell you\nsome fun trivias.")
+    cutscene:battlerText(void, "like about gardening!\nhave you ever heard of\ntalking plants?")
+
     end,
     hurt6 = function (cutscene)
-    cutscene:battlerText(void, "...")         
+    cutscene:battlerText(void, "not interested huh...[wait:5]\nand what's with the look?\nyou heard of it already?")
+    cutscene:battlerText(void, "but did you know that...[wait:5]\ni come from a place where\nplants and slimes are\ngood friends?!")
+    cutscene:battlerText(void, "it's a relative new relationship.[wait:5]\nplants feeding the slimes\nwith their 'fleshes',[wait:5]\nslimes wateringthe plants\nwith their 'mucus'.")         
     end,
     hurt7 = function (cutscene)
-    cutscene:battlerText(void, "...")         
+    cutscene:battlerText(void, "still not interested huh...[wait:5].\nokay okay i will switch to\na different topic.[wait:5]\ni bet you've never\nseen a talking sign")   
+    cutscene:battlerText(void, "they are a leader of a theater,[wait:5]\ntheir acting skill are\nout of this world!")
+    cutscene:battlerText(void, "they can perform \nany act that you\ncan think of!\nthey are even better than\nme at making faces.")
     end,
     hurt8 = function (cutscene)
-    cutscene:battlerText(void, "...")         
+    cutscene:battlerText(void, "please stop hitting me...[wait:5]\nif you keep do that\ni will...")    
+    cutscene:battlerText(void, "ugh. this must be a NIGHTMARE.[wait:5]\ni was hoping to make\nsome new friend...[wait:5\nand now i am...[wait:5]")
     end,
     hurt9 = function (cutscene)
-    cutscene:battlerText(void, "aaaaa.")
-
+    cutscene:battlerText(void, "maybe i'm just a slime after all.\nonly exist for EXP and G.\ni'm just annoying you.")
+    cutscene:battlerText(void, "i guess it's inevitable.\ngo ahead and get[wait:5] that EXP and G.\nit's all you wanted right?")
+   
     end,
 
     die = function (cutscene)
     Game.battle.music:stop()
-    cutscene:battlerText(void, "ok. so the truth is...\n")   
-    cutscene:battlerText(void, "i don't give any EXP.\nit doesn't exist\nfrom where i come from")  
-    cutscene:battlerText(void, "in fact, you can't\neven kill me.\nbecause i will run away.")
-    cutscene:battlerText(void, "i still somehow hope\nyou have a change of heart.")
-    cutscene:battlerText(void, "strange isn't?\nit have always\nbeen like this.")
-    cutscene:battlerText(void, "human and us don't have\na good history together.")     
-    cutscene:battlerText(void, "maybe it will change one day.")  
-    cutscene:battlerText(void, "oh sorry.\ni must have wasted your time.\nanyway i'm going to home.")   
-    cutscene:battlerText(void, "i was going to invite\nsomeone to my place.\nbut you? yeah i think\nthey will not like you.")   
+    cutscene:battlerText(void, "ok.[wait:5] so the truth is...\n")   
+    cutscene:battlerText(void, "i don't give any\nEXP or G.[wait:5]\nit doesn't exist from\nwhere i come from.")  
+    cutscene:battlerText(void, "in fact,[wait:5] you can't\neven kill me.\nbecause i will run away.\nit's not like you\ncan kill a dream anyway.")
+    cutscene:battlerText(void, "oh sorry[wait:5].\ni must have wasted\nyour time.[wait:5]\nanyway i'm going home.")   
+    cutscene:battlerText(void, "i was going to invite\nsomeone to my place.[wait:5]\nbut you?[wait:5] yeah i think\nthey will not like you.")   
     cutscene:battlerText(void, "you would be dead the \nmomment you enter there.")  
+    cutscene:battlerText(void, "i still somehow hope you\nhave a change of heart.")
+    cutscene:battlerText(void, "strange isn't?[wait:5]\nit have always\nbeen like this.")
+    cutscene:battlerText(void, "human and us don't have\na good history together.")     
+    cutscene:battlerText(void, "maybe it will\nchange one day.")  
     cutscene:wait(cutscene:slideTo(void, void.x, void.y-300, 3))
-    cutscene:after(function() -- after the cutscene is done
-    Game.battle:returnToWorld() -- Remove the battle scene
-    end)
-    
+    cutscene:after(function()
+    Game.battle:setState("VICTORY")
+    end)  
     end,
 
     slime = function (cutscene)      

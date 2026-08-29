@@ -1,7 +1,7 @@
 return {
-  version = "1.10",
+  version = "1.11",
   luaversion = "5.1",
-  tiledversion = "1.11.2",
+  tiledversion = "1.12.2",
   class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 7,
-  nextobjectid = 51,
+  nextobjectid = 62,
   properties = {
     ["border"] = "undertale/fire",
     ["light"] = true
@@ -89,6 +89,7 @@ return {
           width = 0,
           height = 0,
           rotation = 0,
+          opacity = 1,
           visible = true,
           properties = {}
         }
@@ -118,6 +119,7 @@ return {
           width = 40,
           height = 39.75,
           rotation = 0,
+          opacity = 1,
           visible = true,
           properties = {
             ["cutscene"] = "void.meeting",
@@ -134,10 +136,10 @@ return {
           width = 0,
           height = 0,
           rotation = 0,
+          opacity = 1,
           visible = true,
           properties = {
-            ["actor"] = "void_ut",
-            ["cutscene"] = "void.boom"
+            ["actor"] = "void_ut"
           }
         }
       }
@@ -166,6 +168,7 @@ return {
           width = 40,
           height = 280,
           rotation = 0,
+          opacity = 1,
           visible = true,
           properties = {}
         },
@@ -179,6 +182,7 @@ return {
           width = 280,
           height = 40,
           rotation = 0,
+          opacity = 1,
           visible = true,
           properties = {}
         },
@@ -192,6 +196,7 @@ return {
           width = 40,
           height = 280,
           rotation = 0,
+          opacity = 1,
           visible = true,
           properties = {}
         },
@@ -205,6 +210,7 @@ return {
           width = 80,
           height = 40,
           rotation = 0,
+          opacity = 1,
           visible = true,
           properties = {}
         },
@@ -218,6 +224,7 @@ return {
           width = 80,
           height = 40,
           rotation = 0,
+          opacity = 1,
           visible = true,
           properties = {}
         },
@@ -231,6 +238,7 @@ return {
           width = 40,
           height = 130.182,
           rotation = 0,
+          opacity = 1,
           visible = true,
           properties = {}
         },
@@ -244,6 +252,7 @@ return {
           width = 40,
           height = 130.182,
           rotation = 0,
+          opacity = 1,
           visible = true,
           properties = {}
         },
@@ -257,6 +266,7 @@ return {
           width = 120,
           height = 10,
           rotation = 0,
+          opacity = 1,
           visible = true,
           properties = {}
         }

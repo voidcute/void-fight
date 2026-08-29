@@ -1,17 +1,17 @@
 return {
-  version = "1.10",
+  version = "1.11",
   luaversion = "5.1",
-  tiledversion = "1.10.1",
-  name = "tundratiles_dark",
+  tiledversion = "1.12.2",
+  name = "meetingroom",
   class = "",
-  tilewidth = 20,
-  tileheight = 20,
+  tilewidth = 40,
+  tileheight = 40,
   spacing = 0,
   margin = 0,
-  columns = 9,
-  image = "../../../assets/sprites/tilesets/tundratiles_dark.png",
-  imagewidth = 186,
-  imageheight = 1500,
+  columns = 3,
+  image = "../../../assets/sprites/tilesets/meetingroom.png",
+  imagewidth = 120,
+  imageheight = 160,
   objectalignment = "unspecified",
   tilerendersize = "grid",
   fillmode = "stretch",
@@ -21,11 +21,11 @@ return {
   },
   grid = {
     orientation = "orthogonal",
-    width = 20,
-    height = 20
+    width = 40,
+    height = 40
   },
   properties = {},
   wangsets = {},
-  tilecount = 675,
+  tilecount = 12,
   tiles = {}
 }

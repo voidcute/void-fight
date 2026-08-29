@@ -1,5 +1,7 @@
 return {
     meeting = function(cutscene)
+   
+        if not Game:getFlag("void_fighted")  then
         cutscene:text("* Ball Club: Meet here!\n* Next meeting:\n* October 10th 10")  
         day = tonumber(os.date("%d"))
         month = tonumber(os.date("%m"))    
@@ -18,14 +20,17 @@ return {
             cutscene:playSound("snd_squeaky")
             cutscene:fadeOut(0)   
             cutscene:wait(2)
-            cutscene:startLightEncounter("void")
-       -- end
-    end,
-    boom = function (cutscene)
-        local void = cutscene:getCharacter("void_ut")
+            cutscene:fadeIn(0) 
 
-        cutscene:text("* a")
-        void:explode()
+            cutscene:startLightEncounter("void")
+            void:remove()
+            Game:setFlag("void_fighted",1)
+        else
+        cutscene:text("* Ball Club: Meet here!\n* Next meeting:\n* October 10th 10")  
+       -- end
+        end
+
+
+    end
     
-end
 }   
