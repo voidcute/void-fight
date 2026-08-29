@@ -34,14 +34,14 @@ function actor:init()
 
     -- Table of sprite animations
     self.animations = {
-        ["lightbattle_hurt"] = {"hurt", 1, true},
+        ["lightbattle/hurt"] = {"hurt", 1, true},
     }
 
     self.light_battle_width = 55
     self.light_battle_height = 66
 
     self:addLightBattlerPart("body", {
-        ["create_sprite"] = function()
+        ["sprite"] = function()
             local sprite = Sprite(self.path.."/body", 0, 65)
             sprite.origin_y = 1
             return sprite
@@ -64,7 +64,7 @@ end
      self:addLightBattlerPart("eyes", {
         -- path, function that returns a path, or a function that returns a sprite object
         -- if one's not defined, get the default animation
-        ["create_sprite"] = function()
+        ["sprite"] = function()
             local sprite = Sprite(self.path.."/eyes",0, 1)
             sprite.layer = 501           
             sprite:slidePath({{0,0},{0,2},{2,0},{-2,0},{0,2},{0,0}}, {speed = 0.2, loop = true, relative = true})
@@ -73,7 +73,7 @@ end
     })
     
     self:addLightBattlerPart("hat", {
-        ["create_sprite"] = function()
+        ["sprite"] = function()
             local sprite = Sprite(self.path.."/hat", 0, 65)
             sprite.origin_y = 1
             sprite.layer = 502     

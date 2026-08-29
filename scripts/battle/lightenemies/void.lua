@@ -20,9 +20,8 @@ function void:init()
     self.money = 0
     self.experience = 0
     self.spare_points = 0    
-    self.dialogue_bubble = "ut_round"
     self.dialogue_offset = {0, 10}
-   
+    self.apologize = false
     -- List of possible wave ids, randomly picked each turn
     self.waves = {
         -- "explode",
@@ -42,8 +41,6 @@ function void:init()
         "* void stands around\nabsentmindedly.",
         "* void stands around\nabsentmindedly?"
     }
-    -- Text displayed at the bottom of the screen when the enemy has low health
-    self.low_health_text = "* void is melting."
     self:registerAct("Something")
 
     self.gauge_size = 150
@@ -66,6 +63,9 @@ function void:hurt(amount, ...)
     super.hurt(self,99,...)
     elseif amount == 0 then 
     super.hurt(self,0,...)
+    end
+    if self.health <= (self.max_health * self.spare_percentage) then
+    self.mercy = 0
     end
     --[[elseif amount > 60 then --and amount ~= 67 and amount ~= 66
         self.violence = true
@@ -133,7 +133,34 @@ end
     elseif self.turn_count == 3 then
     return "* void looks at you curiously."
     end   
-     return TableUtils.pick(self.text)  
+    if  self.health == 900 then
+    return "* void looks concerned."
+    end
+    if  self.health == 800 then
+    return "* void looks anxious."
+    end
+    if  self.health == 700 then
+    return "* void was hurted."
+    end
+    if  self.health == 600 then
+    return "* void was hurted."
+    end
+    if  self.health == 500 then
+    return "* void was hurted."
+    end
+    if  self.health == 400 then
+    return "* void was hurted."
+    end
+    if  self.health == 300 then
+    return "* void was hurted."
+    end
+    if  self.health == 200 then
+    return "* void was hurted."
+    end
+    if  self.health == 100 then
+    return "* void can't take any more hit."
+    end
+    return TableUtils.pick(self.text)  
         
 end
 

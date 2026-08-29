@@ -2,20 +2,19 @@ local Basic, super = Class(LightWave)
 
 function Basic:init()
     super.init(self)
-
+    self.time = 5
     self:setArenaSize(100)
 end
 
 function Basic:onStart()
-    -- Every 0.33 seconds...
-    self.timer:every(1/3, function()
-        -- Our X position is offscreen, to the right
-        local x = SCREEN_WIDTH + 20
-        -- Get a random Y position between the top and the bottom of the arena
-        local y = Utils.random(Game.battle.arena.top, Game.battle.arena.bottom)
 
-        -- Spawn smallbullet going left with speed 8 (see scripts/battle/bullets/smallbullet.lua)
-        local bullet = self:spawnBullet("star", x, y, math.rad(180), 8)
+    self.timer:every(0.5, function()
+
+        local x = -20
+
+        local y =  Game.battle.soul.y
+
+        local bullet = self:spawnBullet("smilebullet", x, y, 0, 10)
         if not bullet.attacker then
             bullet.damage = 6
         end
