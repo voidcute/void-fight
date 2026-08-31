@@ -14,23 +14,23 @@ function void:init()
 end
 
     function void:onActionsEnd()
-        if self.void.violence == true then
-            if self.void.health == 900 then
+       if self.void.violence == true then
+--[[          if self.void.health == 900 then
             Game.battle.enemies[1].wave_override ="basic" 
             elseif self.void.health == 800 then
             Game.battle.enemies[1].wave_override ="aiming"     
             end
+--]]  
+        elseif self.void.checks == 2 then
+        Game.battle.enemies[1].wave_override ="aiming"  
 
-            elseif self.void.checks == 2 then
-            Game.battle.enemies[1].wave_override ="aiming"  
-
-            elseif self.void.violence == false then 
+        elseif self.void.violence == false then 
             if self.void.turn_count == 1 then
             Game.battle.enemies[1].wave_override ="basic"   
             elseif self.void.turn_count == 2 then
             Game.battle.enemies[1].wave_override ="aiming"  
             end
-            
+          
         end
     end
     function void:getDialogueCutscene()

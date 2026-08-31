@@ -140,7 +140,7 @@ end
     return "* void looks anxious."
     end
     if  self.health == 700 then
-    return "* void was hurted."
+    return "* void is disappointed."
     end
     if  self.health == 600 then
     return "* void was hurted."
@@ -155,7 +155,7 @@ end
     return "* void was hurted."
     end
     if  self.health == 200 then
-    return "* void was hurted."
+    return "* void is melting."
     end
     if  self.health == 100 then
     return "* void can't take any more hit."
