@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 7,
-  nextobjectid = 62,
+  nextobjectid = 63,
   properties = {
     ["border"] = "undertale/fire",
     ["light"] = true
@@ -141,6 +141,22 @@ return {
           properties = {
             ["actor"] = "void_ut"
           }
+        },
+        {
+          id = 62,
+          name = "transition",
+          type = "",
+          shape = "rectangle",
+          x = 281.091,
+          y = 470.455,
+          width = 120,
+          height = 10,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["map"] = "credit"
+          }
         }
       }
     },
@@ -251,20 +267,6 @@ return {
           y = 350,
           width = 40,
           height = 130.182,
-          rotation = 0,
-          opacity = 1,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 43,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 279.667,
-          y = 469,
-          width = 120,
-          height = 10,
           rotation = 0,
           opacity = 1,
           visible = true,

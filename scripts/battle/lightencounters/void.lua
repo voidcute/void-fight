@@ -7,8 +7,9 @@ function void:init()
     self.text = "* Ridiculously powerful enemy \nvoid showed up!!!"
     self.music = "Strongerer_Monsters"
     self.void = self:addEnemy("void",SCREEN_WIDTH/2, 246)
-    -- hurt when encounter???
     self.can_flee = false
+    -- hurt when encounter???
+
     frisk = Game.battle:getPartyBattler("frisk")
     frisk:hurt(0,true)
 end
@@ -69,6 +70,7 @@ end
     end
     -- worst code of all time ??????
     function void:onTurnEnd()
+        self.can_flee = false
     if  self.void.violence == false then
         self.void.turn_count = self.void.turn_count + 1
     elseif  self.void.violence == true then
@@ -76,6 +78,7 @@ end
         self.void.turn_counted = self.void.turn_count 
         self.void.turn_count = 11
         end
+        self.void:removeAct("Something")
         self.void:removeAct("Apologize")
         self.void:registerAct("Apologize")
         self.void.violence = false  

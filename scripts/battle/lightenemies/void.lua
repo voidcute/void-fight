@@ -102,6 +102,7 @@ function void:hurt(amount, ...)
         elseif name == "Apologize"  then
         self.turn_count = self.turn_counted 
         self:removeAct("Apologize")
+        self:registerAct("Something")
         return "* You apologized to void."
         --[[elseif name == "Flirt" then
         self.acted = true
@@ -133,6 +134,7 @@ end
     elseif self.turn_count == 3 then
     return "* void looks at you curiously."
     end   
+    if self.violence == true then
     if  self.health == 900 then
     return "* void looks concerned."
     end
@@ -140,10 +142,10 @@ end
     return "* void looks anxious."
     end
     if  self.health == 700 then
-    return "* void is disappointed."
+    return "* void was hurted."
     end
     if  self.health == 600 then
-    return "* void was hurted."
+    return "* void is disappointed."
     end
     if  self.health == 500 then
     return "* void was hurted."
@@ -160,6 +162,7 @@ end
     if  self.health == 100 then
     return "* void can't take any more hit."
     end
+end
     return TableUtils.pick(self.text)  
         
 end
