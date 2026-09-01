@@ -38,8 +38,7 @@ function void:init()
 
     -- Text randomly displayed at the bottom of the screen each turn
     self.text = {
-        "* void stands around\nabsentmindedly.",
-        "* void stands around\nabsentmindedly?"
+        "* void is "
     }
     self:registerAct("Something")
 
@@ -55,6 +54,7 @@ end
 
 
 function void:hurt(amount, ...)
+    Game:setFlag("void_violence",1)
     if amount > 0 and self.health > 100   then
     self.violence = true
     super.hurt(self,100,...)
@@ -85,14 +85,14 @@ function void:hurt(amount, ...)
         self.checks =  1
         return "* void - ATK 100 DEF 100\n* This creature is definitely in the wrong time and space!"
         else if name == "Check" and self.checks == 1 then
+        self.turn_count = 11  
         self.checks = 2   
         self:removeAct("Something")
         self:registerAct("Flirt")
         self:registerAct("Hug")
         self:registerAct("Imitate")
         return "* void - ATK 100 DEF 100\n* Stereotypical: Curvaceously attractive, but no brains..."  
-        elseif name == "Check" and self.checks == 2 then
-        self.checks = 3 
+        elseif name == "Check" and self.checks == 3 then
         return "* void - ATK 100 DEF 100\n* Stereotypical: Curvaceously attractive, but no brains..."  
         elseif name == "Something" then
         return TableUtils.pick{
@@ -103,6 +103,8 @@ function void:hurt(amount, ...)
         self.turn_count = self.turn_counted 
         self:removeAct("Apologize")
         self:registerAct("Something")
+        Game:addFlag("void_violence",-1)
+        
         return "* You apologized to void."
         --[[elseif name == "Flirt" then
         self.acted = true
@@ -134,35 +136,42 @@ end
     elseif self.turn_count == 3 then
     return "* void looks at you curiously."
     end   
-    if self.violence == true then
-    if  self.health == 900 then
-    return "* void looks concerned."
+    if Game:getFlag("void_violence") == 1 then
+        if  self.health == 900 then
+        return "* void looks concerned."
+        end
+        if  self.health == 800 then
+        return "* void looks anxious."
+        end
+        if  self.health == 700 then
+        return "* void was hurted."
+        end
+        if  self.health == 600 then
+        return "* void is disappointed."
+        end
+        if  self.health == 500 then
+        return "* void was hurted."
+        end
+        if  self.health == 400 then
+        return "* void was hurted."
+        end
+        if  self.health == 300 then
+        return "* void was hurted."
+        end
+        if  self.health == 200 then
+        return "* void is melting."
+        end
+        if  self.health == 100 then
+        return "* void can't take any more hit."
+        end
+    elseif Game:getFlag("void_violence") == 2 then 
+    return "* void is angry."
     end
-    if  self.health == 800 then
-    return "* void looks anxious."
+    if Game:getFlag("void_slime") == 1  then
+    return "* void is confused."
     end
-    if  self.health == 700 then
-    return "* void was hurted."
-    end
-    if  self.health == 600 then
-    return "* void is disappointed."
-    end
-    if  self.health == 500 then
-    return "* void was hurted."
-    end
-    if  self.health == 400 then
-    return "* void was hurted."
-    end
-    if  self.health == 300 then
-    return "* void was hurted."
-    end
-    if  self.health == 200 then
-    return "* void is melting."
-    end
-    if  self.health == 100 then
-    return "* void can't take any more hit."
-    end
-end
+
+
     return TableUtils.pick(self.text)  
         
 end

@@ -1,7 +1,7 @@
 return {
     meeting = function(cutscene)
    
-        if not Game:getFlag("void_fighted")  then
+        if not Game:getFlag("void_fighted",false)  then
         cutscene:text("* Ball Club: Meet here!\n* Next meeting:\n* October 10th 10")  
         day = tonumber(os.date("%d"))
         month = tonumber(os.date("%m"))    
@@ -24,7 +24,7 @@ return {
 
             cutscene:startLightEncounter("void")
             void:remove()
-            Game:setFlag("void_fighted",1)
+            Game:setFlag("void_fighted",true)
         else
         cutscene:text("* Ball Club: Meet here!\n* Next meeting:\n* October 10th 10")  
        -- end

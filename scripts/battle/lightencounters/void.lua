@@ -23,13 +23,13 @@ end
             end
 --]]  
         elseif self.void.checks == 2 then
-        Game.battle.enemies[1].wave_override ="aiming"  
+        Game.battle.enemies[1].wave_override =""  
 
         elseif self.void.violence == false then 
             if self.void.turn_count == 1 then
-            Game.battle.enemies[1].wave_override ="basic"   
+            Game.battle.enemies[1].wave_override =""   
             elseif self.void.turn_count == 2 then
-            Game.battle.enemies[1].wave_override ="aiming"  
+            Game.battle.enemies[1].wave_override =""  
             end
           
         end
@@ -82,6 +82,9 @@ end
         self.void:removeAct("Apologize")
         self.void:registerAct("Apologize")
         self.void.violence = false  
+    end
+    if self.void.checks == 2 then
+        self.void.checks = 3
     end
         
 end

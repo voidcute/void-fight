@@ -5,20 +5,18 @@ return{
 
     body = void:getSpritePart("body")
     eyes = void:getSpritePart("eyes")
-
     body:setSprite("enemies/void_ut/body_sweat")  
     eyes:setSprite("enemies/void_ut/eyes_sweat")
 
     cutscene:battlerText(void,"ah, sorry.[wait:5]\ni thought you was a ball\nso i bumped into you.")
     cutscene:battlerText(void,"what are you doing here?[wait:5]\ndidn't you read the sign?") 
 
-
     
     end,
     turn2 = function (cutscene)
-    body:setSprite("enemies/void_ut/body")  
-    eyes:setSprite("enemies/void_ut/eyes")
+
     cutscene:battlerText(void,"oh wait.[wait:5]\nyou are a human right?[wait:10]\nthis will be interesting.")    
+
 
     end,
     turn3 = function (cutscene)
@@ -38,8 +36,10 @@ return{
     end,
     turn10 = function (cutscene)
     end,
+
     hurt1 = function (cutscene)    
-    void = cutscene:getCharacter("void")    
+
+    void = cutscene:getCharacter("void")   
     body = void:getSpritePart("body")
     body:setSprite("enemies/void_ut/body_sweat")   
     eyes = void:getSpritePart("eyes")
@@ -49,6 +49,7 @@ return{
     end,
 
     hurt2 = function (cutscene)
+
     cutscene:battlerText(void, "ouch. why are you\nstill keep hitting me?[wait:5]\ni said i'm sorry.")
     end,
     hurt3 = function (cutscene)
@@ -59,9 +60,9 @@ return{
     cutscene:battlerText(void, "you shouldn't do that.")   
     end,
     hurt4 = function (cutscene)
-    cutscene:battlerText(void, "human. i don't know\nwhere you get \nthis idea from.")   
-    cutscene:battlerText(void, "but can you like\njust stop doing it?")   
-    cutscene:battlerText(void, "unbeliveable i know.[wait:5]\nit would make things\neasier for everyone.")
+    cutscene:battlerText(void, "human. i don't know why\nare you doing this.")   
+    cutscene:battlerText(void, "but can you like just\nstop hitting me please?")   
+    cutscene:battlerText(void, "it would make things\neasier for me.")
     end,
     hurt5 = function (cutscene)
     cutscene:battlerText(void, "do you find this\nfun or what?[wait:5]") 
@@ -77,33 +78,46 @@ return{
     end,
     hurt7 = function (cutscene)
     cutscene:battlerText(void, "still not interested huh...[wait:5].\nokay okay i will switch \nto a different topic.[wait:5]\ni bet you've never\nseen a talking sign.")   
-    cutscene:battlerText(void, "that's right![wait:5]\na takling sign![wait:5]\nthey run a theater![wait:5]\ntheir acting skill are\nout of this world!")
+    cutscene:battlerText(void, "that's right.[wait:5]\na takling sign.[wait:5]\nthey run a theater![wait:5]\ntheir acting skill are\nout of this world!")
     cutscene:battlerText(void, "they can perform \nany act that you\ncan think of!\nthey are even better than\nme at making faces.")
     cutscene:battlerText(void, "i can tell you more\nif you stop hitting me...")
     end,
     hurt8 = function (cutscene)
     cutscene:battlerText(void, "please stop hitting me...[wait:5]\nif you keep do that\ni will...")    
-    cutscene:battlerText(void, "ugh. this must be\na NIGHTMARE.[wait:5]\ni was hoping to make\nsome new friends...[wait:5]\nand now i am...[wait:5]")
+    cutscene:battlerText(void, "ugh...[wait:5]\nthis must be a NIGHTMARE.")
+        cutscene:battlerText(void, "i was hoping to make\nsome new friends...[wait:5]\nbut now i am...")
     end,
     hurt9 = function (cutscene)
-    cutscene:battlerText(void, "maybe i'm just a\nslime after all.\nonly exist for EXP.\ni'm just annoying you.")
-    cutscene:battlerText(void, "i guess it's inevitable.\ngo ahead and get\nthat EXP.[wait:5]\nit's all you wanted right?")
+    cutscene:battlerText(void,"i'm just annoying you...")
+    cutscene:battlerText(void, "maybe i'm just a\nslime after all.\nonly exist for EXP.")
+    cutscene:battlerText(void, "i guess it's inevitable.\ngo ahead and get that EXP.[wait:5]\nit's what you wanted right?")
    
     end,
 
     die = function (cutscene)
+    void = cutscene:getCharacter("void")  
+    body = void:getSpritePart("body")
+    eyes = void:getSpritePart("eyes")    
     Game.battle.music:stop()
-    cutscene:wait(5)
-    cutscene:battlerText(void, "ok.[wait:5] so the truth is...\n")   
+    void:toggleOverlay(true)
+    void:setSprite("hurt")
+    cutscene:wait(3)
+    cutscene:battlerText(void, "...")  
+    void:toggleOverlay(false)
+    cutscene:battlerText(void, ".....")  
+    eyes:setSprite("enemies/void_ut/save")
+    cutscene:battlerText(void, "ok.[wait:5] so the truth is...")   
     cutscene:battlerText(void, "i don't give any\nEXP or even G.[wait:5]\nit doesn't exist from\nwhere i come from.")  
     cutscene:battlerText(void, "in fact,[wait:5] you can't\neven kill me.\nbecause i will run away.\nit's not like you\ncan kill a dream anyway.")
-    cutscene:battlerText(void, "oh sorry[wait:5].\ni must have wasted\nyour time.[wait:5]\nanyway i'm going home.")   
+    cutscene:battlerText(void, "oh sorry[wait:5].\ni must have wasted\nyour time.")   
     cutscene:battlerText(void, "i was going to invite\nyou to my place.[wait:5]\nbut yeah now i think\nthey will not like you.")   
     cutscene:battlerText(void, "you would be dead the \nmoment you enter there.")  
     cutscene:battlerText(void, "...[wait:5]\ni still somehow hope you\nhave a change of heart.")
     cutscene:battlerText(void, "strange isn't?[wait:5]\nit has always\nbeen like this")
     cutscene:battlerText(void, "human and us don't have\na good history together.")     
-    cutscene:battlerText(void, "maybe it will\nchange one day...")  
+    cutscene:battlerText(void, "maybe it will\nchange one day.")  
+    cutscene:battlerText(void, "anyways, i'm going home.")
+    cutscene:battlerText(void, "see [color:red]you[color:reset] later.[wait:5]\nor maybe not...")
     cutscene:wait(cutscene:slideTo(void, void.x, void.y-300, 3))
     cutscene:after(function()
     Game.battle:setState("VICTORY")
@@ -111,7 +125,20 @@ return{
     end,
 
     slime = function (cutscene)      
-    cutscene:battlerText(void, "uh what?\nwhat did you just say???")  
+    Game:setFlag("void_slime",1)
+    void = cutscene:getCharacter("void")  
+    body = void:getSpritePart("body")
+    eyes = void:getSpritePart("eyes")
+    if Game:getFlag("void_violence",1) then
+    eyes:setSprite("enemies/void_ut/eyes_frisk")  
+    body:setSprite("enemies/void_ut/body_angry")
+    cutscene:battlerText(void, "ok,[wait:5] rude.[wait:5]\nfirst you hit me and\nnow you are saying\ni am stupid.") 
+    Game:addFlag("void_violence",1)
+    else 
+    cutscene:battlerText(void, "uh what?\nwhat did you just say???")   
+
+    end
+
     end,
 
 
