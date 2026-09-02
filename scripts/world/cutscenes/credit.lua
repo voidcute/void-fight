@@ -6,6 +6,7 @@ credit = function(cutscene)
         textobj:setOrigin(0.5, 0)
         table.insert(objects, textobj)
         cutscene.world:addChild(textobj)
+        Assets.playSound("mus_intronoise")
         return textobj
 
     end

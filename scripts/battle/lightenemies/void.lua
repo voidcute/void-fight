@@ -21,7 +21,6 @@ function void:init()
     self.experience = 0
     self.spare_points = 0    
     self.dialogue_offset = {0, 10}
-    self.apologize = false
     -- List of possible wave ids, randomly picked each turn
     self.waves = {
         -- "explode",
@@ -54,7 +53,6 @@ end
 
 
 function void:hurt(amount, ...)
-    Game:setFlag("void_violence",1)
     if amount > 0 and self.health > 100   then
     self.violence = true
     super.hurt(self,100,...)
@@ -91,6 +89,7 @@ function void:hurt(amount, ...)
         self:registerAct("Flirt")
         self:registerAct("Hug")
         self:registerAct("Imitate")
+        
         return "* void - ATK 100 DEF 100\n* Stereotypical: Curvaceously attractive, but no brains..."  
         elseif name == "Check" and self.checks == 3 then
         return "* void - ATK 100 DEF 100\n* Stereotypical: Curvaceously attractive, but no brains..."  
@@ -103,7 +102,7 @@ function void:hurt(amount, ...)
         self.turn_count = self.turn_counted 
         self:removeAct("Apologize")
         self:registerAct("Something")
-        Game:addFlag("void_violence",-1)
+        Game:setFlag("void_violence",0)
         
         return "* You apologized to void."
         --[[elseif name == "Flirt" then
@@ -136,7 +135,7 @@ end
     elseif self.turn_count == 3 then
     return "* void looks at you curiously."
     end   
-    if Game:getFlag("void_violence") == 1 then
+    if Game:getFlag("void_violence") < 11 then
         if  self.health == 900 then
         return "* void looks concerned."
         end
@@ -164,7 +163,7 @@ end
         if  self.health == 100 then
         return "* void can't take any more hit."
         end
-    elseif Game:getFlag("void_violence") == 2 then 
+    elseif Game:getFlag("void_violence") == 11 then 
     return "* void is angry."
     end
     if Game:getFlag("void_slime") == 1  then

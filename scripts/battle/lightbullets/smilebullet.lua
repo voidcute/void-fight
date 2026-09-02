@@ -1,9 +1,11 @@
 local SmallBullet, super = Class(LightBullet)
 
-function SmallBullet:init(x, y, dir, speed)
+function SmallBullet:init(x, y, dir, speed,flip)
     -- Last argument = sprite path
     super.init(self, x, y, "bullets/smile_bullet")
-
+    if flip then 
+        self.flip_x = true
+    end
     -- Move the bullet in dir radians (0 = right, pi = left, clockwise rotation)
     self.physics.direction = dir
     -- Speed the bullet moves (pixels per frame at 30FPS)

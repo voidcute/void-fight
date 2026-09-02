@@ -20,9 +20,8 @@ return {
             cutscene:playSound("snd_squeaky")
             cutscene:fadeOut(0)   
             cutscene:wait(2)
-            cutscene:fadeIn(0) 
-
             cutscene:startLightEncounter("void")
+            cutscene:fadeIn(0) 
             void:remove()
             Game:setFlag("void_fighted",true)
         else
