@@ -78,33 +78,41 @@ function void:hurt(amount, ...)
     end
 
     function void:onAct(battler, name)
-
         if name == "Check" and self.checks == 0 then
-        self.checks =  1
+        self.checks = 1
         return "* void - ATK 100 DEF 100\n* This creature is definitely in the wrong time and space!"
-        else if name == "Check" and self.checks == 1 then
+        elseif name == "Check" and self.checks == 1 then
+        self.checks = 2
         self.turn_count = 11  
-        self.checks = 2   
         self:removeAct("Something")
         self:registerAct("Flirt")
         self:registerAct("Hug")
         self:registerAct("Imitate")
-        
         return "* void - ATK 100 DEF 100\n* Stereotypical: Curvaceously attractive, but no brains..."  
         elseif name == "Check" and self.checks == 3 then
         return "* void - ATK 100 DEF 100\n* Stereotypical: Curvaceously attractive, but no brains..."  
-        elseif name == "Something" then
+        end
+        if name == "Something" then
         return TableUtils.pick{
         "* You wave,[wait:5] void waves(?) back at you.",
         "* You say hello,[wait:5] void says hi back.",
         "* You smile,[wait:5] void imitates your smile."}
-        elseif name == "Apologize"  then
-        self.turn_count = self.turn_counted 
-        self:removeAct("Apologize")
-        self:registerAct("Something")
-        Game:setFlag("void_violence",0)
-        
-        return "* You apologized to void."
+        end
+        if name == "Apologize"  then
+            if Game:getFlag("void_apologize",1) == 1 then
+                self:removeAct("Apologize")
+                self:registerAct("Something")
+                Game:addFlag("void_apologize",1)
+                Game:addFlag("void_violence",0)
+                self.turn_count = self.turn_counted 
+                return "* You apologized to void."
+            else
+                self:removeAct("Apologize")
+                self:registerAct("Something")
+                Game:addFlag("void_apologize",1)
+                Game:setFlag("void_violence",0)
+            return "* You apologized to void again."
+           
         --[[elseif name == "Flirt" then
         self.acted = true
         self.act1 = self.act1 + 1
@@ -115,7 +123,7 @@ function void:hurt(amount, ...)
            return "*  " .. self.name .. " ."
         end
         
-       
+       en
         else
         self:removeAct("Something")
         return "* "
@@ -135,7 +143,7 @@ end
     elseif self.turn_count == 3 then
     return "* void looks at you curiously."
     end   
-    if Game:getFlag("void_violence") < 11 then
+    if Game:getFlag("void_violence",0) > 0 and Game:getFlag("void_violence",0) < 11  then
         if  self.health == 900 then
         return "* void looks concerned."
         end
@@ -163,10 +171,10 @@ end
         if  self.health == 100 then
         return "* void can't take any more hit."
         end
-    elseif Game:getFlag("void_violence") == 11 then 
+    elseif Game:getFlag("void_violence",11) == 1 then 
     return "* void is angry."
     end
-    if Game:getFlag("void_slime") == 1  then
+    if Game:getFlag("void_slime", 0) == 1  then
     return "* void is confused."
     end
 

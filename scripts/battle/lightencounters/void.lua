@@ -51,30 +51,34 @@ end
     function void:getDialogueCutscene()
         super.init(self)
         if self.void.violence == true then
-        if self.void.health == 900 then
-            return "void.hurt1"
-        elseif self.void.health == 800 then    
-            return "void.hurt2"
-        elseif self.void.health == 700 then    
-            return "void.hurt3"
-        elseif self.void.health == 600 then    
-            return "void.hurt4"
-        elseif self.void.health == 500 then    
-            return "void.hurt5"
-        elseif self.void.health == 400 then    
-            return "void.hurt6"
-        elseif self.void.health == 300 then    
-            return "void.hurt7"
-        elseif self.void.health == 200 then    
-            return "void.hurt8"
-        elseif self.void.health == 100 then    
-            return "void.hurt9"
-        elseif self.void.health < 100 then
-            return "void.die"
+            if self.void.health == 900 then
+                return "void.hurt1"
+            elseif self.void.health == 800 then    
+                return "void.hurt2"
+            elseif self.void.health == 700 then    
+                return "void.hurt3"
+            elseif self.void.health == 600 then    
+                return "void.hurt4"
+            elseif self.void.health == 500 then    
+                return "void.hurt5"
+            elseif self.void.health == 400 then    
+                return "void.hurt6"
+            elseif self.void.health == 300 then    
+                return "void.hurt7"
+            elseif self.void.health == 200 then    
+                return "void.hurt8"
+            elseif self.void.health == 100 then    
+                return "void.hurt9"
+            elseif self.void.health < 100 then
+                return "void.die"
+            end
         end
-        elseif self.void.checks == 2 then
-        return "void.slime"
-        elseif self.void.turn_count == 1 then
+        if self.void.checks == 2 then
+        return "void.slime"   
+        end
+        if self.void.acted == true then
+        end
+        if self.void.turn_count == 1 then
             return "void.turn1"
         elseif self.void.turn_count == 2 then
             return "void.turn2"
@@ -121,11 +125,14 @@ end
         end
         self.void:removeAct("Something")
         self.void.violence = false  
-
+    end
+    if self.void.acted == true then
+        self.void.acted = false
     end
     if self.void.checks == 2 then
         self.void.checks = 3
     end
+
         
 end
 

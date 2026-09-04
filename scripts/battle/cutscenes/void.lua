@@ -50,18 +50,19 @@ return{
     cutscene:battlerText(void, "ouch. why are you\nstill keep hitting me?[wait:5]\ni said i'm sorry.")
     end,
     hurt3 = function (cutscene)
-    Game:setFlag("void_violence",3)
-    cutscene:battlerText(void, "...")  
-    cutscene:battlerText(void, "oh.[wait:5] are you...\ntrying to kill me?")     
-    cutscene:battlerText(void, "so you must be one\n of those human.")
-    cutscene:battlerText(void, "thinking we are just\nsome creature for\nyou to gain some EXP.") 
-    cutscene:battlerText(void, "you shouldn't do that.")   
-    end,
-    hurt4 = function (cutscene)
-    Game:setFlag("void_violence",4)
+    Game:setFlag("void_violence",3)    
     cutscene:battlerText(void, "human. i don't know why\nare you doing this.")   
     cutscene:battlerText(void, "but can you like just\nstop hitting me please?")   
     cutscene:battlerText(void, "it would make things\neasier for me.")
+
+    end,
+    hurt4 = function (cutscene)
+    Game:setFlag("void_violence",4)
+    cutscene:battlerText(void, "...")  
+    cutscene:battlerText(void, "oh.[wait:5] are you...\ntrying to kill me?")     
+    cutscene:battlerText(void, "so you must be one\nof those human.")
+    cutscene:battlerText(void, "thinking i'm just\nsome creature for\nyou to farm some EXP.") 
+    cutscene:battlerText(void, "you shouldn't do that.")   
     end,
     hurt5 = function (cutscene)
     Game:setFlag("void_violence",5)
@@ -72,7 +73,7 @@ return{
     end,
     hurt6 = function (cutscene)
     Game:setFlag("void_violence",6)
-    cutscene:battlerText(void, "not interested huh...[wait:5]\nand what's with the look?\nyou heard of it already?")
+    cutscene:battlerText(void, "not interested huh?...[wait:5]\nand what's with the look?\nyou heard of it already?")
     cutscene:battlerText(void, "but did you know that...[wait:5]\ni come from a place where\nplants and slimes are\ngood friends?!")
     cutscene:battlerText(void, "plants feeding the slimes\nwith their 'fleshes'.")
     cutscene:battlerText(void, "slimes watering the plants\nwith their 'mucus'.")
@@ -80,11 +81,9 @@ return{
     end,
     hurt7 = function (cutscene)
     Game:setFlag("void_violence",7)
-    cutscene:battlerText(void, "still not interested huh...[wait:5].\nokay okay i will switch \nto a different topic.")   
-    cutscene:battlerText(void, "you don't have to [color:yellow]FIGHT[color:reset].[wait:5]\nthere is something\ncalled [color:yellow]ACT[color:reset],[wait:5]\nyou can end fight\nwithout hurting anyone.")
-    cutscene:battlerText(void, "it doesn't give\nyou EXP but give\nyou experiences.")  
+    cutscene:battlerText(void, "still not interested?...[wait:5].\nokay okay i will switch \nto a different topic.")   
     cutscene:battlerText(void, "my friend told me that \nhumans are good at [color:yellow]ACT[color:reset]ing.\nit's their speciality.")    
-    cutscene:battlerText(void, "i would like to\nsee an [color:yellow]ACT.[color:reset].\n[wait:5]you should try [color:yellow]ACT[color:reset]ing.") 
+    cutscene:battlerText(void, "you should try [color:yellow]ACT[color:reset]ing instead.") 
 
     end,
     hurt8 = function (cutscene)
@@ -102,6 +101,7 @@ return{
     end,
 
     die = function (cutscene)
+    Game:setFlag("void_violence",10)
     void = cutscene:getCharacter("void")  
     body = void:getSpritePart("body")
     eyes = void:getSpritePart("eyes")    
@@ -136,7 +136,7 @@ return{
     void = cutscene:getCharacter("void")  
     body = void:getSpritePart("body")
     eyes = void:getSpritePart("eyes")
-    if Game:getFlag("void_violence") < 11 then
+    if Game:getFlag("void_violence",0) >= 1 then
     eyes:setSprite("enemies/void_ut/eyes_frisk")  
     body:setSprite("enemies/void_ut/body_angry")
     cutscene:battlerText(void, "ok,[wait:5] rude.[wait:5]\nfirst you hit me and\nnow you are saying\ni am stupid.") 
