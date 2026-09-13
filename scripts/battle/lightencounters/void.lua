@@ -119,9 +119,7 @@ end
         end
         if self.void.health == 300 then
         self.void:removeAct("Apologize")
-        self.void:registerAct("Flirt")
-        self.void:registerAct("Hug")
-        self.void:registerAct("Imitate")    
+        self.void:registerAct("Listen")   
         end
         self.void:removeAct("Something")
         self.void.violence = false  

@@ -37,13 +37,15 @@ function void:init()
 
     -- Text randomly displayed at the bottom of the screen each turn
     self.text = {
-        "* void is "
+        "* someone that want to meet you."
     }
     self:registerAct("Something")
 
     self.gauge_size = 150
     self.damage_offset = {5, -70}
     self.act1 = 0
+    self.act2 = 0
+    self.act3 = 0
     self.acted = false
     self.violence = false
     self.can_die = false
@@ -112,24 +114,38 @@ function void:hurt(amount, ...)
                 Game:addFlag("void_apologize",1)
                 Game:setFlag("void_violence",0)
             return "* You apologized to void again."
-           
-        --[[elseif name == "Flirt" then
+            end 
+        end
+        if name == "Flirt" then
         self.acted = true
         self.act1 = self.act1 + 1
-
-        if self.act1 == 1 then
-
-        else
-           return "*  " .. self.name .. " ."
+            if self.act1 == 1 then
+            return "*  ."
+            else
+            return "*  ."
+            end
         end
+        if name == "Hug" then
+        self.acted = true
+        self.act2 = self.act2 + 1
+            if self.act1 == 1 then
+            return "*  ."
+            else
+            return "*  ."
+            end
+        end
+        if name == "Imitate" then
+        self.acted = true
+        self.act3 = self.act3 + 1
+            if self.act1 == 1 then
+            return "*  ."
+            else
+            return "*  ."
+            end
+        end
+  
         
-       en
-        else
-        self:removeAct("Something")
-        return "* "
-        end]]
-        end
-    end
+
 
     
     return super.onAct(self,battler, name)
@@ -141,6 +157,8 @@ end
     if self.turn_count == 2 then
     return "* void wonders why are you here."
     elseif self.turn_count == 3 then
+    return "* void looks sad."
+    elseif self.turn_count == 4 then
     return "* void looks at you curiously."
     end   
     if Game:getFlag("void_violence",0) > 0 and Game:getFlag("void_violence",0) < 11  then
