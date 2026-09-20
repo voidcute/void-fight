@@ -7,7 +7,7 @@ return {
         month = tonumber(os.date("%m"))    
         hour = tonumber(os.date("%H"))
        local void = cutscene:getCharacter("void_ut")
-       -- if day == 10 and month == 10 and hour == 22 or hour == 10
+        --if day == 10 and month == 10 and hour == 22 or hour == 10
         --then
             cutscene:look(down)
             cutscene:wait(cutscene:playSound("escaped"))
@@ -24,9 +24,9 @@ return {
             cutscene:fadeIn(0) 
             void:remove()
             Game:setFlag("void_fighted",true)
+         --end
         else
-        cutscene:text("* Ball Club: Meet here!\n* Next meeting:\n* October 10th 10")  
-       -- end
+            cutscene:text("* Ball Club: Meet here!\n* Next meeting:\n* October 10th 10")  
         end
 
 

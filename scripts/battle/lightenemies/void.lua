@@ -169,10 +169,10 @@ end
         return "* void looks anxious."
         end
         if  self.health == 700 then
-        return "* void was hurted."
+        return "* void looks puzzled."
         end
         if  self.health == 600 then
-        return "* void is disappointed."
+        return "* void looks disappointed."
         end
         if  self.health == 500 then
         return "* void was hurted."
