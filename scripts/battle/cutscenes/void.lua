@@ -2,7 +2,7 @@ return{
     
     turn1 = function (cutscene)
     void = cutscene:getCharacter("void")  
-
+    hat = void:getSpritePart("hat")
     body = void:getSpritePart("body")
     eyes = void:getSpritePart("eyes")
     x = body.origin_x
@@ -28,7 +28,7 @@ return{
     eyes:slidePath({{0,0},{0,2},{2,0},{-2,0},{0,2},{0,0}}, {speed = 0.2, loop = true, relative = true})
     cutscene:battlerText(void,"oh no,[wait:5]\nit's ok.") 
     cutscene:battlerText(void,"since you're the\nonly one here,[wait:5]\nyou're welcome to join.") 
-
+    cutscene:wait(0.1)
     end,
     turn2 = function (cutscene)
     cutscene:battlerText(void,"huh?\n[wait:5]where are the others?")  
@@ -53,19 +53,53 @@ return{
     eyes:slidePath({{0,0},{0,2},{2,0},{-2,0},{0,2},{0,0}}, {speed = 0.2, loop = true, relative = true})
     end,
     turn4 = function (cutscene)
+    void = cutscene:getCharacter("void")  
+    hat = void:getSpritePart("hat")
+    body = void:getSpritePart("body")
+    eyes = void:getSpritePart("eyes")
     reset()
     eyes:setSprite("enemies/void_ut/eyes")
     eyes:slidePath({{0,0},{0,2},{2,0},{-2,0},{0,2},{0,0}}, {speed = 0.2, loop = true, relative = true})
-    cutscene:battlerText(void,"none of my piece are\n good enough to give...") 
+    cutscene:battlerText(void,"none of my piece are\ngood enough to give...") 
     cutscene:battlerText(void,"it's ok.") 
     cutscene:battlerText(void,"i can give you\nnsomething else.[wait:5]\nplease wait here,[wait:5]\ni'll go get it") 
-    cutscene:slideTo(eyes, void.x, void.y-300, 3)
-    cutscene:slideTo(body, void.x, void.y-300, 3)
+    reset()
+
+
+    cutscene:slideTo(eyes, eyes.x+300, eyes.y, 3)
+    cutscene:slideTo(body, body.x+300, body.y, 3)
     cutscene:wait(3)
     end,
-    turn5 = function (cutscene)
+    turn5 = function (cutscene,EnemyBattler)
+     
+    hat.visible = false
+    eyes.visible = false
+    body.visible = false
+    cutscene:wait(0.1)
+    cutscene:slideTo(eyes, eyes.x-300, eyes.y, 0.1)
+    cutscene:slideTo(body, body.x-300, body.y, 0.1)
+
+    cutscene:wait(0.1)
+    cutscene:slideTo(void, void.x+400, void.y, 0.1)
+    cutscene:wait(0.1)
+    hat.visible = true
+    eyes.visible = true
+    body.visible = true
+    cutscene:slideTo(void, void.x-200, void.y, 3)
+    
+    cutscene:wait(3)
+    eyes:slidePath({{0,0},{0,2},{2,0},{-2,0},{0,2},{0,0}}, {speed = 0.2, loop = true, relative = true})
+    cutscene:battlerText(void,"i'm back!\ndid ya miss me?")  
+    cutscene:battlerText(void,"huh? you look like \nyou've seen a ghost.")  
+    cutscene:battlerText(void,"uh anyways i've got\nsomething for you.")   
+    cutscene:battlerText(void,"a seed!...\n[wait:5]of something...[wait:5]\ni'm not really sure.")  
+    cutscene:battlerText(void,"but i'm sure you\nwill be amazed by it.") 
+    cutscene:battlerText(void,"go ahead and water them.") 
+
+
     end,
     turn6 = function (cutscene)
+    cutscene:battlerText(void,"a.") 
     end,
     turn7 = function (cutscene)
     end,
@@ -109,11 +143,11 @@ return{
     hurt4 = function (cutscene)
     Game:setFlag("void_violence",4)
     cutscene:battlerText(void, "...")  
-    cutscene:battlerText(void, "oh.[wait:5] are you...\ntrying to kill me?")   
     void:getSpritePart("body"):setSprite("enemies/void_ut/body_sweat")   
     void:getSpritePart("eyes"):setSprite("enemies/void_ut/eyes_frowning")
-    cutscene:battlerText(void, "so nothing has changed?\nhuman still hate slime?...")
-    cutscene:battlerText(void, "but that was a long\ntime ago...\nmaybe this is a\nmisunderstanding?") 
+    cutscene:battlerText(void, "oh.[wait:5] are you...\ntrying to kill me?")   
+    cutscene:battlerText(void, "no way...\nthis must be a\nmisunderstanding.") 
+    cutscene:battlerText(void, "you wouldn't actually\ndo that right?") 
     end,
     hurt5 = function (cutscene)
     Game:setFlag("void_violence",5)
@@ -156,7 +190,7 @@ return{
     hurt9 = function (cutscene)
     Game:setFlag("void_violence",9)
     cutscene:battlerText(void,"i'm just annoying you...")
-    cutscene:battlerText(void,"they were right...\nhuman still hate slime.")
+    cutscene:battlerText(void,"you are actually trying to\nkill me...")
     cutscene:battlerText(void,"i'm such an idiot\nfor thinking otherwise...")
     end,
 
@@ -178,12 +212,16 @@ return{
     cutscene:battlerText(void, "sorry[wait:5]...\ni must have wasted\nyour time.")   
     cutscene:battlerText(void, "i wanted to invite\nyou to the island.[wait:5]\nbut uh now i think\nthey will not like you.")   
     cutscene:battlerText(void, "you would be dead the \nmoment you enter there.")  
-    cutscene:battlerText(void, "...[wait:5]\ndespite everything,[wait:5] i still\nhope that you have a\nchange of heart.")
+    cutscene:battlerText(void, "...[wait:5]\ndespite everything,[wait:5] i still\nhope that we can\nbe friend.")
     cutscene:battlerText(void, "anyways, i'm going home.")
-    cutscene:battlerText(void, "see [color:red]you[color:reset] later.[wait:5]\nor maybe not...")
+    cutscene:battlerText(void, "see [color:red]you[color:reset] later.")
     cutscene:wait(cutscene:slideTo(void, void.x, void.y-300, 3))
+    cutscene:after(function()
+    Game.battle:setState("VICTORY")
+    end)  
     end,
-    slime = function (cutscene)      
+    
+  --[[  slime = function (cutscene)      
     Game:setFlag("void_slime",1)
     void = cutscene:getCharacter("void")  
     body = void:getSpritePart("body")
@@ -200,7 +238,7 @@ return{
 
     end
 
-    end,
+    end,--]]
 
 
             

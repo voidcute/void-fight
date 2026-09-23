@@ -22,22 +22,19 @@ end
             Game.battle.enemies[1].wave_override ="aiming"     
             end
 --]]  
-        elseif self.void.checks == 2 then
-        Game.battle.enemies[1].wave_override ="basic2"  
+       -- elseif self.void.checks == 2 then
+      --  Game.battle.enemies[1].wave_override ="basic2"  
 
         elseif self.void.violence == false then 
             if self.void.turn_count == 1 then
-
-            elseif self.void.turn_count == 2 then
-            
+ 
+            elseif self.void.turn_count == 2 then    
             elseif self.void.turn_count == 3 then
-
-            elseif self.void.turn_count == 4 then
-
+            elseif self.void.turn_count == 4 then 
             elseif self.void.turn_count == 5 then
-
+        Game.battle.enemies[1].wave_override ="water"            
             elseif self.void.turn_count == 6 then
-
+        Game.battle.enemies[1].wave_override ="basic"    
             elseif self.void.turn_count == 7 then
 
             elseif self.void.turn_count == 8 then 
@@ -73,11 +70,11 @@ end
                 return "void.die"
             end
         end
-        if self.void.checks == 2 then
-        return "void.slime"   
-        end
-        if self.void.acted == true then
-        end
+--        if self.void.checks == 2 then
+--        return "void.slime"   
+--        end
+       -- if self.void.acted == true then
+       -- end
         if self.void.turn_count == 1 then
             return "void.turn1"
         elseif self.void.turn_count == 2 then
@@ -105,6 +102,9 @@ end
     -- worst code of all time ??????
     function void:onTurnEnd()
         self.can_flee = false
+        if  self.void.turn_count == 5 then
+        self.void.dialogue_right = false
+        end
     if  self.void.violence == false then
         self.void.turn_count = self.void.turn_count + 1
     elseif  self.void.violence == true then
@@ -124,12 +124,12 @@ end
         self.void:removeAct("Something")
         self.void.violence = false  
     end
-    if self.void.acted == true then
-        self.void.acted = false
-    end
-    if self.void.checks == 2 then
-        self.void.checks = 3
-    end
+  --  if self.void.acted == true then
+  --      self.void.acted = false
+   -- end
+  --  if self.void.checks == 2 then
+   --     self.void.checks = 3
+   -- end
 
         
 end

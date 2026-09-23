@@ -28,7 +28,7 @@ function Aiming:onStart()
             for _, attacker in ipairs(self:getMenuAttackers()) do
 
                 -- Get the attacker's center position
-                local x, y = attacker:getRelativePos(attacker.width/2, attacker.height/2)
+                local x, y = attacker:getRelativePos(attacker.width/2, (attacker.height/2))
 
                 -- Get the angle between the bullet position and the soul's position
                 local angle = Utils.angle(x, y, Game.battle.soul.x, Game.battle.soul.y)

@@ -12,7 +12,7 @@ return {
   nextlayerid = 7,
   nextobjectid = 63,
   properties = {
-    ["border"] = "undertale/fire",
+    ["border"] = "fire",
     ["light"] = true
   },
   tilesets = {},
