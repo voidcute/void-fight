@@ -27,7 +27,7 @@ end
 
         elseif self.void.violence == false then 
             if self.void.turn_count == 1 then
- 
+        Game.battle.enemies[1].wave_override ="basic"    
             elseif self.void.turn_count == 2 then    
             elseif self.void.turn_count == 3 then
             elseif self.void.turn_count == 4 then 

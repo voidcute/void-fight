@@ -17,38 +17,33 @@ end
 
 function pot:update()
     -- For more complicated bullet behaviours, code here gets called every update
-  
+
     super.update(self)
 
-    Object.startCache()
-    for _, other in ipairs(Game.stage:getObjects(Registry.getBullet("droplet"))) do -- loop through a list of every bullet added to the battle
-    if other ~= self and self:collidesWith(other) then -- if 'other' isn't this bullet itself, check collision with it
-        if self.watered <5 then
-           self.watered = self.watered + 1
-        end
-        other:remove()
-        if  self.watered == 1 then
-        self:setSprite("bullets/pot_2")
-        end
-        if  self.watered == 2 then
-        self:setSprite("bullets/pot_3")
-        end
-        if  self.watered == 3 then
-        self:setSprite("bullets/pot_4")
-        end
-        if  self.watered == 4 then
-        self.wave.watered = self.wave.watered + 1
-        self:setSprite("bullets/pot_5")
-        end
+    local droplet_class = Mod.libs["magical-glass"]:getLightBullet("droplet")
         
-        -- code in here will be run every frame that they are touching
-    end
+        for _, droplet in ipairs(Game.stage:getObjects(Bullet)) do
+            if droplet:includes(droplet_class) and droplet ~= self and self:collidesWith(droplet) then
+            if self.watered < 5 then
+                self.watered = self.watered + 1
+            end
+            droplet:remove()
+
+            if self.watered == 1 then
+                self:setSprite("bullets/pot_2")
+            elseif self.watered == 2 then
+                self:setSprite("bullets/pot_3")
+            elseif self.watered == 3 then
+                self:setSprite("bullets/pot_4")
+            elseif self.watered == 4 then
+                self.wave.watered = self.wave.watered + 1
+                self:setSprite("bullets/pot_5")
+            end
+        end
     end
     Object.endCache()
+end
 
 function pot:onCollide()
-
-
-end
 end
 return pot

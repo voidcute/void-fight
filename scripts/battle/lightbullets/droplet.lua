@@ -11,6 +11,9 @@ function droplet:init(x, y)
     self.physics.speed = 4
     self.destroy_on_hit = false
 end
+function droplet:onDamage()
+        return {}
+end
 
 function droplet:update()
     -- For more complicated bullet behaviours, code here gets called every update

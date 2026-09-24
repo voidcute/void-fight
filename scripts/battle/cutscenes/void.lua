@@ -108,6 +108,7 @@ return{
     turn9 = function (cutscene)
     end,
     turn10 = function (cutscene)
+    cutscene:battlerText(void,"a.") 
     cutscene:after(function()
     Game.battle:setState("VICTORY")
     end)  

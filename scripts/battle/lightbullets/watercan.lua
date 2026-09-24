@@ -24,10 +24,9 @@ function watercan:onDamage()
 end
 function watercan:update()
     local soul = Game.battle.soul
-    x= soul.x
-    y= soul.y
-    self.x = x
-    self.y = y
+    self.x = soul.x-8
+    self.y = soul.y-29
+    
     -- For more complicated bullet behaviours, code here gets called every update
     super.update(self)
 
