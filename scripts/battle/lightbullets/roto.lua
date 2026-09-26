@@ -1,6 +1,6 @@
 local roto, super = Class(LightBullet)
 
-function roto:init(x, y, dir, speed, timer, cooldown, attacks, attack_delay)
+function roto:init(x, y, dir, speed, timer, attacks, attack_delay,cooldown)
     -- Last argument = sprite path
     super.init(self, x, y, "bullets/roto_1")
     self.sprite:setAnimation({"bullets/roto",0.1,true})
@@ -39,16 +39,18 @@ function roto:update()
             for i = 1, 4 do
                 local dir = math.rad(i * 90 - 45)
                 local speed = 8
-                local bullet = self.wave:spawnBullet("ruta", self.x + 6, self.y + 15, dir, speed)
+                local bullet = self.wave:spawnBullet("ruta", self.x+3, self.y + 20, dir, speed)
                 bullet.match_rotation = true
             end
-
+            
             self.attacks_left = self.attacks_left - 1
             if self.attacks_left > 0 then
+                
                 self.timer = self.attack_delay
             else
                 self.timer = self.cooldown
                 self.state = 2
+                self.stop = false
             end
         end
     end

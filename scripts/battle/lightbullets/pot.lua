@@ -4,6 +4,7 @@ function pot:init(x, y)
     -- Last argument = sprite path
     super.init(self, x, y, "bullets/pot_1")
     self:setScale(1)
+    self.layer = LIGHT_BATTLE_LAYERS["above_bullets"]
     -- Top-center origin point (will be rotated around it)
     self:setOrigin(0.5, 0)
     -- The hitbox where the player will be damaged by the bullet (affected by scale and rotation)
@@ -27,8 +28,12 @@ function pot:update()
             if self.watered < 5 then
                 self.watered = self.watered + 1
             end
+            if self.watered < 3 then
+                Assets.playSound("power")
+            else
+                 Assets.playSound("bump")
+            end
             droplet:remove()
-
             if self.watered == 1 then
                 self:setSprite("bullets/pot_2")
             elseif self.watered == 2 then
@@ -41,6 +46,7 @@ function pot:update()
             end
         end
     end
+
     Object.endCache()
 end
 
