@@ -19,21 +19,20 @@ function potchomp:init(x, y, wait_time, grown_time, flash_time)
     self.sprite.y = self.sprite.height
     self.sprite:setScale(1, 0)
     self:setHitbox(0, 0, 36, 29)
-    self.head_collider = PolygonCollider(self, {
-        {0, -56},
-        {31, -56},
-        {31, -25},
-        {0, -25}
-    })
-    self.stem_collider = PolygonCollider(self, {
-        {8, -25},
-        {23, -25},
-        {23, 85},
-        {8, 85}
-    })
+
     self.destroy_on_hit = false
     -- Move the bullet in dir radians (0 = right, pi = left, clockwise rotation)
     -- Speed the bullet moves (pixels per frame at 30FPS)
+end
+
+function potchomp:updateGrowColliders(progress)
+    local function growY(y)
+        return 85 + ((y - 85) * progress)
+    end
+
+    self.head_collider = Hitbox(self, 0, growY(-56), 31, 31)
+    self.stem_collider = Hitbox(self, 12, growY(-25), 12, 110)
+    self.collider = ColliderGroup(self, {self.head_collider, self.stem_collider})
 end
 
 function potchomp:update()
@@ -47,15 +46,6 @@ function potchomp:update()
             self.sprite:setScale(1, 1)
             self.timer = self.wait_time
             self.state = "warning"
-        end
-    elseif self.state == "growing" then
-        self.grow_timer = self.grow_timer - DTMULT
-        local progress = math.max(0, 1 - (self.grow_timer / self.grow_duration))
-        self.sprite:setScale(1, progress)
-        if self.grow_timer <= 0 then
-            self.sprite:setScale(1, 1)
-            self.timer = self.grown_time
-            self.state = "grown"
         end
     elseif self.state == "warning" then
         self.timer = self.timer - DTMULT
@@ -85,17 +75,29 @@ function potchomp:update()
 
             self:setColor(1, 1, 1)
             self.sprite.y = 85
+            self:updateGrowColliders(0)
             self.grow_timer = self.grow_duration
             self.state = "growing"
         end
+        elseif self.state == "growing" then
+        self.grow_timer = self.grow_timer - DTMULT
+        local progress = math.max(0, 1 - (self.grow_timer / self.grow_duration))
+        self.sprite:setScale(1, progress)
+        self:updateGrowColliders(progress)
+        if self.grow_timer <= 0 then
+            self.sprite:setScale(1, 1)
+            self.timer = self.grown_time
+            self.state = "grown"
+        end
     elseif self.state == "grown" then
-         self.collider = ColliderGroup(self, {self.head_collider, self.stem_collider})
         self.timer = self.timer - DTMULT
         if self.timer <= 0 then
+            self.state = "removing"
             if self.wave and self.wave.spawnPotchomp then
                 self.wave:spawnPotchomp()
             end
-            self:remove()
+            self.collider = nil
+            self:fadeOutAndRemove(0.1)
         end
     end
 

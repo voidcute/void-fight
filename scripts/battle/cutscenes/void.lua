@@ -169,17 +169,12 @@ return{
     cutscene:battlerText(void, "they're tired of it \nand wanted to go\nto somewhere else.")   
     cutscene:battlerText(void, "we formed a relationship\nwith them.") 
     cutscene:battlerText(void, "they feed us\nwith their 'fleshes'.")
-    cutscene:battlerText(void, "we water them\nwith their 'mucus'.")
-    cutscene:battlerText(void, "i can tell you more\nif you are interested.")
+    cutscene:battlerText(void, "we water them\nwith our 'mucus'.")
+    cutscene:battlerText(void, "i can tell you more\nif you are interested...")
     end,
     hurt7 = function (cutscene)
     Game:setFlag("void_violence",7)
-    cutscene:battlerText(void, "still not interested?...[wait:5].\nokay okay i will switch \nto a different topic.")   
-    cutscene:battlerText(void, "a friend told me that \nhumans like [color:yellow]ACT[color:reset]ing.")   
-    cutscene:battlerText(void, "how do they know it?\nbecause they are\nan [color:yellow]ACT[color:reset]or.") 
-    cutscene:battlerText(void, "they're are very\ngood at[color:yellow] ACT[color:reset]ing") 
-    cutscene:battlerText(void, "humans would watch \ntheir [color:yellow]ACT[color:reset]s for hours,[wait:5]\nwithout getting bored.")  
-    cutscene:battlerText(void, "i can tell you more\nif you are interested...") 
+    cutscene:battlerText(void, "still not interested?...[wait:5]")   
 
     end,
     hurt8 = function (cutscene)
