@@ -3,7 +3,7 @@ local water, super = Class(LightWave)
 function water:init()
     super.init(self)
     self.time = -1
-
+    self.pf = 0
     Wave:setArenaOffset(0, -129)
     self.watered = 0
 end
@@ -19,7 +19,7 @@ function water:onStart()
     end
     self:spawnPotchomp()
 
-    self.roto1 = self.timer:every(1.5, function()
+    self.roto1 = self.timer:every(2, function()
         local x = -20
         local y = MathUtils.random(0, Game.battle.arena.top)
         local bullet = self:spawnBullet("roto", x, y, 0, 3)
@@ -27,14 +27,14 @@ function water:onStart()
         -- Dont remove the bullet offscreen, because we spawn it offscreen
         bullet.remove_offscreen = false
     end)
-   self.timer:after(10, function()
+   self.timer:after(15, function()
         self.timer:cancel(self.roto1)
         self.roto2 = self.timer:every(2, function()
             local x = -20
             local y1 = MathUtils.random(0, Game.battle.arena.top)
             local y2 = MathUtils.random(390, Game.battle.arena.bottom)
             local bullet = self:spawnBullet("roto", x, y1, 0, 3)
-            local bullet = self:spawnBullet("roto", x, y2, 0, 3.1)
+            local bullet = self:spawnBullet("roto", x+10, y2, 0, 3)
 
             bullet.remove_offscreen = false
         end)
@@ -71,7 +71,13 @@ end
 
 function water:update()
     if self.watered == 5 then
+
+    Game.battle.encounter:addEnemy("chompthing",SCREEN_WIDTH/2, 246)
+    local chomp = Game.battle:getEnemyBattler("chompthing")
+    local body = chomp:getSpritePart("body")
+    body.visible = false
     Game.battle:setState("DEFENDINGEND", "WAVEENDED")
+
     end
 
     super.update(self)

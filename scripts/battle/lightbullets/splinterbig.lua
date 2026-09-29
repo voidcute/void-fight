@@ -3,14 +3,12 @@ local bullet, super = Class(LightBullet)
 function bullet:init(x, y)
     super.init(self, x, y)
 
-    self.remove_on_arena_collision = true
 
     self:setSprite("bullets/bulletmd", 1, true)
 
     self:setScale(1, 1)
     self:setOrigin(0.5, 0.5)
-    self:setHitbox(4, 4, 5, 5)
-
+    self:setHitbox(5, 4, 12, 12)
     self.timelimit = 20 + love.math.random(0, 15)
     self.timer = 0
 

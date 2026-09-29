@@ -66,7 +66,9 @@ function chompthing:onDodge(battler, attacked)
 end
 
 function chompthing:onAct(battler, name)
-
+        if name == "Check" then
+        return "* you can't see this lol"
+        end
 end
 
 return chompthing

@@ -80,7 +80,7 @@ function void:hurt(amount, ...)
     end
 
     function void:onAct(battler, name)
-        if name == "Check" and self.checks == 0 then
+        if name == "Check" then
 --      self.checks = 1
         return "* void - ATK 100 DEF 100\n* This creature is definitely in the wrong time and space!"
         end

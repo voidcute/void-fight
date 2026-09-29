@@ -99,7 +99,13 @@ return{
 
     end,
     turn6 = function (cutscene)
-    cutscene:battlerText(void,"a.") 
+    local chomp = Game.battle:getEnemyBattler("chompthing")
+    local chomp_body = chomp["getSpritePart"](chomp, "body")
+    chomp_body.visible = true
+    chomp_body.scale_y = 0
+    Game.battle.timer:tween(1, chomp_body, {scale_y = 1})
+    cutscene:wait(0.8)
+    cutscene:battlerText(void,"uh...\nthat isn't right.") 
     end,
     turn7 = function (cutscene)
     end,
@@ -108,7 +114,8 @@ return{
     turn9 = function (cutscene)
     end,
     turn10 = function (cutscene)
-    cutscene:battlerText(void,"a.") 
+    cutscene:battlerText(void,"uh...") 
+
     cutscene:after(function()
     Game.battle:setState("VICTORY")
     end)  

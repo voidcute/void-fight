@@ -18,22 +18,28 @@ function potchomp:init(x, y, wait_time, grown_time, flash_time)
     self.sprite:setOrigin(0, 1)
     self.sprite.y = self.sprite.height
     self.sprite:setScale(1, 0)
-    self:setHitbox(0, 0, 36, 29)
 
     self.destroy_on_hit = false
     -- Move the bullet in dir radians (0 = right, pi = left, clockwise rotation)
     -- Speed the bullet moves (pixels per frame at 30FPS)
 end
 
-function potchomp:updateGrowColliders(progress)
+function potchomp:GrowColliders(progress)
+    if self.state == "spawning" then
+        local function growY(y)
+        return 29 + ((y - 29) * progress)
+    end
+    self.collider = Hitbox(self, 0, growY(0), 36, 29)
+    else
     local function growY(y)
         return 85 + ((y - 85) * progress)
     end
-
     self.head_collider = Hitbox(self, 0, growY(-56), 31, 31)
     self.stem_collider = Hitbox(self, 12, growY(-25), 12, 110)
     self.collider = ColliderGroup(self, {self.head_collider, self.stem_collider})
+    end
 end
+
 
 function potchomp:update()
     -- For more complicated bullet behaviours, code here gets called every update
@@ -42,6 +48,7 @@ function potchomp:update()
         self.spawn_timer = self.spawn_timer - DTMULT
         local progress = math.max(0, 1 - (self.spawn_timer / self.spawn_duration))
         self.sprite:setScale(1, progress)
+        self:GrowColliders(progress)
         if self.spawn_timer <= 0 then
             self.sprite:setScale(1, 1)
             self.timer = self.wait_time
@@ -72,10 +79,8 @@ function potchomp:update()
             self:setSprite("bullets/potchomped")
             self.sprite:setOrigin(0, 1)
             self.sprite:setScale(1, 0)
-
             self:setColor(1, 1, 1)
             self.sprite.y = 85
-            self:updateGrowColliders(0)
             self.grow_timer = self.grow_duration
             self.state = "growing"
         end
@@ -83,7 +88,7 @@ function potchomp:update()
         self.grow_timer = self.grow_timer - DTMULT
         local progress = math.max(0, 1 - (self.grow_timer / self.grow_duration))
         self.sprite:setScale(1, progress)
-        self:updateGrowColliders(progress)
+        self:GrowColliders(progress)
         if self.grow_timer <= 0 then
             self.sprite:setScale(1, 1)
             self.timer = self.grown_time

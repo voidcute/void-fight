@@ -42,10 +42,35 @@ function actor:init()
         ["lightbattle_hurt"] = {"lightbattle/hurt", 1, true},
     }
 
-    self.light_battle_width = 49
-    self.light_battle_height = 53
+    self.light_battle_width = 39
+    self.light_battle_height = 81
 
-    self:addLightBattlerPart("body", "lightbattle/body")
+    self:addLightBattlerPart("body", {
+        ["sprite"] = function()
+            local sprite = Sprite(self.path.."/body", 0,0)
+            sprite.origin_y = 1
+            return sprite
+        end,
+        ["init"] = function(part)
+            part.wiggle_timer = 0
+        end,
+        ["update"] = function(part)
+            part.wiggle_timer = part.wiggle_timer + DTMULT
+            part.sprite.x = -6 + math.sin(part.wiggle_timer / 18) * 1.5
+            part.sprite.y = 85 - (1 - math.cos(part.wiggle_timer / 18)) * 1.5
+            part.sprite.rotation = math.sin(part.wiggle_timer / 18) * 0.04
+        end
+    })
+
+     self:addLightBattlerPart("pot", {
+        -- path, function that returns a path, or a function that returns a sprite object
+        -- if one's not defined, get the default animation
+        ["sprite"] = function()
+            local sprite = Sprite(self.path.."/pot",0, 0)
+            sprite.layer = 501           
+            return sprite
+        end
+    })
 end
 
 return actor

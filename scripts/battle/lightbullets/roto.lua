@@ -7,6 +7,7 @@ function roto:init(x, y, dir, speed, timer, attacks, attack_delay,cooldown)
     -- Top-center origin point (will be rotated around it)
     self:setOrigin(0.5, 0)
     self:setScale(1, 1)
+    self:setHitbox(8,0,16,29)
     -- The hitbox where the player will be damaged by the bullet (affected by scale and rotation)
     -- Move the bullet in dir radians (0 = right, pi = left, clockwise rotation)
     self.physics.direction = dir or 0
