@@ -1277,7 +1277,7 @@ function LightBattle:arenaDefendingState()
         end
 
         local soul_x, soul_y, soul_offset_x, soul_offset_y
-        local arena_x, arena_y, arena_h, arena_w
+        local arena_x, arena_y, arena_h, arena_w, arena_shape
         local has_arena = false
         local spawn_soul = false
         for _, wave in ipairs(self.waves) do
@@ -1289,6 +1289,7 @@ function LightBattle:arenaDefendingState()
             arena_y = wave.arena_y or arena_y
             arena_w = wave.arena_width and math.max(wave.arena_width, arena_w or 0) or arena_w
             arena_h = wave.arena_height and math.max(wave.arena_height, arena_h or 0) or arena_h
+            arena_shape = wave.arena_shape or arena_shape
             if wave.has_arena then
                 has_arena = true
             end
@@ -1303,10 +1304,18 @@ function LightBattle:arenaDefendingState()
         if has_arena then
             if self.encounter.event then
                 self.arena:setPosition(arena_x, arena_y)
-                self.arena:setSize(arena_w, arena_h)
+                if arena_shape then
+                    self.arena:setShape(arena_shape)
+                else
+                    self.arena:setSize(arena_w, arena_h)
+                end
                 self.arena:update()
             else
-                self.arena:changeShape({ arena_w, self.arena.height })
+                if arena_shape then
+                    self.arena:setShape(arena_shape)
+                else
+                    self.arena:changeShape({ arena_w, self.arena.height })
+                end
             end
         elseif #self.waves > 0 then
             self.arena:disable()
@@ -2179,7 +2188,7 @@ end
 function LightBattle:updateDefendingBegin()
     if self.arena:isNotTransitioning() then
         local soul_x, soul_y, soul_offset_x, soul_offset_y
-        local arena_x, arena_y, arena_h, arena_w
+        local arena_x, arena_y, arena_h, arena_w, arena_shape
         local has_arena = true
         for _, wave in ipairs(self.waves) do
             soul_x = wave.soul_start_x or soul_x
@@ -2189,6 +2198,7 @@ function LightBattle:updateDefendingBegin()
             arena_x = wave.arena_x or arena_x
             arena_y = wave.arena_y or arena_y
             arena_h = wave.arena_height and math.max(wave.arena_height, arena_h or 0) or arena_h
+            arena_shape = wave.arena_shape or arena_shape
             if not wave.has_arena then
                 has_arena = false
             end
@@ -2199,7 +2209,9 @@ function LightBattle:updateDefendingBegin()
         local center_x, center_y = self.arena:getCenter()
 
         if has_arena then
-            if self.arena.height ~= arena_h then
+            if arena_shape then
+                self.arena:setShape(arena_shape)
+            elseif self.arena.height ~= arena_h then
                 self.arena:changeShape({ self.arena.width, arena_h })
             end
             if not (self.arena.x == arena_x and self.arena.y == arena_y) then

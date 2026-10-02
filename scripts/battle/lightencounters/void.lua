@@ -27,14 +27,14 @@ end
 
         elseif self.void.violence == false then 
             if self.void.turn_count == 1 then
-        Game.battle.enemies[1].wave_override ="basic"    
+       -- Game.battle.enemies[1].wave_override ="basic"    
             elseif self.void.turn_count == 2 then    
             elseif self.void.turn_count == 3 then
             elseif self.void.turn_count == 4 then 
             elseif self.void.turn_count == 5 then
-        Game.battle.enemies[1].wave_override ="water"            
+        --Game.battle.enemies[1].wave_override ="water"            
             elseif self.void.turn_count == 6 then
-        Game.battle.enemies[1].wave_override ="basic"    
+            Game.battle.enemies[1].wave_override = "chomp"
             elseif self.void.turn_count == 7 then
 
             elseif self.void.turn_count == 8 then 
@@ -102,8 +102,13 @@ end
     -- worst code of all time ??????
     function void:onTurnEnd()
         self.can_flee = false
+        if  self.void.turn_count == 4 then
+        self.void.name = "void's hat"
+        self.void.defense = 10000000
+        end
         if  self.void.turn_count == 5 then
-        self.void.dialogue_right = false
+        self.void.name = "void"
+        self.void.defense = 0
         end
     if  self.void.violence == false then
         self.void.turn_count = self.void.turn_count + 1

@@ -15,6 +15,21 @@ function LightWave:setArenaSize(width, height)
     self.arena_height = height or width
 end
 
+function LightWave:setArenaShape(shape)
+    self.arena_shape = TableUtils.copy(shape, true)
+
+    local min_x, min_y, max_x, max_y
+    for _, point in ipairs(shape) do
+        min_x = math.min(min_x or point[1], point[1])
+        min_y = math.min(min_y or point[2], point[2])
+        max_x = math.max(max_x or point[1], point[1])
+        max_y = math.max(max_y or point[2], point[2])
+    end
+
+    self.arena_width = max_x - min_x
+    self.arena_height = max_y - min_y
+end
+
 function LightWave:setArenaPosition(x, y)
     self.arena_x = x
     self.arena_y = y

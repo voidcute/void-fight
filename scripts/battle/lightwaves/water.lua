@@ -72,10 +72,6 @@ end
 function water:update()
     if self.watered == 5 then
 
-    Game.battle.encounter:addEnemy("chompthing",SCREEN_WIDTH/2, 246)
-    local chomp = Game.battle:getEnemyBattler("chompthing")
-    local body = chomp:getSpritePart("body")
-    body.visible = false
     Game.battle:setState("DEFENDINGEND", "WAVEENDED")
 
     end

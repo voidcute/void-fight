@@ -5,8 +5,8 @@ return{
     hat = void:getSpritePart("hat")
     body = void:getSpritePart("body")
     eyes = void:getSpritePart("eyes")
-    x = body.origin_x
-    y = body.origin_y
+    void_ox = void.x
+    void_oy = void.y
     function reset()
     eyes:slidePath({{0,0}}, {time= 0,speed = 1, loop = false, relative = true, snap=true})
     cutscene:wait(0.01)
@@ -53,10 +53,6 @@ return{
     eyes:slidePath({{0,0},{0,2},{2,0},{-2,0},{0,2},{0,0}}, {speed = 0.2, loop = true, relative = true})
     end,
     turn4 = function (cutscene)
-    void = cutscene:getCharacter("void")  
-    hat = void:getSpritePart("hat")
-    body = void:getSpritePart("body")
-    eyes = void:getSpritePart("eyes")
     reset()
     eyes:setSprite("enemies/void_ut/eyes")
     eyes:slidePath({{0,0},{0,2},{2,0},{-2,0},{0,2},{0,0}}, {speed = 0.2, loop = true, relative = true})
@@ -64,7 +60,7 @@ return{
     cutscene:battlerText(void,"it's ok.") 
     cutscene:battlerText(void,"i can give you\nnsomething else.[wait:5]\nplease wait here,[wait:5]\ni'll go get it") 
     reset()
-
+    body:setSprite("enemies/void_ut/body")  
 
     cutscene:slideTo(eyes, eyes.x+300, eyes.y, 3)
     cutscene:slideTo(body, body.x+300, body.y, 3)
@@ -85,9 +81,20 @@ return{
     hat.visible = true
     eyes.visible = true
     body.visible = true
+    Game.battle.encounter:addEnemy("chompthing", 637, 240)
+    chomp = cutscene:getCharacter("chompthing")
+    chomp_body = chomp:getSpritePart("body")
+    pot = chomp:getSpritePart("pot")
+    pot.flip_x = true
+    pot:setSprite("enemies/chompthing/potside")
+    chomp_body.visible = false
+    cutscene:slideTo(chomp, chomp.x-200, chomp.y, 3)
     cutscene:slideTo(void, void.x-200, void.y, 3)
-    
     cutscene:wait(3)
+    cutscene:slideTo(chomp, chomp.x-20, chomp.y, 1)
+    cutscene:wait(1)
+    pot.flip_x = false
+    pot:setSprite("enemies/chompthing/pot")
     eyes:slidePath({{0,0},{0,2},{2,0},{-2,0},{0,2},{0,0}}, {speed = 0.2, loop = true, relative = true})
     cutscene:battlerText(void,"i'm back!\ndid ya miss me?")  
     cutscene:battlerText(void,"huh? you look like \nyou've seen a ghost.")  
@@ -99,15 +106,38 @@ return{
 
     end,
     turn6 = function (cutscene)
-    local chomp = Game.battle:getEnemyBattler("chompthing")
-    local chomp_body = chomp["getSpritePart"](chomp, "body")
+     cutscene:battlerText(void,"you did it!\nnow let's take a look.")  
+    void:toggleOverlay(true)
+    void:setSprite("bodyside")
     chomp_body.visible = true
     chomp_body.scale_y = 0
     Game.battle.timer:tween(1, chomp_body, {scale_y = 1})
-    cutscene:wait(0.8)
-    cutscene:battlerText(void,"uh...\nthat isn't right.") 
+    cutscene:wait(1)
+    cutscene:battlerText(void,"uh...\nthis isn't right.") 
+    pot:setSprite("enemies/chompthing/potside")
+    chomp_body:setSprite("enemies/chompthing/bodyside")
+    cutscene:wait(1)
+    cutscene:battlerText(void,"oh no.") 
+    cutscene:slideTo(void, void.x+20, void.y, 1)
+    cutscene:wait(1)
+    
+    void.flip_x = true
+    chomp.flip_x = false
+    cutscene:slideTo(void, void.x+400, void.y, 2)
+    cutscene:slideTo(chomp, chomp.x+550, chomp.y, 2)
+    cutscene:wait(2)
+    chomp.x = 1050
+    void.x =  1000
+   
+      
     end,
     turn7 = function (cutscene)
+    void.scale_x = 2
+    void.scale_y = 2
+    void.alpha = 1
+    chomp.scale_x = 2
+    chomp.scale_y = 2
+    chomp.alpha = 1
     end,
     turn8 = function (cutscene)
     end,

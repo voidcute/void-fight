@@ -50,6 +50,5 @@ function pot:update()
     Object.endCache()
 end
 
-function pot:onCollide()
-end
+
 return pot

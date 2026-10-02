@@ -80,8 +80,9 @@ function void:hurt(amount, ...)
     end
 
     function void:onAct(battler, name)
-        if name == "Check" then
---      self.checks = 1
+        if name == "Check" and self.turn_count == 5 then
+       return "* void's hat - ATK ??? DEF ???\n* This creature is definitely in the wrong time and space!"
+        else
         return "* void - ATK 100 DEF 100\n* This creature is definitely in the wrong time and space!"
         end
 --[[      elseif name == "Check" and self.checks == 1 then
@@ -163,7 +164,7 @@ end
     elseif self.turn_count == 4 then
     return "* void looks at you curiously."
     elseif self.turn_count == 5 then
-    return "* void looks at you curiously."
+    return "* Smells like Dreams."
     end
     
     if Game:getFlag("void_violence",0) > 0 and Game:getFlag("void_violence",0) < 11  then
