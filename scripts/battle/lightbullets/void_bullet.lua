@@ -5,9 +5,10 @@ function void:init(x, y, dir, speed)
     super.init(self, x, y, "bullets/void")
 
     self:setScale(1, 1)
-    self.draw_children_above = 0
     -- Move the bullet in dir radians (0 = right, pi = left, clockwise rotation)
+
     self.physics.direction = dir or 0
+    self.physics.match_rotation = true
     self.rotation = self.physics.direction
     -- Speed the bullet moves (pixels per frame at 30FPS)
     self.base_speed = speed or 0
@@ -24,17 +25,15 @@ end
 
 function void:draw()
     love.graphics.setLineWidth(15)
-    if self.trail_timer < 120 and #self.positions > 1 then
+    if self.trail_timer < 150 and #self.positions > 1 then
         local points = {}
         for _, position in ipairs(self.positions) do
             table.insert(points, position[1] - self.x+10)
             table.insert(points, position[2] - self.y+10)
         end
-        local alpha = math.min(1, (120 - self.trail_timer) / 30)
+        local alpha = math.min(1, (150 - self.trail_timer) / 30)
         love.graphics.setColor(0,191/255,1, alpha)
         love.graphics.line(points)
-        love.graphics.setLineJoin("bevel")
-        love.graphics.setLineStyle("rough")
         
     end
 
@@ -48,13 +47,13 @@ function void:update()
     super.update(self)
     table.insert(self.positions, {self.x, self.y})
     self.trail_timer = self.trail_timer + DTMULT
-    if self.trail_timer >= 120 then
+    if self.trail_timer >= 150 then
         self.positions = {{self.x, self.y}}
         self.trail_timer = 0
     end
 
     local trail_colliders = {}
-    if self.trail_timer < 120 then
+    if self.trail_timer < 150 then
         for index = 2, #self.positions do
             local previous = self.positions[index - 1]
             local current = self.positions[index]

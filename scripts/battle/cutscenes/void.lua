@@ -86,6 +86,8 @@ return{
     chomp_body = chomp:getSpritePart("body")
     pot = chomp:getSpritePart("pot")
     pot.flip_x = true
+    void:toggleOverlay(true)
+    void:setSprite("bodyside")
     pot:setSprite("enemies/chompthing/potside")
     chomp_body.visible = false
     cutscene:slideTo(chomp, chomp.x-200, chomp.y, 3)
@@ -93,14 +95,14 @@ return{
     cutscene:wait(3)
     cutscene:slideTo(chomp, chomp.x-20, chomp.y, 1)
     cutscene:wait(1)
+    void:toggleOverlay(false)
     pot.flip_x = false
     pot:setSprite("enemies/chompthing/pot")
     eyes:slidePath({{0,0},{0,2},{2,0},{-2,0},{0,2},{0,0}}, {speed = 0.2, loop = true, relative = true})
     cutscene:battlerText(void,"i'm back!\ndid ya miss me?")  
     cutscene:battlerText(void,"huh? you look like \nyou've seen a ghost.")  
     cutscene:battlerText(void,"uh anyways i've got\nsomething for you.")   
-    cutscene:battlerText(void,"a seed!...\n[wait:5]of something...[wait:5]\ni'm not really sure.")  
-    cutscene:battlerText(void,"but i'm sure you\nwill be amazed by it.") 
+    cutscene:battlerText(void,"a flower seed!")  
     cutscene:battlerText(void,"go ahead and water them.") 
 
 
@@ -111,16 +113,19 @@ return{
     void:setSprite("bodyside")
     chomp_body.visible = true
     chomp_body.scale_y = 0
+    cutscene:wait(0.2)
     Game.battle.timer:tween(1, chomp_body, {scale_y = 1})
     cutscene:wait(1)
-    cutscene:battlerText(void,"uh...\nthis isn't right.") 
+    void:setSprite("bodyside_uh")
+    cutscene:battlerText(void,"uh... this isn't right.") 
     pot:setSprite("enemies/chompthing/potside")
     chomp_body:setSprite("enemies/chompthing/bodyside")
+    void:setSprite("bodyside_uh")
     cutscene:wait(1)
     cutscene:battlerText(void,"oh no.") 
     cutscene:slideTo(void, void.x+20, void.y, 1)
     cutscene:wait(1)
-    
+    void:setSprite("bodyside_shock")
     void.flip_x = true
     chomp.flip_x = false
     cutscene:slideTo(void, void.x+400, void.y, 2)
@@ -132,12 +137,21 @@ return{
       
     end,
     turn7 = function (cutscene)
+      void.flip_x = false
+    void.x = -100
     void.scale_x = 2
     void.scale_y = 2
-    void.alpha = 1
-    chomp.scale_x = 2
-    chomp.scale_y = 2
-    chomp.alpha = 1
+    void:setSprite("bodyside_sad")
+    void.y = void_oy
+    cutscene:wait(cutscene:slideTo(void, void_ox, void.y, 4))
+    cutscene:battlerText(void,"phew. that was close.") 
+    void:toggleOverlay(false)
+    body:setSprite("enemies/void_ut/body_bite")
+    eyes:setSprite("enemies/void_ut/eye")
+    cutscene:battlerText(void,"sorry about that.it seems\ni took the wrong one.") 
+    
+
+    
     end,
     turn8 = function (cutscene)
     end,
@@ -189,29 +203,15 @@ return{
     end,
     hurt5 = function (cutscene)
     Game:setFlag("void_violence",5)
-    cutscene:battlerText(void, "wait.[wait:5]\nwait![wait:5]\ni get it now.") 
-    cutscene:battlerText(void, "you don't hate me,[wait:5]\nyou're just bored so\nyou hit me for fun.")
-    cutscene:battlerText(void, "sorry for boring you.\nuh...[wait:5]do you like trivias?[wait:5]\ni have some to tell.")
-    cutscene:battlerText(void, "like about slimes.[wait:5]\nthere's an island\nfull of them.\ni live there.")  
-    cutscene:battlerText(void, "there are many types\nof slimes there.[wait:5]\nsome are friendly.[wait:5]\nsome are... aggressive.") 
-    cutscene:battlerText(void, "don't worry about it,[wait:5]\nthey live at\nthe shoreline.")   
-    cutscene:battlerText(void, "i can tell you more\nif you are interested.")
+
     end,
     hurt6 = function (cutscene)
     Game:setFlag("void_violence",6)
-    cutscene:battlerText(void, "not interested huh?...[wait:5]")
-    cutscene:battlerText(void, "but did you know that...[wait:5]\nwe are good friend\nwith plants?")
-    cutscene:battlerText(void, "how did it happen?[wait:5]\nwell,[wait:5] long story short\nthey just showed up\none day.") 
-    cutscene:battlerText(void, "apparently they was in\nconstant figthing\nwith undead humans?")   
-    cutscene:battlerText(void, "they're tired of it \nand wanted to go\nto somewhere else.")   
-    cutscene:battlerText(void, "we formed a relationship\nwith them.") 
-    cutscene:battlerText(void, "they feed us\nwith their 'fleshes'.")
-    cutscene:battlerText(void, "we water them\nwith our 'mucus'.")
-    cutscene:battlerText(void, "i can tell you more\nif you are interested...")
+
     end,
     hurt7 = function (cutscene)
     Game:setFlag("void_violence",7)
-    cutscene:battlerText(void, "still not interested?...[wait:5]")   
+    cutscene:battlerText(void, "")   
 
     end,
     hurt8 = function (cutscene)
@@ -243,9 +243,6 @@ return{
     cutscene:battlerText(void, "ok.[wait:5] so the truth is...")   
     cutscene:battlerText(void, "you can't kill me.[wait:5]\nbecause i would run away.")
     cutscene:battlerText(void, "sorry[wait:5]...\ni must have wasted\nyour time.")   
-    cutscene:battlerText(void, "i wanted to invite\nyou to the island.[wait:5]\nbut uh now i think\nthey will not like you.")   
-    cutscene:battlerText(void, "you would be dead the \nmoment you enter there.")  
-    cutscene:battlerText(void, "...[wait:5]\ndespite everything,[wait:5] i still\nhope that we can\nbe friend.")
     cutscene:battlerText(void, "anyways, i'm going home.")
     cutscene:battlerText(void, "see [color:red]you[color:reset] later.")
     cutscene:wait(cutscene:slideTo(void, void.x, void.y-300, 3))

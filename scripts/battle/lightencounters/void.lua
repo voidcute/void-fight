@@ -5,7 +5,8 @@ function void:init()
 
     -- Text displayed at the bottom of the screen at the start of the encounter
     self.text = "* Ridiculously powerful enemy \nvoid showed up!!!"
-    self.music = "mus_wrongworld"
+     self.music = false
+    --self.music = "mus_wrongworld"
     self.void = self:addEnemy("void",SCREEN_WIDTH/2, 246)
     self.can_flee = false
     -- hurt when encounter???
@@ -104,11 +105,16 @@ end
         self.can_flee = false
         if  self.void.turn_count == 4 then
         self.void.name = "void's hat"
+        self.void:removeAct("Something")
         self.void.defense = 10000000
         end
         if  self.void.turn_count == 5 then
         self.void.name = "void"
         self.void.defense = 0
+        end
+        if  self.void.turn_count == 6 then
+        self.void.name = "Void"
+        self.void.defense = 100000
         end
     if  self.void.violence == false then
         self.void.turn_count = self.void.turn_count + 1

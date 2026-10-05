@@ -21,7 +21,7 @@ function encounter:getDialogueCutscene()
         cutscene:wait(1)
         local dialogue = "[speed:0.5][voice:none]void.[wait:60]\nLike the void"
         local x = Game.battle.enemies[1].x + Game.battle.enemies[1].width * 2
-        local bubble = SpeechBubble(dialogue, x, 78, {style = "above"})
+        local bubble = SpeechBubble(dialogue, x, 78)
         Game.battle:addChild(bubble)
         bubble:setSkippable(false)
         bubble:setCallback(function()

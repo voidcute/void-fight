@@ -9,8 +9,8 @@ function droplet:init(x, y,speed)
     -- Speed the bullet moves (pixels per frame at 30FPS)
     self:setHitbox(0, 11, 10, 8)
     self.physics.speed = speed or 2
-    self.speed_increase = 0.012
-    self.max_speed = 6
+    self.speed_increase = 0.35
+    self.max_speed = 24
     self.destroy_on_hit = false
 end
 function droplet:onDamage()
