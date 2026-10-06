@@ -61,65 +61,64 @@ return{
     cutscene:battlerText(void,"i can give you\nnsomething else.[wait:5]\nplease wait here,[wait:5]\ni'll go get it") 
     reset()
     body:setSprite("enemies/void_ut/body")  
-
     cutscene:slideTo(eyes, eyes.x+300, eyes.y, 3)
     cutscene:slideTo(body, body.x+300, body.y, 3)
     cutscene:wait(3)
     end,
     turn5 = function (cutscene,EnemyBattler)
-     
     hat.visible = false
     eyes.visible = false
     body.visible = false
     cutscene:wait(0.1)
-    cutscene:slideTo(eyes, eyes.x-300, eyes.y, 0.1)
-    cutscene:slideTo(body, body.x-300, body.y, 0.1)
-
+    eyes.x  = eyes.x -300
+    body.x  = body.x -300
     cutscene:wait(0.1)
-    cutscene:slideTo(void, void.x+400, void.y, 0.1)
+    void.x = void.x + 400
     cutscene:wait(0.1)
     hat.visible = true
     eyes.visible = true
     body.visible = true
-    Game.battle.encounter:addEnemy("chompthing", 637, 240)
-    chomp = cutscene:getCharacter("chompthing")
-    chomp_body = chomp:getSpritePart("body")
-    pot = chomp:getSpritePart("pot")
+    Game.battle.encounter:addEnemy("Flowerpot", 637, 240)
+    flowerpot = cutscene:getCharacter("Flowerpot")
+    chomp = flowerpot:getSpritePart("chomp")
+    pot = flowerpot:getSpritePart("pot")
+    flower = flowerpot:getSpritePart("flower")
     pot.flip_x = true
     void:toggleOverlay(true)
     void:setSprite("bodyside")
-    pot:setSprite("enemies/chompthing/potside")
-    chomp_body.visible = false
-    cutscene:slideTo(chomp, chomp.x-200, chomp.y, 3)
-    cutscene:slideTo(void, void.x-200, void.y, 3)
+    pot:setSprite("enemies/Flowerpot/potside")
+    chomp.visible = false
+    cutscene:slideTo(flowerpot, flowerpot.x - 200, flowerpot.y, 3)
+    cutscene:slideTo(void, void.x - 200, void.y, 3)
     cutscene:wait(3)
-    cutscene:slideTo(chomp, chomp.x-20, chomp.y, 1)
+    cutscene:slideTo(flowerpot, flowerpot.x - 20, flowerpot.y, 1)
     cutscene:wait(1)
     void:toggleOverlay(false)
     pot.flip_x = false
-    pot:setSprite("enemies/chompthing/pot")
+    pot:setSprite("enemies/Flowerpot/pot")
     eyes:slidePath({{0,0},{0,2},{2,0},{-2,0},{0,2},{0,0}}, {speed = 0.2, loop = true, relative = true})
+    
+
     cutscene:battlerText(void,"i'm back!\ndid ya miss me?")  
     cutscene:battlerText(void,"huh? you look like \nyou've seen a ghost.")  
     cutscene:battlerText(void,"uh anyways i've got\nsomething for you.")   
     cutscene:battlerText(void,"a flower seed!")  
     cutscene:battlerText(void,"go ahead and water them.") 
-
-
     end,
     turn6 = function (cutscene)
      cutscene:battlerText(void,"you did it!\nnow let's take a look.")  
     void:toggleOverlay(true)
     void:setSprite("bodyside")
-    chomp_body.visible = true
-    chomp_body.scale_y = 0
+    chomp.visible = true
+    chomp.scale_y = 0
     cutscene:wait(0.2)
-    Game.battle.timer:tween(1, chomp_body, {scale_y = 1})
+    Game.battle.timer:tween(1, chomp, {scale_y = 1})
     cutscene:wait(1)
     void:setSprite("bodyside_uh")
     cutscene:battlerText(void,"uh... this isn't right.") 
-    pot:setSprite("enemies/chompthing/potside")
-    chomp_body:setSprite("enemies/chompthing/bodyside")
+    pot:setSprite("enemies/Flowerpot/potside")
+    chomp:setSprite("enemies/Flowerpot/chompside")
+    
     void:setSprite("bodyside_uh")
     cutscene:wait(1)
     cutscene:battlerText(void,"oh no.") 
@@ -127,33 +126,71 @@ return{
     cutscene:wait(1)
     void:setSprite("bodyside_shock")
     void.flip_x = true
-    chomp.flip_x = false
+    flowerpot.flip_x = false
     cutscene:slideTo(void, void.x+400, void.y, 2)
-    cutscene:slideTo(chomp, chomp.x+550, chomp.y, 2)
+    cutscene:slideTo(flowerpot, flowerpot.x+550, flowerpot.y, 2)
     cutscene:wait(2)
-    chomp.x = 1050
+    flowerpot.x = 1050
     void.x =  1000
    
       
     end,
     turn7 = function (cutscene)
-      void.flip_x = false
+    void.flip_x = false
     void.x = -100
     void.scale_x = 2
     void.scale_y = 2
     void:setSprite("bodyside_sad")
     void.y = void_oy
-    cutscene:wait(cutscene:slideTo(void, void_ox, void.y, 4))
-    cutscene:battlerText(void,"phew. that was close.") 
+    cutscene:wait(cutscene:slideTo(void, void_ox, void.y, 2))
+    cutscene:battlerText(void,"phew.[wait:5] that was close.") 
+    cutscene:battlerText(void,"sigh...[wait:5]\nthey gave me the wrong one.") 
+    
     void:toggleOverlay(false)
     body:setSprite("enemies/void_ut/body_bite")
     eyes:setSprite("enemies/void_ut/eye")
-    cutscene:battlerText(void,"sorry about that.it seems\ni took the wrong one.") 
+    cutscene:battlerText(void,"sorry about that.[wait:5]\ni almost put you in danger.") 
+    cutscene:battlerText(void,"...") 
+    cutscene:battlerText(void,"oh this?[wait:5] don't worry\nabout it.[wait:5] i will be fine.") 
+    cutscene:battlerText(void,"i will go get the right\none this time.") 
+    cutscene:slideTo(eyes, eyes.x+300, eyes.y, 3)
+    cutscene:slideTo(body, body.x+300, body.y, 3)
+    cutscene:wait(3)
+    end,
+    turn8 = function (cutscene)
+    hat.visible = false
+    eyes.visible = false
+    body.visible = false
+    cutscene:wait(0.1)
+    eyes.x  = eyes.x -300
+    body.x  = body.x -300
+    cutscene:wait(0.1)
+    void.x = void.x + 400
+    cutscene:wait(0.1)
+    hat.visible = true
+    eyes.visible = true
+    body.visible = true
+    Game.battle.encounter:addEnemy("Flowerpot", 637, 240)
+    flowerpot = cutscene:getCharacter("Flowerpot")
+    chomp = flowerpot:getSpritePart("chomp")
+    pot = flowerpot:getSpritePart("pot")
+    pot.flip_x = true
+    void:toggleOverlay(true)
+    void:setSprite("bodyleft_bite")
+    pot:setSprite("enemies/Flowerpot/potside")
+    chomp.visible = false
+    cutscene:slideTo(flowerpot, flowerpot.x - 200, flowerpot.y, 3)
+    cutscene:slideTo(void, void.x - 200, void.y, 3)
+    cutscene:wait(3)
+    cutscene:slideTo(flowerpot, flowerpot.x - 20, flowerpot.y, 1)
+    cutscene:wait(1)
+    void:toggleOverlay(false)
+    pot.flip_x = false
+    pot:setSprite("enemies/Flowerpot/pot")
+    eyes:slidePath({{0,0},{0,2},{2,0},{-2,0},{0,2},{0,0}}, {speed = 0.2, loop = true, relative = true})
     
 
     
-    end,
-    turn8 = function (cutscene)
     end,
     turn9 = function (cutscene)
     end,
@@ -194,16 +231,16 @@ return{
     end,
     hurt4 = function (cutscene)
     Game:setFlag("void_violence",4)
+    cutscene:battlerText(void, "...") 
+    end,
+    hurt5 = function (cutscene)
+    Game:setFlag("void_violence",5)
     cutscene:battlerText(void, "...")  
     void:getSpritePart("body"):setSprite("enemies/void_ut/body_sweat")   
     void:getSpritePart("eyes"):setSprite("enemies/void_ut/eyes_frowning")
     cutscene:battlerText(void, "oh.[wait:5] are you...\ntrying to kill me?")   
     cutscene:battlerText(void, "no way...\nthis must be a\nmisunderstanding.") 
     cutscene:battlerText(void, "you wouldn't actually\ndo that right?") 
-    end,
-    hurt5 = function (cutscene)
-    Game:setFlag("void_violence",5)
-
     end,
     hurt6 = function (cutscene)
     Game:setFlag("void_violence",6)

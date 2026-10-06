@@ -6,15 +6,15 @@ function chompthing:init()
     -- Enemy name
     self.name = "Flower pot"
     -- Sets the actor, which handles the enemy's sprites (see scripts/data/actors/chompthing.lua)
-    self:setActor("chompthing")
-
+    self:setActor("Flowerpot")
+    self.dialogue_right = false
     -- Enemy health
-    self.max_health = 300
-    self.health = 300
+    self.max_health = 1
+    self.health = 1
     -- Enemy attack (determines bullet damage)
     self.attack = 0
     -- Enemy defense (usually 0)
-    self.defense = 0
+    self.defense = 99999
     -- Enemy reward
     self.money = 0
     self.experience = 0
@@ -67,7 +67,7 @@ end
 
 function chompthing:onAct(battler, name)
         if name == "Check" then
-        return "* Flower pot - ATK 0 DEF 0\nIt's a pot for planting. Yet also a plant."
+        return "* Flower pot \nIt's a pot for planting. Yet also a plant."
         end
 end
 

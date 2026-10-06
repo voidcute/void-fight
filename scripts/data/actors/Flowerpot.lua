@@ -1,10 +1,10 @@
-local actor, super = Class(Actor, "chompthing")
+local actor, super = Class(Actor, "Flowerpot")
 
 function actor:init()
     super.init(self)
 
     -- Display name (optional)
-    self.name = "chompthing"
+    self.name = "Flower pot"
 
     -- Width and height for this actor, used to determine its center
     self.width = 27
@@ -20,7 +20,7 @@ function actor:init()
     self.flip = nil
 
     -- Path to this actor's sprites (defaults to "")
-    self.path = "enemies/chompthing"
+    self.path = "enemies/Flowerpot"
     -- This actor's default sprite or animation, relative to the path (defaults to "")
     self.default = "idle"
 
@@ -43,11 +43,11 @@ function actor:init()
     }
 
     self.light_battle_width = 39
-    self.light_battle_height = 81
+    self.light_battle_height = 82
 
-    self:addLightBattlerPart("body", {
+    self:addLightBattlerPart("chomp", {
         ["sprite"] = function()
-            local sprite = Sprite(self.path.."/body", 0,0)
+            local sprite = Sprite(self.path.."/chomp", 0,0)
             sprite.origin_y = 1
             return sprite
         end,
@@ -69,6 +69,14 @@ function actor:init()
             local sprite = Sprite(self.path.."/pot",0, 0)
             sprite.layer = 501           
             return sprite
+        end
+    })
+        self:addLightBattlerPart("flower", {
+        ["sprite"] = function()
+            local sprite = Sprite(self.path.."/sun's flower", -8,0)
+            return sprite
+        end,
+        ["init"] = function(part)
         end
     })
 end

@@ -13,7 +13,8 @@ function star:init(x, y, dir, speed)
 end
 
 function star:update()
-    -- For more complicated bullet behaviours, code here gets called every update
+
+   
 
     super.update(self)
 end

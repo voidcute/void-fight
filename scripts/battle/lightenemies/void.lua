@@ -198,7 +198,7 @@ end
         return "* void is melting."
         end
         if  self.health == 100 then
-        return "* void can't take any more hit."
+        return "* void has low HP."
         end
     elseif Game:getFlag("void_violence",11) == 1 then 
     return "* void is angry."

@@ -24,10 +24,7 @@ function Chomp:onStart()
         self.timer:cancel(chase)
     end)
     self.timer:after(16, function()
-        local chomp = Game.battle:getEnemyBattler("chompthing")
-        if chomp then
             Game.battle:removeEnemy(chomp, true)
-        end
 
         local top_teeth = {}
         local bottom_teeth = {}
@@ -162,8 +159,8 @@ function Chomp:onStart()
     
     -- Store starting arena position
 
-    local void = Game.battle:getEnemyBattler("void")
-    local chomp = Game.battle:getEnemyBattler("chompthing")
+    void = Game.battle:getEnemyBattler("void")
+    chomp = Game.battle:getEnemyBattler("Flowerpot")
     if not void or not chomp then
         return
     end

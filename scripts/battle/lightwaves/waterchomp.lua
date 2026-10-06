@@ -3,7 +3,6 @@ local water, super = Class(LightWave)
 function water:init()
     super.init(self)
     self.time = -1
-    self.pf = 0
     Wave:setArenaOffset(0, -129)
     self.watered = 0
 end
@@ -71,9 +70,7 @@ end
 
 function water:update()
     if self.watered == 5 then
-
     Game.battle:setState("DEFENDINGEND", "WAVEENDED")
-
     end
 
     super.update(self)
