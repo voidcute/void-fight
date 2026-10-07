@@ -53,16 +53,15 @@ function void:init()
 
 end
 
-
 function void:hurt(amount, ...)
     if amount > 0 and self.health > 100   then
-    self.violence = true
-    super.hurt(self,100,...)
-    elseif amount > 0 and self.health < 200 then
-    self.violence = true
+    --self.violence = true
+    super.hurt(self,1,...)
+--[[     elseif amount > 0 and self.health < 200 then
+    --self.violence = true
     super.hurt(self,99,...)
     elseif amount == 0 then 
-    super.hurt(self,0,...)
+    super.hurt(self,0,...) ]]
     end
     if self.health <= (self.max_health * self.spare_percentage) then
     self.mercy = 0

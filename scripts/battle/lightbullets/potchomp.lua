@@ -55,13 +55,16 @@ function potchomp:update()
             self.state = "warning"
         end
     elseif self.state == "warning" then
+        if self.timer == 5 then
+        Assets.playSound("alert", 0.4)
+        end
         self.timer = self.timer - DTMULT
         if self.timer <= self.flash_time then
             self.flash_timer = self.flash_timer - DTMULT
             if self.flash_timer <= 0 then
                 self.flash_red = not self.flash_red
                 if self.flash_red then
-                    Assets.playSound("alert", 0.4)
+                    
                     self:setColor(1, 0, 0)
                 else
                     self:setColor(1, 1, 1)

@@ -28,8 +28,8 @@ function pot:update()
             if self.watered < 5 then
                 self.watered = self.watered + 1
             end
-            if self.watered < 3 then
-                Assets.playSound("power")
+            if self.watered <= 4 then
+                Assets.playSound("power",0.7,1.3)
             else
                  Assets.playSound("bump")
             end

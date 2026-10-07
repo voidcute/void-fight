@@ -11,7 +11,7 @@ function watercan:init(x, y)
     self:setHitbox(0, 0)
     self.time = 30
 
-    self.droplet_spawn_delay = 0.1
+    self.droplet_spawn_delay = 0.15
     self.droplet = nil
     -- Don't destroy this bullet when it damages the player
     self.destroy_on_hit = false

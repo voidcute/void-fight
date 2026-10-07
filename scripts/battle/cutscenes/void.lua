@@ -244,12 +244,11 @@ return{
     end,
     hurt6 = function (cutscene)
     Game:setFlag("void_violence",6)
-
+    cutscene:battlerText(void, "...") 
     end,
     hurt7 = function (cutscene)
     Game:setFlag("void_violence",7)
-    cutscene:battlerText(void, "")   
-
+    cutscene:battlerText(void, "...") 
     end,
     hurt8 = function (cutscene)
     Game:setFlag("void_violence",8)

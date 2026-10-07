@@ -6,7 +6,7 @@ function Dummy:init()
     -- Enemy name
     self.name = "Dummy"
     -- Sets the actor, which handles the enemy's sprites (see scripts/data/actors/dummy.lua)
-    self:setActor("Flowerpot")
+    self:setActor("dummy")
 
     -- Enemy health
     self.max_health = 5000
