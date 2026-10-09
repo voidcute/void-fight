@@ -19,7 +19,7 @@ function Chomp:onStart()
 
     soul = Game.battle.soul
     arena = Game.battle.arena
-    soul.speed = 5
+    soul.speed = 50
     self.timer:after(14, function ()
         self.timer:cancel(chase)
     end)

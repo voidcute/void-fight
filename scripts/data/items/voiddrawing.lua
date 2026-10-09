@@ -23,7 +23,7 @@ function item:init()
     -- Light world check text
     self.check = {
         "Unique\n* Use outside of battle\nto look at the drawing.",
-        "* Seems to be depicted an island.\n*The island is filled with slimes."
+        "* Seems to be depicted an island.\n* It is filled with slimes."
     }
 
     -- Consumable target mode (ally, party, enemy, enemies, or none)

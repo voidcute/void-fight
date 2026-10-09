@@ -5,8 +5,7 @@ function void:init()
 
     -- Text displayed at the bottom of the screen at the start of the encounter
     self.text = "* Ridiculously powerful enemy \nvoid showed up!!!"
-     self.music = false
-    --self.music = "mus_wrongworld"
+    self.music = "mus_wrongworld"
     self.void = self:addEnemy("void",SCREEN_WIDTH/2, 246)
     self.can_flee = false
     -- hurt when encounter???
@@ -28,20 +27,23 @@ end
 
         elseif self.void.violence == false then 
             if self.void.turn_count == 1 then
-       -- Game.battle.enemies[1].wave_override ="basic"    
-            elseif self.void.turn_count == 2 then    
+        Game.battle.enemies[1].wave_override ="basic"    
+            elseif self.void.turn_count == 2 then
+        Game.battle.enemies[1].wave_override ="splinter1"           
             elseif self.void.turn_count == 3 then
+        Game.battle.enemies[1].wave_override ="splinter2"   
             elseif self.void.turn_count == 4 then 
+        Game.battle.enemies[1].wave_override ="aiming"          
             elseif self.void.turn_count == 5 then
-        --Game.battle.enemies[1].wave_override ="water"            
+        Game.battle.enemies[1].wave_override ="waterchomp"            
             elseif self.void.turn_count == 6 then
-            Game.battle.enemies[1].wave_override = "chomp"
+        Game.battle.enemies[1].wave_override = "chomp"
             elseif self.void.turn_count == 7 then
-
+        Game.battle.enemies[1].wave_override = "aimingharder"
             elseif self.void.turn_count == 8 then 
-
+         Game.battle.enemies[1].wave_override = "waterflower"
             elseif self.void.turn_count == 9 then
-
+         Game.battle.enemies[1].wave_override = "basic2"
             end
           
         end
@@ -56,7 +58,7 @@ end
     elseif self.void.turn_count  == 5 then
     return "* Smells like Dreams."
     elseif self.void.turn_count  == 6 then
-    return "* Something is about to grow.."
+    return "* Something is about to grow."
     elseif self.void.turn_count  == 7 then
     return "* ..."  
     elseif self.void.turn_count  == 8 then

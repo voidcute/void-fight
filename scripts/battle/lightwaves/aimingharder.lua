@@ -4,6 +4,8 @@ function Aiming:init()
     self.time = 10
 end
 function Aiming:onStart()
+    soul = Game.battle.soul
+    Game.battle["soul_speed"] = 4
     -- Every 0.5 seconds...
     self.timer:after(8,function()
         self.timer:cancel(normal)
@@ -13,29 +15,26 @@ function Aiming:onStart()
         sound:setLooping(true)
         sound:play()
         end)
-    self.timer:after(10,function()
-        sound:stop()
-    end)
-            if Game.battle.state == "DEFENDING" then
 
-            for _, attacker in ipairs(self:getAttackers()) do
 
-                 x, y = attacker:getRelativePos(attacker.width/2, attacker.height/2)
 
-    
-                angle1 = Utils.angle(x, y, Game.battle.soul.x-30, Game.battle.soul.y)
-                angle2 = Utils.angle(x, y, Game.battle.soul.x, Game.battle.soul.y)
-                angle3 = Utils.angle(x, y, Game.battle.soul.x+30, Game.battle.soul.y)
-            end
-        end
+
     normal = self.timer:every(20/30, function()
+          for _, attacker in ipairs(self:getAttackers()) do
+            x, y = attacker:getRelativePos(attacker.width/2, attacker.height/2) 
+            angle1 = Utils.angle(x, y, Game.battle.soul.x-30, Game.battle.soul.y)
+            angle2 = Utils.angle(x, y, Game.battle.soul.x, Game.battle.soul.y)
+            angle3 = Utils.angle(x, y, Game.battle.soul.x+30, Game.battle.soul.y)
                 self:spawnBullet("star", x, y, angle1, 7)
                 self:spawnBullet("star", x, y, angle2, 7)
                 self:spawnBullet("star", x, y, angle3, 7)
-                   
+          end      
     end)
 end
+function Aiming:onEnd()
+    sound:stop()
 
+end
 function Aiming:update()
     -- Code here gets called every frame
 

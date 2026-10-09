@@ -22,9 +22,9 @@ function water:onStart()
         self.timer:everyInstant(6, function()
         local x = -20
         local y = MathUtils.random(0, Game.battle.arena.top)
-        self:spawnBullet("homingstar", x, y, 0, 4,40,8,30,2)
+        self:spawnBullet("homingstar", x, y, 0, 6,40,8,30,2)
         end)
-        self.timer:everyInstant(3, function ()
+        self.timer:everyInstant(5.5, function ()
         --local flower_count = MathUtils.round(MathUtils.random(1, 3))
         local flower_count = 2
         local selected_pots = {}
