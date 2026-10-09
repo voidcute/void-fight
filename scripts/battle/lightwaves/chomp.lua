@@ -24,7 +24,7 @@ function Chomp:onStart()
         self.timer:cancel(chase)
     end)
     self.timer:after(16, function()
-            Game.battle:removeEnemy(chomp, true)
+            Game.battle:removeEnemy(chomp, false)
 
         local top_teeth = {}
         local bottom_teeth = {}

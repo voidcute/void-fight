@@ -13,7 +13,7 @@ function void:init()
     -- Enemy attack (determines bullet damage)
     self.attack = 5
     -- Enemy defense (usually 0)
-    self.defense = 0
+    self.defense = 1000
     self.turn_count = 1
     self.turn_counted = 0
     -- Enemy reward
@@ -53,39 +53,39 @@ function void:init()
 
 end
 
-function void:hurt(amount, ...)
-    if amount > 0 and self.health > 100   then
-    --self.violence = true
-    super.hurt(self,1,...)
---[[     elseif amount > 0 and self.health < 200 then
-    --self.violence = true
-    super.hurt(self,99,...)
-    elseif amount == 0 then 
-    super.hurt(self,0,...) ]]
-    end
-    if self.health <= (self.max_health * self.spare_percentage) then
-    self.mercy = 0
-    end
-    --[[elseif amount > 60 then --and amount ~= 67 and amount ~= 66
-        self.violence = true
-        super.hurt(self,200,...)
-    elseif amount == 66  then
-      super.hurt(self,666666,...)
-     elseif amount == 67  then
-       super.hurt(self,670000,...)
-    else
-        super.hurt(self,0,...)]]
+-- function void:hurt(amount, ...)
+--    -- if amount > 0 and self.health > 100   then
+--     --self.violence = true
+--     super.hurt(self,1,...)
+-- --[[     elseif amount > 0 and self.health < 200 then
+--     --self.violence = true
+--     super.hurt(self,99,...)
+--     elseif amount == 0 then 
+--     super.hurt(self,0,...) ]]
+--     end
+--     if self.health <= (self.max_health * self.spare_percentage) then
+--     self.mercy = 0
+--     end
+--     --[[elseif amount > 60 then --and amount ~= 67 and amount ~= 66
+--         self.violence = true
+--         super.hurt(self,200,...)
+--     elseif amount == 66  then
+--       super.hurt(self,666666,...)
+--      elseif amount == 67  then
+--        super.hurt(self,670000,...)
+--     else
+--         super.hurt(self,0,...)]]
 
-    end
+--     end
 
     function void:onAct(battler, name)
-        if name == "Check" and self.turn_count == 5 then
-        return "* void's hat - ATK ??? DEF ???\n* This creature is definitely in the wrong time and space!"
+        if name == "Check" and self.turn_count == 5 or self.turn_count == 8 then
+        return "* void's hat - ATK ??? DEF ???\n* A strange hat. It's surprisingly durable."
         elseif name == "Check" and self.turn_count == 7 then
-        return "* Void - ATK     DEF    \n* Not to be confused with void."
-        else
+        return "* Void    \n* Not to be confused with void."
+        elseif name == "Check" then
         return "* void - ATK 100 DEF 100\n* This creature is definitely in the wrong time and space!"
-        end
+        
 --[[      elseif name == "Check" and self.checks == 1 then
         self.checks = 2
         self.turn_count = 11  
@@ -127,13 +127,13 @@ function void:hurt(amount, ...)
         end
 
 --]]  
-     if name == "Something" then
+    elseif name == "Something" then
         return TableUtils.pick{
         "* You wave,[wait:5] void waves(?) back at you.",
         "* You say hello,[wait:5] void says hi back.",
         "* You smile,[wait:5] void imitates your smile."}
         end
-        if name == "Apologize"  then
+--[[         if name == "Apologize"  then
             if Game:getFlag("void_apologize",1) == 1 then
                 self:removeAct("Apologize")
                 self:registerAct("Something")
@@ -148,7 +148,7 @@ function void:hurt(amount, ...)
                 Game:setFlag("void_violence",0)
             return "* You apologized to void again."
             end 
-        end
+        end ]]
         
 
 
@@ -156,22 +156,30 @@ function void:hurt(amount, ...)
     return super.onAct(self,battler, name)
 
 end
-    function void:getEncounterText()
+--[[     function void:getEncounterText()
         
     if self.turn_count == 2 then
     return "* You have a feeling that someone\nelse should be here instead."
     elseif self.turn_count == 3 then
-    return "* void looks sad."
+    return "* Smells... slimy."
     elseif self.turn_count == 4 then
-    return "* void looks at you curiously."
+    return "* The enemy is bouncing up and down."
     elseif self.turn_count == 5 then
     return "* Smells like Dreams."
-        elseif self.turn_count == 5 then
-    return "* Smells like Dreams."
+    elseif self.turn_count == 6 then
+    return "* Something is about to grow..."
+    elseif self.turn_count == 7 then
+    return "* ..."  
+    elseif self.turn_count == 8 then
+    return "* Smells like Desires."  
+    elseif self.turn_count == 9 then
+    return "* Something is about to bloom."  
+    elseif self.turn_count == 10 then
+    return "* The air is filled with smoke."    
     end
     
     
-    if Game:getFlag("void_violence",0) > 0 and Game:getFlag("void_violence",0) < 11  then
+--[[     if Game:getFlag("void_violence",0) > 0 and Game:getFlag("void_violence",0) < 11  then
         if  self.health == 900 then
         return "* void looks concerned."
         end
@@ -205,10 +213,10 @@ end
     if Game:getFlag("void_slime", 0) == 1  then
     return "* void is confused."
     end
-
+ 
     return TableUtils.pick(self.text)  
         
-end
+end ]]
 
 --end
 return void

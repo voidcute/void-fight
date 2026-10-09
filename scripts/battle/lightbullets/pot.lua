@@ -11,7 +11,7 @@ function pot:init(x, y)
     self:setHitbox(0, 0, 28, 25)
     self.watered = 0
     -- Rotation of the bullet (in radians)
-
+     self.overwater = 0
     -- Don't destroy this bullet when it damages the player
     self.destroy_on_hit = false
 end
@@ -26,8 +26,12 @@ function pot:update()
         for _, droplet in ipairs(Game.stage:getObjects(Bullet)) do
             if droplet:includes(droplet_class) and droplet ~= self and self:collidesWith(droplet) then
             if self.watered < 5 then
-                self.watered = self.watered + 1
+                self.watered = self.watered + 1 
+            -- ?
+            -- else 
+            --     self.overwater = self.overwater + 1 
             end
+
             if self.watered <= 4 then
                 Assets.playSound("power",0.7,1.3)
             else
@@ -44,6 +48,9 @@ function pot:update()
                 self.wave.watered = self.wave.watered + 1
                 self:setSprite("bullets/pot_5")
             end
+            -- if self.overwater == 10 then
+            --     self.wave.overgrown = true
+            -- end
         end
     end
 

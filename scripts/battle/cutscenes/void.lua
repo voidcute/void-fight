@@ -88,6 +88,7 @@ return{
     void:setSprite("bodyside")
     pot:setSprite("enemies/Flowerpot/potside")
     chomp.visible = false
+    flower.visible = false
     cutscene:slideTo(flowerpot, flowerpot.x - 200, flowerpot.y, 3)
     cutscene:slideTo(void, void.x - 200, void.y, 3)
     cutscene:wait(3)
@@ -144,12 +145,12 @@ return{
     void.y = void_oy
     cutscene:wait(cutscene:slideTo(void, void_ox, void.y, 2))
     cutscene:battlerText(void,"phew.[wait:5] that was close.") 
-    cutscene:battlerText(void,"sigh...[wait:5]\nthey gave me the wrong one.") 
+    cutscene:battlerText(void,"sigh...[wait:5]\nthey gave me\nthe wrong one.") 
     
     void:toggleOverlay(false)
     body:setSprite("enemies/void_ut/body_bite")
     eyes:setSprite("enemies/void_ut/eye")
-    cutscene:battlerText(void,"sorry about that.[wait:5]\ni almost put you in danger.") 
+    cutscene:battlerText(void,"sorry about that.[wait:5]\ni almost put\nyou in danger.") 
     cutscene:battlerText(void,"...") 
     cutscene:battlerText(void,"oh this?[wait:5] don't worry\nabout it.[wait:5] i will be fine.") 
     cutscene:battlerText(void,"i will go get the right\none this time.") 
@@ -174,11 +175,13 @@ return{
     flowerpot = cutscene:getCharacter("Flowerpot")
     chomp = flowerpot:getSpritePart("chomp")
     pot = flowerpot:getSpritePart("pot")
+    flower = flowerpot:getSpritePart("flower")
     pot.flip_x = true
     void:toggleOverlay(true)
     void:setSprite("bodyleft_bite")
     pot:setSprite("enemies/Flowerpot/potside")
     chomp.visible = false
+    flower.visible = false
     cutscene:slideTo(flowerpot, flowerpot.x - 200, flowerpot.y, 3)
     cutscene:slideTo(void, void.x - 200, void.y, 3)
     cutscene:wait(3)
@@ -188,15 +191,82 @@ return{
     pot.flip_x = false
     pot:setSprite("enemies/Flowerpot/pot")
     eyes:slidePath({{0,0},{0,2},{2,0},{-2,0},{0,2},{0,0}}, {speed = 0.2, loop = true, relative = true})
-    
-
-    
+    cutscene:battlerText(void,"huh?...")
+    cutscene:battlerText(void,"it's that expression again.") 
+    eyes:setSprite("enemies/void_ut/eye_thread")
+    cutscene:battlerText(void,"could it be...?")  
+    eyes:setSprite("enemies/void_ut/eye_big")
+    cutscene:battlerText(void,"you're afraid that\ni would leave and \nnever comeback!?")  
+    cutscene:battlerText(void,"i'm so sorry...\ni will not do\nthat again.")  
+    eyes:setSprite("enemies/void_ut/eye")
+    cutscene:battlerText(void,"anyways, i'm sure this\nis the right seed.")
+    cutscene:battlerText(void,"yes,i've checked a\nlot of times.")
+    cutscene:battlerText(void,"go ahead and water them.")
     end,
     turn9 = function (cutscene)
+    flower.visible = true
+    flower.scale_y = 0
+    
+    Game.battle.timer:tween(0.5, flower, {scale_y = 1})
+    cutscene:wait(1)
+    cutscene:battlerText(void,"wow...") 
+    cutscene:battlerText(void,"beautiful isn't?") 
+    cutscene:battlerText(void,"...")   
+    cutscene:battlerText(void,"do you smell something?") 
+    local timer = 1
+    local flash_time = 10
+    local flash_timer = 0
+    local flash_red = false
+
+    cutscene:during(function ()
+        timer = timer - DTMULT
+        if timer <= flash_time then
+            flash_timer = flash_timer - DTMULT
+            if flash_timer <= 0 then
+                flash_red = not flash_red
+                if flash_red then                 
+                    flower:setColor(1, 0, 0)
+                else
+                    flower:setColor(1, 1, 1)
+                end
+                flash_timer = 10  
+            end
+        end
+    end)
+    cutscene:battlerText(void,"?") 
+    void:toggleOverlay(true)
+    void:setSprite("bodyleft_bite")
+    cutscene:battlerText(void,"uh...\nwhy is it ticking?") 
+
+    flowerpot:explode()
+    cutscene:battlerText(void,"what.")
+    void:toggleOverlay(false)
+    body:setSprite("enemies/void_ut/body_explode")
+    eyes:setSprite("enemies/void_ut/eye_big")
+    cutscene:battlerText(void,"what just happened???") 
     end,
     turn10 = function (cutscene)
-    cutscene:battlerText(void,"uh...") 
-
+    cutscene:battlerText(void,"i've really messed up...\ni couldn't give\nyou anthing.") 
+    cutscene:battlerText(void,"...")
+      eyes:setSprite("enemies/void_ut/eye")
+    cutscene:battlerText(void,"wait, wait!") 
+    cutscene:battlerText(void,"i can draw you a picture.")
+    eyes.visible = false
+    local sound = Assets.newSound("snd_window_draw_squeak")
+    sound:setLooping(true)
+    sound:play()
+    cutscene:wait(5)
+    sound:stop()
+    eyes.visible = true
+    cutscene:battlerText(void,"done.") 
+    cutscene:battlerText(void,"what do you thin-.") 
+    eyes:setSprite()
+    eyes:setSprite("enemies/void_ut/eye_big")
+    cutscene:battlerText(void,"wait, it's late!!!") 
+    cutscene:battlerText(void,"i've to go now.") 
+    cutscene:battlerText(void,"i will leave it to the ground.") 
+    cutscene:battlerText(void,"byeeeee!\nsee [color:red]you[color:reset] later.")
+    cutscene:wait(cutscene:slideTo(void, void.x, void.y-300, 1))
     cutscene:after(function()
     Game.battle:setState("VICTORY")
     end)  

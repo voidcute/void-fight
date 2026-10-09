@@ -2,13 +2,13 @@ return {
     meeting = function(cutscene)
    
         if not Game:getFlag("void_fighted",false)  then
-        cutscene:text("* Ball Club: Meet here!\n* Next meeting:\n* October 10th 10")  
+        cutscene:text("* Ball Club: Meet here!\n* Next meeting:\n* October 10th")  
         day = tonumber(os.date("%d"))
         month = tonumber(os.date("%m"))    
         hour = tonumber(os.date("%H"))
        local void = cutscene:getCharacter("void_ut")
-        --if day == 10 and month == 10 and hour == 22 or hour == 10
-        --then
+        if day == 10 and month == 10 --and hour == 22 or hour == 10
+        then
             cutscene:look(down)
             cutscene:wait(cutscene:playSound("escaped"))
             cutscene:setSpeaker(void)
@@ -24,7 +24,7 @@ return {
             cutscene:fadeIn(0) 
             void:remove()
             Game:setFlag("void_fighted",true)
-         --end
+         end
         else
             cutscene:text("* Ball Club: Meet here!\n* Next meeting:\n* October 10th 10")  
         end

@@ -43,12 +43,8 @@ function chompthing:init()
     self.check = "ATK 5 DEF 0\n* Cotton heart and button eye\n* You are the apple of my eye"
 
     -- Text randomly displayed at the bottom of the screen each turn
-    self.text = {
-        "* chompthing stands around\nabsentmindedly.",
-        "* chompthing stands around\nabsentmindedly?"
-    }
     -- Text displayed at the bottom of the screen when the enemy has low health
-    self.low_health_text = "* The chompthing looks like it's\nabout to fall over."
+    self.low_health_text = "* c."
     -- Register act called "Smile"
     
     -- Register party act with Noelle called "Tell Story"

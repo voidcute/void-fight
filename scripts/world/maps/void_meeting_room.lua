@@ -9,8 +9,8 @@ return {
   height = 12,
   tilewidth = 40,
   tileheight = 40,
-  nextlayerid = 7,
-  nextobjectid = 63,
+  nextlayerid = 8,
+  nextobjectid = 72,
   properties = {
     ["border"] = "fire",
     ["light"] = true
@@ -157,6 +157,20 @@ return {
           properties = {
             ["map"] = "credit"
           }
+        },
+        {
+          id = 71,
+          name = "drawing",
+          type = "",
+          shape = "rectangle",
+          x = 334,
+          y = 287.5,
+          width = 15.8182,
+          height = 10.6364,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {}
         }
       }
     },
@@ -271,6 +285,39 @@ return {
           opacity = 1,
           visible = true,
           properties = {}
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 7,
+      name = "controllers",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 68,
+          name = "toggle",
+          type = "",
+          shape = "rectangle",
+          x = 207.485,
+          y = 71.4394,
+          width = 15.8182,
+          height = 10.6364,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["flag"] = "void_fighted",
+            ["target1"] = { id = 71 }
+          }
         }
       }
     }

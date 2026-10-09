@@ -73,7 +73,8 @@ function actor:init()
     })
         self:addLightBattlerPart("flower", {
         ["sprite"] = function()
-            local sprite = Sprite(self.path.."/sun's flower", -8,0)
+            local sprite = Sprite(self.path.."/sun's flower", -8,85)
+            sprite.origin_y = 1
             return sprite
         end,
         ["init"] = function(part)

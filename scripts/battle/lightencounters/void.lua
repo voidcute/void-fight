@@ -46,9 +46,31 @@ end
           
         end
     end
+    function void:getEncounterText()    
+    if self.void.turn_count == 2 then
+    return "* You have a feeling that someone\nelse should be here instead."
+    elseif self.void.turn_count  == 3 then
+    return "* Smells... slimy."
+    elseif self.void.turn_count  == 4 then
+    return "* The enemy is bouncing up and down."
+    elseif self.void.turn_count  == 5 then
+    return "* Smells like Dreams."
+    elseif self.void.turn_count  == 6 then
+    return "* Something is about to grow.."
+    elseif self.void.turn_count  == 7 then
+    return "* ..."  
+    elseif self.void.turn_count  == 8 then
+    return "* Smells like Desires."  
+    elseif self.void.turn_count  == 9 then
+    return "* Something is about to bloom."  
+    elseif self.void.turn_count  == 10 then
+    return "* The air is filled with smoke."    
+    end
+
+end
     function void:getDialogueCutscene()
         super.init(self)
-        if self.void.violence == true then
+--[[         if self.void.violence == true then
             if self.void.health == 900 then
                 return "void.hurt1"
             elseif self.void.health == 800 then    
@@ -70,7 +92,7 @@ end
             elseif self.void.health < 100 then
                 return "void.die"
             end
-        end
+        end ]]
 --        if self.void.checks == 2 then
 --        return "void.slime"   
 --        end
@@ -106,18 +128,20 @@ end
         if  self.void.turn_count == 4 then
         self.void.name = "void's hat"
         self.void:removeAct("Something")
-        self.void.defense = 10000000
-        end
-        if  self.void.turn_count == 5 then
+        
+        
+        elseif  self.void.turn_count == 5 then
         self.void.name = "void"
-        self.void.defense = 0
-        end
-        if  self.void.turn_count == 6 then
+        elseif  self.void.turn_count == 6 then
         self.void.name = "Void"
-        self.void.defense = 100000
+        elseif  self.void.turn_count == 7 then
+        self.void.name = "void's hat"
+        elseif  self.void.turn_count == 8 then
+        self.void.name = "void"   
         end
-    if  self.void.violence == false then
         self.void.turn_count = self.void.turn_count + 1
+--[[     if  self.void.violence == false then
+        
     elseif  self.void.violence == true then
         if  self.void.turn_count < 11 then
         self.void:registerAct("Apologize")
@@ -134,7 +158,7 @@ end
         end
         self.void:removeAct("Something")
         self.void.violence = false  
-    end
+    end ]]
   --  if self.void.acted == true then
   --      self.void.acted = false
    -- end
