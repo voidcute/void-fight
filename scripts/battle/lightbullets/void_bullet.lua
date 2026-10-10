@@ -71,9 +71,9 @@ function void:update()
     local soul = Game.battle and Game.battle.soul
     if soul and soul.collidable then
         if self.collider and self.collider:collidesWith(soul.collider) then
-            Game.battle["soul_speed"] = 0.5
+            Game.battle["soul_speed"] = 1
         else
-            Game.battle["soul_speed"] = 5
+            Game.battle["soul_speed"] = 6
     
         end
     end

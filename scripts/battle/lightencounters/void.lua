@@ -54,7 +54,7 @@ end
     elseif self.void.turn_count  == 3 then
     return "* Smells... slimy."
     elseif self.void.turn_count  == 4 then
-    return "* The enemy is bouncing up and down."
+    return "* There are a few strands of fur in the enemy's mouth."
     elseif self.void.turn_count  == 5 then
     return "* Smells like Dreams."
     elseif self.void.turn_count  == 6 then

@@ -26,11 +26,20 @@
     "inventory": {
         // "items": ["undertale/rock_candy", "undertale/monster_candy", "undertale/spider_donut", "undertale/spider_cider", "undertale/butterscotch_pie", "undertale/ghost_fruit"],
         "items": ["undertale/bisicle","undertale/bisicle","undertale/bisicle","undertale/bisicle","undertale/bisicle","undertale/bisicle","undertale/bisicle","undertale/bisicle"],
-        "box_a": ["undertale/stick", "undertale/toy_knife", "undertale/tough_glove", "undertale/ballet_shoes", "undertale/torn_notebook", "undertale/burnt_pan", "undertale/empty_gun", "undertale/worn_dagger", "undertale/real_knife"],
-        "box_b": ["undertale/bandage", "undertale/faded_ribbon", "undertale/manly_bandanna", "undertale/old_tutu", "undertale/cloudy_glasses", "undertale/stained_apron", "undertale/cowboy_hat", "undertale/heart_locket", "undertale/the_locket", "undertale/temy_armor"],
+        "box_a": ["undertale/toy_knife", "undertale/tough_glove", "undertale/ballet_shoes", "undertale/torn_notebook", "undertale/burnt_pan"],
+        "box_b": ["undertale/faded_ribbon", "undertale/manly_bandanna", "undertale/old_tutu", "undertale/cloudy_glasses"],
         "key_items": ["cell_phone"]
     },
     // Equipment for your party. Not specifying equipment defaults to the following.
+<<<<<<< Updated upstream
+=======
+    "equipment": {
+    "frisk": {
+    "weapon": "undertale/stick",
+    "armor": ["undertale/stained_apron"]
+        }
+    },
+>>>>>>> Stashed changes
     "dev" : false,
 
     // Should never be true, but just in case. Restarts the entire engine when leaving the mod.

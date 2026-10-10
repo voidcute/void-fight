@@ -2,6 +2,7 @@ local Aiming, super = Class(LightWave)
 function Aiming:init()
     super.init(self)
     self.time = 10
+    self.sound = nil
 end
 function Aiming:onStart()
     soul = Game.battle.soul
@@ -11,9 +12,9 @@ function Aiming:onStart()
         self.timer:cancel(normal)
         star= self:spawnBullet("star", x, y-50, angle2, 0)
         star.graphics.grow = 16 / (60 * DTMULT)
-        sound = Assets.newSound("chargeshot_charge")
-        sound:setLooping(true)
-        sound:play()
+        self.sound = Assets.newSound("chargeshot_charge")
+        self.sound:setLooping(true)
+        self.sound:play()
         end)
 
 
@@ -32,7 +33,13 @@ function Aiming:onStart()
     end)
 end
 function Aiming:onEnd()
+<<<<<<< Updated upstream
     sound:stop()
+=======
+    if self.sound then
+        self.sound:stop()
+    end
+>>>>>>> Stashed changes
 
 end
 function Aiming:update()

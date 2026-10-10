@@ -20,11 +20,11 @@ function pot:update()
     -- For more complicated bullet behaviours, code here gets called every update
 
     super.update(self)
-
-    local droplet_class = Mod.libs["magical-glass"]:getLightBullet("droplet")
+    Object.startCache()
+    local droplets = Mod.libs["magical-glass"]:getLightBullet("droplet")
         
         for _, droplet in ipairs(Game.stage:getObjects(Bullet)) do
-            if droplet:includes(droplet_class) and droplet ~= self and self:collidesWith(droplet) then
+            if droplet:includes(droplets) and droplet ~= self and self:collidesWith(droplet) then
             if self.watered < 5 then
                 self.watered = self.watered + 1 
             -- ?
@@ -53,7 +53,6 @@ function pot:update()
             -- end
         end
     end
-
     Object.endCache()
 end
 

@@ -171,7 +171,7 @@ return{
     hat.visible = true
     eyes.visible = true
     body.visible = true
-    Game.battle.encounter:addEnemy("Flowerpot", 637, 240)
+    enemypot = Game.battle.encounter:addEnemy("Flowerpot", 637, 240)
     flowerpot = cutscene:getCharacter("Flowerpot")
     chomp = flowerpot:getSpritePart("chomp")
     pot = flowerpot:getSpritePart("pot")
@@ -244,7 +244,11 @@ return{
     void:toggleOverlay(false)
     body:setSprite("enemies/void_ut/body_explode")
     eyes:setSprite("enemies/void_ut/eye_big")
+<<<<<<< Updated upstream
     Game.battle:removeEnemy(chomp, false)
+=======
+    Game.battle:removeEnemy(enemypot, false)
+>>>>>>> Stashed changes
     cutscene:battlerText(void,"what just happened???") 
     end,
     turn10 = function (cutscene)

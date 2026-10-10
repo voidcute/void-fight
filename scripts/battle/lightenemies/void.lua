@@ -11,7 +11,7 @@ function void:init()
     self.max_health = 1000
     self.health = 1000
     -- Enemy attack (determines bullet damage)
-    self.attack = 5
+    self.attack = 7
     -- Enemy defense (usually 0)
     self.defense = 1000
     self.turn_count = 1
