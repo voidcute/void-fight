@@ -33,13 +33,13 @@ function Aiming:onStart()
     end)
 end
 function Aiming:onEnd()
-<<<<<<< Updated upstream
+
     sound:stop()
-=======
+
     if self.sound then
         self.sound:stop()
     end
->>>>>>> Stashed changes
+
 
 end
 function Aiming:update()

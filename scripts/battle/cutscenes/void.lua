@@ -244,11 +244,10 @@ return{
     void:toggleOverlay(false)
     body:setSprite("enemies/void_ut/body_explode")
     eyes:setSprite("enemies/void_ut/eye_big")
-<<<<<<< Updated upstream
+
     Game.battle:removeEnemy(chomp, false)
-=======
     Game.battle:removeEnemy(enemypot, false)
->>>>>>> Stashed changes
+
     cutscene:battlerText(void,"what just happened???") 
     end,
     turn10 = function (cutscene)

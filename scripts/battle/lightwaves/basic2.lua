@@ -2,11 +2,10 @@ local Basic, super = Class(LightWave)
 
 function Basic:init()
     super.init(self)
-<<<<<<< Updated upstream
+
     self.time = 12
-=======
     self.time = 13
->>>>>>> Stashed changes
+
 end
 
 function Basic:onStart()

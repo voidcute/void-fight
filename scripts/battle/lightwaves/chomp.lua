@@ -19,11 +19,10 @@ function Chomp:onStart()
 
     soul = Game.battle.soul
     arena = Game.battle.arena
-<<<<<<< Updated upstream
+
     soul.speed = 50
-=======
     Game.battle["soul_speed"] = 6
->>>>>>> Stashed changes
+
     self.timer:after(14, function ()
         self.timer:cancel(chase)
     end)
