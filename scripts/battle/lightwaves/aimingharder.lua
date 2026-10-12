@@ -34,7 +34,6 @@ function Aiming:onStart()
 end
 function Aiming:onEnd()
 
-    sound:stop()
 
     if self.sound then
         self.sound:stop()

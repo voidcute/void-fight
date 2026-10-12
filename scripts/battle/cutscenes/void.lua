@@ -245,7 +245,6 @@ return{
     body:setSprite("enemies/void_ut/body_explode")
     eyes:setSprite("enemies/void_ut/eye_big")
 
-    Game.battle:removeEnemy(chomp, false)
     Game.battle:removeEnemy(enemypot, false)
 
     cutscene:battlerText(void,"what just happened???") 

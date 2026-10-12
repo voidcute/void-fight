@@ -3,7 +3,6 @@ local Basic, super = Class(LightWave)
 function Basic:init()
     super.init(self)
 
-    self.time = 12
     self.time = 13
 
 end

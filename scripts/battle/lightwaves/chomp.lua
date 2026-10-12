@@ -20,7 +20,7 @@ function Chomp:onStart()
     soul = Game.battle.soul
     arena = Game.battle.arena
 
-    soul.speed = 50
+    
     Game.battle["soul_speed"] = 6
 
     self.timer:after(14, function ()
