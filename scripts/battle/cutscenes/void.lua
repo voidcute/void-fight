@@ -20,7 +20,11 @@ return{
     reset()
     eyes:setSprite("enemies/void_ut/eyes_confused")
     eyes:slidePath({{0,0},{0,2},{0,0}}, {speed = 0.2, loop = true, relative = true})
+    if Game:getFlag("wrong_date",true) then
+    cutscene:battlerText(void,"wait today isn't\nOctober 10th...")  
+    else
     cutscene:battlerText(void,"you don't look \nlike a ball...")  
+    end
     cutscene:battlerText(void,"what are you doing here?[wait:5]\ndidn't you read the sign?") 
     body:setSprite("enemies/void_ut/body")  
     reset()

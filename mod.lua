@@ -10,6 +10,7 @@ function Mod:load(data, new_file)
         Game.world:registerCall("Dimensional Box A", "mg_cell.box_a")
         Game.world:registerCall("Dimensional Box B", "mg_cell.box_b")
         Game:setFlag("void_fighted",false)
+        Game:setFlag("wrong_date",true) 
     end
 function Mod:postInit ()
 
